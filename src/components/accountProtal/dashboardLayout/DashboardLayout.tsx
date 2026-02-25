@@ -4,11 +4,7 @@ import Sidebar from "../Sidebar";
 import Topbar from "../Topbar";
 import DashboardContent from "./DashboardContent";
 
-interface Props {
-    children: React.ReactNode;
-}
-
-const DashboardLayout: React.FC<Props> = ({ children }) => {
+export const DashboardLayout = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     return (
@@ -22,7 +18,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
                 <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
                 <main className="flex-1 overflow-y-auto p-6 bg-[#F4F7FB] mr-4 rounded-[20px]">
-                    <DashboardContent/>
+                    <DashboardContent />
                 </main>
             </div>
         </div>

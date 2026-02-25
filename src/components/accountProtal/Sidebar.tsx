@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { X, Menu, ChevronDown } from "lucide-react";
 import Image from "next/image";
@@ -31,14 +30,14 @@ interface SidebarProps {
 
 interface NavItemData {
   label: string;
-  icon: React.ReactNode;
+  icon?: React.ReactElement;
   children?: NavSubItem[];
 }
 
 interface NavSubItem {
   label: string;
   isActive?: boolean;
-  icon: React.ReactNode; // Added icon for sub-items
+  icon: React.ReactElement;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
@@ -47,10 +46,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const toggleExpand = (label: string, children?: NavSubItem[]) => {
     if (expandedItem === label) {
-      setExpandedItem(null); // Collapse the item
+      setExpandedItem(null);
     } else {
-      setExpandedItem(label); // Expand the itemh
-      // Auto-activate first sub-item when expanding
+      setExpandedItem(label);
       if (children && children.length > 0) {
         setActiveItem(children[0].label);
       }
@@ -148,7 +146,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
         {/* Navigation */}
         <nav className="p-3 lg:p-4 mt-2 lg:mt-3 space-y-1 lg:space-y-3">
-          <h4 className="text-[#98A4AE] text-xs ml-4 uppercase tracking-wide mb-3 lg:mb-4">
+          <h4 className="text-[#98A4AE] text-xs ml-4 font-manrope uppercase tracking-wide mb-3 lg:mb-4">
             Main
           </h4>
 
@@ -162,17 +160,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   {/* Parent item with children */}
                   <button
                     onClick={() => toggleExpand(item.label, item.children)}
-                    className={`w-full flex items-center justify-between gap-2.5 px-4 py-3 rounded- cursor-pointer transition text-[15px] ${
-                      expandedItem === item.label
-                        ? "bg-transparent text-[#635BFF] font-semibold"
-                        : "text-[#29343D] hover:bg-[#F3F4F7] font-normal"
-                    }`}
+                    className={`w-full flex items-center justify-between font-manrope gap-2.5 px-4 py-3 rounded-lg cursor-pointer transition text-[15px] ${expandedItem === item.label
+                      ? "bg-transparent text-[#635BFF] font-semibold"
+                      : "text-[#29343D] hover:bg-[#F3F4F7] font-normal"
+                      }`}
                   >
                     <div className="flex items-center gap-2.5">
                       {expandedItem === item.label ? (
                         <div className="text-[#29343D]">
                           {/* Change icon color when active */}
-                          {React.cloneElement(item.icon, { color: "#635BFF" })}
+                          {React.cloneElement(item?.icon, { color: "#635BFF" })}
                         </div>
                       ) : (
                         item.icon
@@ -187,9 +184,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     </div>
                     <ChevronDown
                       size={24}
-                      className={`transition-transform color-[#29343D] ${
-                        expandedItem === item.label ? "rotate-180" : ""
-                      } ${expandedItem === item.label ? "text-[#635BFF]" : ""}`}
+                      className={`transition-transform color-[#29343D] ${expandedItem === item.label ? "rotate-180" : ""
+                        } ${expandedItem === item.label ? "text-[#635BFF]" : ""}`}
                     />
                   </button>
 
@@ -200,11 +196,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         <button
                           key={subItem.label}
                           onClick={() => setActiveItem(subItem.label)}
-                          className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg cursor-pointer transition text-[15px] font-normal ${
-                            activeItem === subItem.label
-                              ? "bg-[#635BFF] text-white shadow-[0_8px_20px_-8px_rgba(77,91,236,0.23)]"
-                              : "text-[#635BFF] bg-[#DDDBFF] "
-                          }`}
+                          className={`w-full flex items-center gap-2.5 px-3 py-2.5 font-manrope rounded-lg cursor-pointer transition text-[15px] font-normal ${activeItem === subItem.label
+                            ? "bg-[#635BFF] text-white shadow-[0_8px_20px_-8px_rgba(77,91,236,0.23)] font-semibold"
+                            : "text-[#635BFF] bg-[#DDDBFF]"
+                            }`}
                         >
                           {/* Sub-item icon and text color when active */}
                           {activeItem === subItem.label
@@ -224,11 +219,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 /* Item without children - Dashboard */
                 <button
                   onClick={() => setActiveItem(item.label)}
-                  className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg cursor-pointer transition ${
-                    activeItem === item.label
-                      ? "bg-[#635BFF] text-white shadow-[0_8px_20px_-8px_rgba(77,91,236,0.23)] font-semibold"
-                      : "text-[#29343D] hover:bg-[#F3F4F7] font-normal"
-                  }`}
+                  className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg cursor-pointer transition ${activeItem === item.label
+                    ? "bg-[#635BFF] text-white shadow-[0_8px_20px_-8px_rgba(77,91,236,0.23)] font-semibold"
+                    : "text-[#29343D] hover:bg-[#F3F4F7] font-normal"
+                    }`}
                 >
                   {/* Parent Icon active state */}
                   {activeItem === item.label ? (
@@ -236,7 +230,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   ) : (
                     <IDashboard width={20} height={20} fill="#98A4AE" />
                   )}
-                  <span className="text-sm">{item.label}</span>
+                  <span className="text-sm font-manrope">{item.label}</span>
                 </button>
               )}
             </div>
@@ -248,3 +242,4 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 };
 
 export default Sidebar;
+

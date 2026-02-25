@@ -1,9 +1,10 @@
-import DashboardPage from '@/components/accountProtal/dashboardLayout/DashboardPage'
+import DashboardLayout from "@/components/accountProtal/dashboardLayout/DashboardLayout";
+
 
 export default function page() {
     return (
         <div>
-            <DashboardPage />
+            <DashboardLayout />
         </div>
     )
 }

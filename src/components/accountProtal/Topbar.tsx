@@ -32,7 +32,7 @@ const Topbar: React.FC<TopbarProps> = ({ onMenuClick }) => {
                     <SalonSelect />
                 </div>
                 <IBell />
-                <Image src={'/images/avator.svg'} width={40} height={40} alt="avatar" className="rounded-full" />
+                <Image src={'/images/profile.svg'} width={40} height={40} alt="avatar" className="rounded-full" />
             </div>
         </header>
     );
