@@ -10,7 +10,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { AlertCircle, CheckCircle, Clock, TrendingDown } from "lucide-react";
 import ISales from "@/app/account-protal/svg/ISales";
 import ITex from "@/app/account-protal/svg/ITex";
 import IBudget from "@/app/account-protal/svg/IBudget";
