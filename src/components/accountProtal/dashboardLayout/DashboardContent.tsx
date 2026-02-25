@@ -15,6 +15,7 @@ import ITex from "@/app/account-protal/svg/ITex";
 import IBudget from "@/app/account-protal/svg/IBudget";
 import IDeadline from "@/app/account-protal/svg/IDeadline";
 import Image from "next/image";
+import Card from "../Card";
 
 const pagelineData = [
   { name: "Jan", value: 15000 },
@@ -108,6 +109,45 @@ const activityData = [
   },
 ];
 
+const stats = [
+  {
+    icon: <ISales />,
+    title: "Salaries Pending Approval",
+    value: 12,
+    lines: ["3 overdue"],
+    iconBg: "bg-yellow-400",
+    gradientFrom: "#FEFDF7",
+    gradientTo: "#FEF7DF",
+  },
+  {
+    icon: <ITex />,
+    title: "Taxes Pending Approval",
+    value: 5,
+    lines: ["1 overdue"],
+    iconBg: "bg-[#16CDC7]",
+    gradientFrom: "#F8FDFD",
+    gradientTo: "#E1F9F8",
+  },
+  {
+    icon: <IDeadline />,
+    title: "Upcoming Deadlines",
+    value: 8,
+    lines: ["Next 14 days"],
+    iconBg: "bg-[#635BFF]",
+    gradientFrom: "#FAFAFF",
+    gradientTo: "#EBEAFF",
+  },
+  {
+    icon: <IBudget />,
+    title: "Budget Warnings",
+    value: 3,
+    lines: ["Salons over budget"],
+    iconBg: "bg-[#FF6692]",
+    gradientFrom: "#FFFAFB",
+    gradientTo: "#FFEBF1",
+  },
+];
+
 export default function Dashboard() {
   return (
     <div className="min-h-screen p-1 ">
@@ -119,89 +159,10 @@ export default function Dashboard() {
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {/* Salaries Pending Approval */}
-        <div className="w-full max-w-sm p-6 rounded-lg bg-gradient-to-t from-[#FEFDF7] to-[#FEF7DF] font-manrope">
-          <div className="flex items-center space-x-4">
-            {/* Icon */}
-            <div className="w-[40px] h-[40px] bg-yellow-400 rounded-xl flex items-center justify-center text-white text-xl">
-              <ISales />
-            </div>
-            {/* Title */}
-            <h3 className="text-lg font-medium text-gray-800">
-              Salaries Pending Approval
-            </h3>
-          </div>
-          {/* Main Number */}
-          <div className="mt-4 text-[28px] font-semibold text-gray-800">12</div>
-          {/* Additional Text */}
-          <div className="mt-2 text-[13px] text-[#29343D] font-semibold">
-            <p>3 overdue</p>
-            <p>+18.5% from last month</p>
-          </div>
-        </div>
-
-        {/* Taxes Pending Approval */}
-        <div className="w-full max-w-sm p-6 rounded-lg bg-gradient-to-t from-[#F8FDFD] to-[#E1F9F8] font-manrope">
-          <div className="flex items-center space-x-4">
-            {/* Icon */}
-            <div className="w-[40px] h-[40px] bg-[#16CDC7] rounded-xl flex items-center justify-center text-white text-xl">
-              <ITex />
-            </div>
-            {/* Title */}
-            <h3 className="text-lg font-medium text-gray-800">
-              Taxes Pending Approval
-            </h3>
-          </div>
-          {/* Main Number */}
-          <div className="mt-4 text-[28px] font-semibold text-gray-800">5</div>
-          {/* Additional Text */}
-          <div className="mt-2 text-[13px] text-[#29343D] font-semibold">
-            <p>1 overdue</p>
-            <p>-10% from last month</p>
-          </div>
-        </div>
-
-        {/* Upcoming Deadlines */}
-        <div className="w-full max-w-sm p-6 rounded-lg bg-gradient-to-t from-[#FAFAFF] to-[#EBEAFF] font-manrope">
-          <div className="flex items-center space-x-4">
-            {/* Icon */}
-            <div className="w-[40px] h-[40px] bg-[#635BFF] rounded-xl flex items-center justify-center text-white text-xl">
-              <IDeadline />
-            </div>
-            {/* Title */}
-            <h3 className="text-lg font-medium text-gray-800">
-              Upcoming Deadlines
-            </h3>
-          </div>
-          {/* Main Number */}
-          <div className="mt-4 text-[28px] font-semibold text-gray-800">8</div>
-          {/* Additional Text */}
-          <div className="mt-2 text-[13px] text-[#29343D] font-semibold">
-            <p>Next 14 days</p>
-          </div>
-        </div>
-
-        {/* Budget Warnings */}
-        <div className="w-full max-w-sm p-6 rounded-lg bg-gradient-to-t from-[#FFFAFB] to-[#FFEBF1] font-manrope">
-          <div className="flex items-center space-x-4">
-            {/* Icon */}
-            <div className="w-[40px] h-[40px] bg-[#FF6692] rounded-xl flex items-center justify-center text-white text-xl">
-              <IBudget />
-            </div>
-            {/* Title */}
-            <h3 className="text-lg font-medium text-gray-800">
-              Budget Warnings
-            </h3>
-          </div>
-          {/* Main Number */}
-          <div className="mt-4 text-[28px] font-semibold text-gray-800">3</div>
-          {/* Additional Text */}
-          <div className="mt-2 text-[13px] text-[#29343D] font-semibold">
-            <p>Salons over budget</p>
-            <p>+50% from last month</p>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6 mb-6 w-full">
+        {stats.map((stat, index) => (
+          <Card key={index} {...stat} />
+        ))}
       </div>
 
       {/* Middle Section - Activity and Salon Overview */}

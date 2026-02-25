@@ -2,6 +2,7 @@
 import Sidebar from "@/components/accountProtal/Sidebar";
 import Topbar from "@/components/accountProtal/Topbar";
 import { useState } from "react";
+import OverviewContant from "./OverviewContant";
 
 export default function OverViewLayout() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function OverViewLayout() {
                 <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
                 <main className="flex-1 overflow-y-auto p-6 bg-[#F4F7FB] mr-4 rounded-[20px]">
-                    <h1>hello world</h1>
+                    <OverviewContant />
                 </main>
             </div>
         </div>
