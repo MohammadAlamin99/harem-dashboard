@@ -2,11 +2,13 @@ import React from "react";
 
 type IconProps = {
     color?: string;
+    bgColor?:string;
     className?: string;
 };
 
 export default function IHome({
     color = "currentColor",
+    bgColor,
     className = "",
 }: IconProps) {
     return (
@@ -17,7 +19,7 @@ export default function IHome({
             viewBox="0 0 24 24"
             fill="none"
             className={className}
-            style={{ color }}
+            style={{ color,background:bgColor }}
         >
             <path
                 fillRule="evenodd"

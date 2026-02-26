@@ -1,3 +1,10 @@
+import ISales from "@/app/account-protal/svg/ISales";
+import ITex from "@/app/account-protal/svg/ITex";
+import IBudget from "@/app/account-protal/svg/IBudget";
+import IDeadline from "@/app/account-protal/svg/IDeadline";
+import Image from "next/image";
+import IHome from "@/app/account-protal/svg/IHome";
+import { useState } from "react";
 import {
   LineChart,
   Line,
@@ -10,69 +17,83 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { AlertCircle, CheckCircle, Clock, TrendingDown } from "lucide-react";
-import ISales from "@/app/account-protal/svg/ISales";
-import ITex from "@/app/account-protal/svg/ITex";
-import IBudget from "@/app/account-protal/svg/IBudget";
-import IDeadline from "@/app/account-protal/svg/IDeadline";
-import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 
-const pagelineData = [
-  { name: "Jan", value: 15000 },
-  { name: "Feb", value: 18000 },
-  { name: "Feb", value: 16000 },
-  { name: "Feb", value: 17000 },
-  { name: "Mar", value: 18000 },
-  { name: "Apr", value: 16000 },
-  { name: "Jun", value: 17000 },
-  { name: "Jul", value: 16000 },
-  { name: "Sep", value: 15000 },
+const lineData = [
+  { name: "Jan", value: 3000 },
+  { name: "Feb", value: 12000 },
+  { name: "Feb", value: 10000 },
+  { name: "Feb", value: 10000 },
+  { name: "Mar", value: 12000 },
+  { name: "Apr", value: 12000 },
+  { name: "Jun", value: 10000 },
+  { name: "Jul", value: 6000 },
+  { name: "Sep", value: 11000 },
 ];
 
 const barData = [
-  { name: "Salaries", Budget: 35000, Expense: 28000 },
-  { name: "Taxes", Budget: 20000, Expense: 12000 },
-  { name: "Supplies", Budget: 40000, Expense: 35000 },
-  { name: "Marketing", Budget: 25000, Expense: 8000 },
-  { name: "Utilities", Budget: 15000, Expense: 12000 },
+  { name: "Salaries", Budget: 20000, Expense: 5000 },
+  { name: "Taxes", Budget: 22000, Expense: 10000 },
+  { name: "Supplies", Budget: 41000, Expense: 20000 },
+  { name: "Marketing", Budget: 20000, Expense: 2000 },
+  { name: "Utilities", Budget: 5000, Expense: 20000 },
+];
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 const salonData = [
   {
     id: 1,
     name: "Glamour Beauty",
-    icon: "💄",
+    iconColor: "#FF6692", // icon color
+    bgColor: "#FFE5ED", // background behind icon
     pendingSalaries: 5,
     pendingTaxes: 2,
-    status: "Over Budget",
-    statusColor: "bg-[#FF6692]",
+    status: "On Track",
+    statusColor: "#FFE5ED",
   },
   {
     id: 2,
     name: "Style Studio",
-    icon: "✂️",
+    iconColor: "#36C76C", // icon color
+    bgColor: "#EBFAF0", // background behind icon
     pendingSalaries: 5,
     pendingTaxes: 2,
     status: "On Track",
-    statusColor: "bg-green-100 text-green-700",
+    statusColor: "#EBFAF0",
   },
   {
     id: 3,
     name: "Chic Hair & Beauty",
-    icon: "💇",
+    iconColor: "#36C76C", // icon color
+    bgColor: "#EBFAF0", // background behind icon
     pendingSalaries: 5,
     pendingTaxes: 2,
     status: "On Track",
-    statusColor: "bg-green-100 text-green-700",
+    statusColor: "#EBFAF0",
   },
   {
     id: 4,
-    name: "Glamour Beauty",
-    icon: "💄",
+    name: "Style Studio",
+    iconColor: "#FF6692", // icon color
+    bgColor: "#FFE5ED", // background behind icon
     pendingSalaries: 5,
     pendingTaxes: 2,
-    status: "Over Budget",
-    statusColor: "bg-pink-100 text-pink-700",
+    status: "On Track",
+    statusColor: "#FFE5ED",
   },
 ];
 
@@ -110,6 +131,11 @@ const activityData = [
 ];
 
 export default function Dashboard() {
+  const [payrollOpen, setPayrollOpen] = useState(false);
+  const [expenseOpen, setExpenseOpen] = useState(false);
+  const [payrollMonth, setPayrollMonth] = useState("Monthly");
+  const [expenseMonth, setExpenseMonth] = useState("Monthly");
+
   return (
     <div className="min-h-screen p-1 ">
       {/* Header */}
@@ -120,7 +146,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
         {/* Salaries Pending Approval */}
         <div className="w-full max-w-sm p-6 rounded-lg bg-gradient-to-t from-[#FEFDF7] to-[#FEF7DF] font-manrope">
           <div className="flex items-center space-x-4">
@@ -206,9 +232,9 @@ export default function Dashboard() {
       </div>
 
       {/* Middle Section - Activity and Salon Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
         {/* Recent Activity */}
-        <div className="bg-white rounded-lg p-6 border border-gray-200 font-manrope">
+        <div className="bg-white rounded-xl p-6 font-manrope">
           <div className="flex place-content-between">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-[16px] font-semibold text-[#29343D]">
@@ -280,7 +306,7 @@ export default function Dashboard() {
         </div>
 
         {/* Salon Overview */}
-        <div className="bg-white rounded-lg p-6 border border-gray-200">
+        <div className="bg-white rounded-xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-[16px] font-semibold text-gray-900">
               Salon Overview
@@ -295,36 +321,50 @@ export default function Dashboard() {
             {salonData.map((salon) => (
               <div
                 key={salon.id}
-                className="flex items-center justify-between p-6 border-1 border-[#E0E6EB] bg-gray-50 rounded-xl"
+                className="flex items-center justify-between p-6 border-1 border-[#E0E6EB] bg-gray-50 rounded-xl font-manrope"
               >
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-2 text-center">
+                <div className="flex items-center text-center gap-2">
+                  <div className="flex gap-2 text-center justify-center items-center">
                     {/* Salon Icon */}
-                    <div className="text-2xl">{salon.icon}</div>
+                    <IHome
+                      color={salon.iconColor}
+                      bgColor={salon.bgColor}
+                      className="rounded-[6px] h-8 w-8 p-1"
+                    />
 
-                    <div>
-                      {/* Salon Name */}
-                      <p className="font-medium text-gray-900">{salon.name}</p>
-                    </div>
+                    {/* Salon Name */}
+                    <p className="font-semibold text-[14px] text-[#29343D]">
+                      {salon.name}
+                    </p>
                   </div>
-                  <div className="flex gap-8 ml-24">
+                  <div className="flex gap-4 lg:gap-8 md:ml-16 lg:ml-24">
                     {/* Pending Salaries and Pending Taxes */}
                     <div className="flex flex-col text-center">
-                      <span>{salon.pendingSalaries}</span>
-                      <span>Pending Salaries</span>
+                      <span className="text-[16px] font-semibold font-manrope">
+                        {salon.pendingSalaries}
+                      </span>
+                      <span className="text-[12px] font-normal text-[#526B7A]">
+                        Pending Salaries
+                      </span>
                     </div>
 
                     <div className="flex flex-col text-center">
-                      <span>{salon.pendingTaxes}</span>
-                      <span>Pending Taxes</span>
+                      <span className="text-[16px] font-semibold font-manrope">
+                        {salon.pendingTaxes}
+                      </span>
+                      <span className="text-[12px] font-normal text-[#526B7A]">
+                        Pending Taxes
+                      </span>
                     </div>
                   </div>
-
                 </div>
-
                 {/* Status Label (e.g., Over Budget) */}
                 <span
-                  className={`px-3 py-1 rounded-full text-xs font-medium ${salon.statusColor}`}
+                  className="inline-block ml-2 pt-1 pr-2 pb-1 pl-2 rounded-lg text-xs font-medium"
+                  style={{
+                    backgroundColor: salon.statusColor, // e.g., "#FDE8E8"
+                    color: salon.iconColor, // e.g., "#C70000"
+                  }}
                 >
                   {salon.status}
                 </span>
@@ -332,32 +372,58 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
+
       </div>
 
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8">
         {/* Payroll Over Time */}
-        <div className="bg-white rounded-lg p-6 border border-gray-200">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-white rounded-xl p-4  font-manrope">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4 sm:gap-0">
             <div>
-              <h2 className="text-lg font-bold text-gray-900">
+              <h2 className="text-[16px] font-semibold text-[#29343D]">
                 Payroll Over Time
               </h2>
-              <p className="text-sm text-gray-500">Last 12 Months</p>
+              <p className="text-sm text-[#98A4AE]">Last 12 Months</p>
             </div>
-            <div className="flex gap-2">
-              <button className="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50">
-                Monthly
-              </button>
-              <button className="px-4 py-2 rounded-lg border border-purple-200 text-purple-600 text-sm font-medium hover:bg-purple-50">
+            <div className="flex gap-3">
+              <div className="relative">
+                <button
+                  onClick={() => setPayrollOpen(!payrollOpen)}
+                  className="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 flex items-center gap-2 whitespace-nowrap"
+                >
+                  {payrollMonth}
+                  <ChevronDown size={16} className="text-[#0A2540]" />
+                </button>
+                {payrollOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border-1 border-[#EFF4FA] rounded-lg z-10">
+                    {months.map((month) => (
+                      <button
+                        key={month}
+                        onClick={() => {
+                          setPayrollMonth(month);
+                          setPayrollOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm font-md text-[#0A2540] hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
+                      >
+                        {month}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button className="px-4 py-2 rounded-lg border-1 border-[#635BFF] text-indigo-600 text-sm font-medium hover:bg-indigo-50 whitespace-nowrap">
                 Export Data
               </button>
             </div>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={pagelineData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <LineChart data={lineData}>
+                <CartesianGrid
+                  stroke="#F6F7F9"
+                  height={1}
+                  vertical={false}
+                />
                 <XAxis dataKey="name" stroke="#9ca3af" />
                 <YAxis stroke="#9ca3af" />
                 <Tooltip
@@ -367,12 +433,15 @@ export default function Dashboard() {
                     borderRadius: "0.5rem",
                   }}
                 />
+                <Legend wrapperStyle={{ paddingTop: "1rem" }} />
                 <Line
                   type="monotone"
                   dataKey="value"
                   stroke="#06b6d4"
                   strokeWidth={3}
                   dot={false}
+                  name="Total"
+                  isAnimationActive={false}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -380,23 +449,53 @@ export default function Dashboard() {
         </div>
 
         {/* Expense vs Budget */}
-        <div className="bg-white rounded-lg p-6 border border-gray-200">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 ">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4 sm:gap-0">
             <div>
-              <h2 className="text-lg font-bold text-gray-900">
+              <h2 className="text-[16px] font-semibold text-[#29343D]">
                 Expense vs Budget
               </h2>
-              <p className="text-sm text-gray-500">Last 12 Months</p>
+              <p className="text-sm text-[#98A4AE]">Last 12 Months</p>
             </div>
-            <button className="px-4 py-2 rounded-lg border border-purple-200 text-purple-600 text-sm font-medium hover:bg-purple-50">
-              Export Data
-            </button>
+            <div className="flex gap-2">
+              <div className="relative">
+                <button
+                  onClick={() => setExpenseOpen(!expenseOpen)}
+                  className="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 flex items-center gap-2 whitespace-nowrap"
+                >
+                  {expenseMonth}
+                  <ChevronDown size={16} />
+                </button>
+                {expenseOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border-1 border-[#EFF4FA] rounded-lg z-10">
+                    {months.map((month) => (
+                      <button
+                        key={month}
+                        onClick={() => {
+                          setExpenseMonth(month);
+                          setExpenseOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
+                      >
+                        {month}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button className="px-4 py-2 rounded-lg border-1 border-[#635BFF] text-indigo-600 text-sm font-medium hover:bg-indigo-50 whitespace-nowrap">
+                Export Data
+              </button>
+            </div>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis dataKey="name" stroke="#9ca3af" />
+                <CartesianGrid
+                  stroke="#F6F7F9"
+                  vertical={false}
+                />
+                <XAxis dataKey="name" stroke="#9ca3af"/>
                 <YAxis stroke="#9ca3af" />
                 <Tooltip
                   contentStyle={{
@@ -405,13 +504,34 @@ export default function Dashboard() {
                     borderRadius: "0.5rem",
                   }}
                 />
-                <Legend />
-                <Bar dataKey="Budget" fill="#6366f1" radius={[8, 8, 0, 0]} />
-                <Bar dataKey="Expense" fill="#ec4899" radius={[8, 8, 0, 0]} />
+                <Bar
+                  dataKey="Budget"
+                  fill="#635BFF"
+                  radius={[9, 9, 0, 0]}
+                  barSize={10}
+                  isAnimationActive={false}
+                />
+                <Bar
+                  dataKey="Expense"
+                  fill="#FF6692"
+                  radius={[8, 8, 0, 0]}
+                  barSize={10}
+                  isAnimationActive={false}
+                />
+
+                <Legend
+                  layout="horizontal"
+                  verticalAlign="bottom"
+                  align="left"
+                  wrapperStyle={{ paddingTop: "1rem", borderRadius:'50%' }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
+
+
+        
       </div>
     </div>
   );
