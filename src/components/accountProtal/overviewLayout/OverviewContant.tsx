@@ -178,7 +178,7 @@ export default function OverviewContant() {
                                     </div>
                                 )}
                             </div>
-                            <button className="px-4 py-2 rounded-lg border-1 border-[#635BFF] text-indigo-600 text-sm font-medium hover:bg-indigo-50 whitespace-nowrap">
+                            <button className="px-4 py-2 rounded-lg border border-[#635BFF] text-indigo-600 text-sm font-medium hover:bg-indigo-50 whitespace-nowrap">
                                 Export Data
                             </button>
                         </div>
