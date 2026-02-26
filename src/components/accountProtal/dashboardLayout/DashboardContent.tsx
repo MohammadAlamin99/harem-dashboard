@@ -338,7 +338,6 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
         </div>
-
         {/* Expense vs Budget */}
         <div className="bg-white rounded-lg p-6 border border-gray-200">
           <div className="flex items-center justify-between mb-6">
