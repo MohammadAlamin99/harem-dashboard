@@ -141,7 +141,7 @@ export default function Dashboard() {
     <div className="min-h-screen p-1 ">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="h-[54px] px-4 flex items-center text-left text-sm md:text-[16px] font-bold text-gray-900 rounded-xl bg-[#FFFFFF]">
+        <h1 className="h-[54px] px-4 flex items-center font-manrope text-left text-sm md:text-[16px] font-bold text-gray-900 rounded-xl bg-[#FFFFFF]">
           Dashboard
         </h1>
       </div>
@@ -244,17 +244,17 @@ export default function Dashboard() {
             </div>
 
             {/* Filter Buttons */}
-            <div className="flex gap-[10px] mb-6 flex-wrap font-manrope">
-              <button className="px-3 py-1 rounded-md text-[12px] border-1 border-[#635BFF] text-[#635BFF] font-medium">
+            <div className="flex gap-2.5 mb-6 flex-wrap font-manrope">
+              <button className="px-3 py-1 rounded-md text-[12px] border border-[#635BFF] text-[#635BFF] font-medium">
                 All
               </button>
-              <button className="px-3 py-1 rounded-md text-[12px] text-[#0A2540] border-1 border-[#EFF4FA] font-medium hover:bg-gray-100">
+              <button className="px-3 py-1 rounded-md text-[12px] text-[#0A2540] border border-[#EFF4FA] font-medium hover:bg-gray-100">
                 High
               </button>
-              <button className="px-3 py-1 rounded-md text-[12px] text-[#0A2540] border-1 border-[#EFF4FA] font-medium hover:bg-gray-100">
+              <button className="px-3 py-1 rounded-md text-[12px] text-[#0A2540] border border-[#EFF4FA] font-medium hover:bg-gray-100">
                 Medium
               </button>
-              <button className="px-3 py-1 rounded-md text-[12px] text-[#0A2540] border-1 border-[#EFF4FA] font-medium hover:bg-gray-100">
+              <button className="px-3 py-1 rounded-md text-[12px] text-[#0A2540] border border-[#EFF4FA] font-medium hover:bg-gray-100">
                 Low
               </button>
             </div>
@@ -468,7 +468,7 @@ export default function Dashboard() {
                   <ChevronDown size={16} />
                 </button>
                 {expenseOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border-1 border-[#EFF4FA] rounded-lg z-10">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-[#EFF4FA] rounded-lg z-10">
                     {months.map((month) => (
                       <button
                         key={month}
@@ -484,7 +484,7 @@ export default function Dashboard() {
                   </div>
                 )}
               </div>
-              <button className="px-4 py-2 rounded-lg border-1 border-[#635BFF] text-indigo-600 text-sm font-medium hover:bg-indigo-50 whitespace-nowrap">
+              <button className="px-4 py-2 rounded-lg border border-[#635BFF] text-indigo-600 text-sm font-medium hover:bg-indigo-50 whitespace-nowrap">
                 Export Data
               </button>
             </div>
