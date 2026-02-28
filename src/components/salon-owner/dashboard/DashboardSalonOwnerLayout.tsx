@@ -1,0 +1,58 @@
+import Card from "@/components/accountProtal/Card";
+import CommonHeadSalonOwner from "./CommonHeadSalonOwner";
+import IBudget from "@/app/account-protal/svg/IBudget";
+import IDeadline from "@/app/account-protal/svg/IDeadline";
+import ITex from "@/app/account-protal/svg/ITex";
+import ISales from "@/app/account-protal/svg/ISales";
+import IUser from "@/app/account-protal/svg/IUser";
+
+export default function DashboardSalonOwnerLayout() {
+  const stats = [
+    {
+      icon: <ITex />,
+      title: "Monthly Processed Sales",
+      value: "€ 23,850",
+      lines: ["+12.5% from last month"],
+      iconBg: "bg-[#635BFF]",
+      gradientFrom: "rgba(99, 91, 255, 0.12)",
+      gradientTo: "rgba(99, 91, 255, 0.03)",
+    },
+    {
+      icon: <IDeadline />,
+      title: "Appointments",
+      value: 23,
+      lines: ["+18.5% from last month"],
+      iconBg: "bg-[#F8C20A]",
+      gradientFrom: "#FEFDF7",
+      gradientTo: "#FEF7DF",
+    },
+    {
+      icon: <IUser />,
+      title: "Clients",
+      value: 44,
+      lines: ["+10% from last month"],
+      iconBg: "bg-[#16CDC7]",
+      gradientFrom: "#FAFAFF",
+      gradientTo: "#E1F9F8",
+    },
+    {
+      icon: <IBudget />,
+      title: "Team Members",
+      value: 10,
+      lines: [""],
+      iconBg: "bg-[#36C76C]",
+      gradientFrom: "#FAFAFF",
+      gradientTo: "#E1F9F8",
+    },
+  ];
+  return (
+    <>
+      <CommonHeadSalonOwner />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6 w-full">
+        {stats.map((stat, index) => (
+          <Card key={index} {...stat} />
+        ))}
+      </div>
+    </>
+  );
+}

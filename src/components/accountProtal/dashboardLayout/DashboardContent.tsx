@@ -1,4 +1,3 @@
-
 import ISales from "@/app/account-protal/svg/ISales";
 import ITex from "@/app/account-protal/svg/ITex";
 import IBudget from "@/app/account-protal/svg/IBudget";
@@ -338,7 +337,6 @@ export default function Dashboard() {
                   </p>
                 </div>
                 <div className="flex items-center text-center gap-2">
-
                   <div className="flex gap-4 lg:gap-8">
                     {/* Pending Salaries and Pending Taxes */}
                     <div className="flex flex-col text-center">
@@ -373,7 +371,6 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
-
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8">
@@ -420,11 +417,7 @@ export default function Dashboard() {
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={lineData}>
-                <CartesianGrid
-                  stroke="#F6F7F9"
-                  height={1}
-                  vertical={false}
-                />
+                <CartesianGrid stroke="#F6F7F9" height={1} vertical={false} />
                 <XAxis dataKey="name" stroke="#9ca3af" />
                 <YAxis stroke="#9ca3af" />
                 <Tooltip
@@ -492,10 +485,7 @@ export default function Dashboard() {
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
-                <CartesianGrid
-                  stroke="#F6F7F9"
-                  vertical={false}
-                />
+                <CartesianGrid stroke="#F6F7F9" vertical={false} />
                 <XAxis dataKey="name" stroke="#9ca3af" />
                 <YAxis stroke="#9ca3af" />
                 <Tooltip
@@ -524,15 +514,12 @@ export default function Dashboard() {
                   layout="horizontal"
                   verticalAlign="bottom"
                   align="left"
-                  wrapperStyle={{ paddingTop: "1rem", borderRadius: '50%' }}
+                  wrapperStyle={{ paddingTop: "1rem", borderRadius: "50%" }}
                 />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
-
-
-
       </div>
     </div>
   );
