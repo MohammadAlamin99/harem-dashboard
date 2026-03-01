@@ -297,7 +297,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       )}
 
       <aside
-        className={`fixed z-50 lg:static top-0 left-0 h-full w-75 bg-white transform transition-transform duration-300
+        className={`fixed z-50 lg:static top-0 left-0 h-full w-75 max-[1400px]:w-[200px] max-[992px]:w-[50%] max-[768px]:w-[80%] bg-white transform transition-transform duration-300
         ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
       >
         {/* HEADER  */}

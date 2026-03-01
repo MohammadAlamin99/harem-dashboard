@@ -3,8 +3,11 @@ import CommonHeadSalonOwner from "./CommonHeadSalonOwner";
 import IBudget from "@/app/account-protal/svg/IBudget";
 import IDeadline from "@/app/account-protal/svg/IDeadline";
 import ITex from "@/app/account-protal/svg/ITex";
-import ISales from "@/app/account-protal/svg/ISales";
 import IUser from "@/app/account-protal/svg/IUser";
+import SalonSummery from "./SalonSummery";
+import ClientGraph from "./ClientGraph";
+import TrandGraph from "./TrandGraph";
+import OnlinePaymentCard from "./OnlinePaymentGraph";
 
 export default function DashboardSalonOwnerLayout() {
   const stats = [
@@ -52,6 +55,18 @@ export default function DashboardSalonOwnerLayout() {
         {stats.map((stat, index) => (
           <Card key={index} {...stat} />
         ))}
+      </div>
+      <div className="mt-6 grid grid-cols-2 max-[992px]:grid-cols-1 gap-6">
+        <SalonSummery />
+        <ClientGraph />
+      </div>
+      <div className="mt-6 grid grid-cols-2 max-[992px]:grid-cols-1 gap-6">
+        <TrandGraph />
+        <OnlinePaymentCard
+          toConfirm={4}
+          overdue={4}
+          lastCheckDate="25 February"
+        />
       </div>
     </>
   );
