@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { ChevronDown, Pencil } from "lucide-react";
+import Image from "next/image";
 
 type Appointment = {
   id: string;
+  photo?: string;
   name: string;
   phone: string;
   time: string;
@@ -73,7 +75,7 @@ export default function AgendaAppointments({ appointments }: Props) {
       </div>
 
       {/* Table Header */}
-      <div className="grid grid-cols-3 bg-gray-200 rounded-t-xl px-6 py-3 text-gray-600 text-sm font-medium">
+      <div className="grid grid-cols-3 bg-[#F3F3FF] rounded-t-xl px-6 py-3 text-[#29343D] text-sm font-medium font-manrope">
         <span>Client</span>
         <span>Time</span>
         <span>Status</span>
@@ -87,33 +89,44 @@ export default function AgendaAppointments({ appointments }: Props) {
           return (
             <div key={appointment.id} className="border-t border-gray-200">
               {/* Main Row */}
-              <div className="grid grid-cols-3 items-center px-6 py-5">
+              <div className="grid grid-cols-3 max-[575px]:grid-cols-1 max-[575px]:gap-3 items-center px-6 py-5">
                 {/* Client */}
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-xl bg-pink-200 flex items-center justify-center text-white font-bold">
-                    {appointment.name.charAt(0)}
+                    {/* {appointment.photo} */}
+                    <Image
+                      src={appointment.photo || ""}
+                      alt={appointment.name}
+                      width={48}
+                      height={48}
+                      objectFit="cover"
+                    />
                   </div>
 
                   <div>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-[#29343D] font-manrope text-sm">
                       {appointment.name}
                     </p>
-                    <p className="text-gray-400 text-sm">{appointment.phone}</p>
+                    <p className="text-[#999] text-[12px] font-manrope font-normal">
+                      {appointment.phone}
+                    </p>
                   </div>
                 </div>
 
                 {/* Time */}
-                <div className="text-gray-600 text-sm">{appointment.time}</div>
+                <div className="text-[#526B7A] font-manrope font-normal text-[12px]">
+                  {appointment.time}
+                </div>
 
                 {/* Status + Actions */}
                 <div className="flex items-center justify-between">
-                  <span className="px-4 py-1 rounded-full bg-indigo-100 text-indigo-600 text-sm">
+                  <span className="px-2.5 py-1 rounded-full bg-[#DDDBFF] text-[#635BFF] text-sm font-manrope font-medium">
                     {appointment.status}
                   </span>
 
                   <div className="flex items-center gap-3">
-                    <button className="bg-gray-200 p-2 rounded-lg">
-                      <Pencil size={16} className="text-gray-600" />
+                    <button className="bg-[#EFF4FA] px-4 py-2.5 rounded-[8px] cursor-pointer">
+                      <Pencil size={16} color="#46CAEB" />
                     </button>
 
                     <button
@@ -121,8 +134,9 @@ export default function AgendaAppointments({ appointments }: Props) {
                       className="text-indigo-500"
                     >
                       <ChevronDown
-                        size={20}
-                        className={`transition-transform ${
+                        color="#635BFF"
+                        size={24}
+                        className={`cursor-pointer transition-transform ${
                           isOpen ? "rotate-180" : ""
                         }`}
                       />
@@ -134,38 +148,65 @@ export default function AgendaAppointments({ appointments }: Props) {
               {/* Expanded Section */}
               {isOpen && (
                 <div className="px-10 pb-8">
-                  <h3 className="text-center font-medium text-gray-700 mb-6">
+                  <h3 className="text-center text[#29343D] font-semibold font-manrope mb-4 text-sm">
                     Booking Order
                   </h3>
+                  <div className="relative flex justify-between items-start">
+                    {/* Connector Line */}
+                    <div className="absolute top-5 left-6 right-6 h-[2px] bg-[#B9C3CC]" />
+                    {[1, 2, 3].map((step) => {
+                      const isActive = step === 1;
+                      return (
+                        <div
+                          key={step}
+                          className="relative z-10 flex flex-col items-center w-1/3"
+                        >
+                          {/* Circle */}
+                          <div
+                            className={`
+                              w-10 h-10 rounded-full flex items-center justify-center text-sm font-manrope font-medium
+                              ${
+                                isActive
+                                  ? "bg-[#FFF9E5] text-[#FFD648]"
+                                  : "bg-gray-500 text-white"
+                              }
+                            `}
+                          >
+                            {step}
+                          </div>
 
-                  <div className="flex justify-between items-center relative mb-6">
-                    {/* Line */}
-                    <div className="absolute top-4 left-0 right-0 h-[2px] bg-gray-300" />
+                          {/* Status Badge */}
+                          <span
+                            className={`
+                              mt-3 text-xs px-2 py-1 rounded-[8px] font-medium font-manrope
+                              ${
+                                isActive
+                                  ? "bg-[#FFF9E5] text-[#FFD648]"
+                                  : "bg-[#EFF4FA] text-[#0A2540]"
+                              }
+                            `}
+                          >
+                            {isActive ? "Overdue" : "To Do"}
+                          </span>
 
-                    {[1, 2, 3].map((step) => (
-                      <div
-                        key={step}
-                        className="relative flex flex-col items-center"
-                      >
-                        <div className="w-8 h-8 rounded-full bg-gray-400 text-white flex items-center justify-center text-sm z-10">
-                          {step}
+                          {/* Details */}
+                          <div className="mt-3 text-center">
+                            <p className="text-xs text-[#999] font-manrope">
+                              12:00-12:05
+                            </p>
+                            <p className="text-sm font-manrope text-[#29343D] font-semibold my-0.5">
+                              Shampoo
+                            </p>
+                            <p className="text-xs text-[#999] font-manrope font-normal">
+                              Angelica
+                            </p>
+                          </div>
                         </div>
-
-                        <span className="mt-2 text-xs bg-gray-200 px-3 py-1 rounded-full text-gray-600">
-                          To Do
-                        </span>
-
-                        <div className="mt-3 text-center text-sm">
-                          <p className="text-gray-500">12:00-12:05</p>
-                          <p className="font-medium text-gray-800">Shampoo</p>
-                          <p className="text-gray-400">Angelica</p>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
-
                   <div className="flex justify-center">
-                    <button className="px-6 py-3 bg-indigo-200 text-indigo-600 rounded-xl hover:bg-indigo-300 transition">
+                    <button className="px-4 py-2.5 bg-[#DDDBFF] text-[#635BFF] rounded-[8px] font-manrope hover:bg-[#D3D0FF] transition mt-4 cursor-pointer">
                       Print Receipt
                     </button>
                   </div>

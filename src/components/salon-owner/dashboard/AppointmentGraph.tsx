@@ -43,7 +43,7 @@ export default function AppointmentGraph({ data }: Props) {
       />
 
       {/* Chart */}
-      <div className="w-full h-[350px]">
+      <div className="w-full h-[400px] mt-4">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} barCategoryGap="30%">
             <CartesianGrid

@@ -95,6 +95,7 @@ export default function DashboardSalonOwnerLayout() {
           appointments={[
             {
               id: "1",
+              photo: "/images/avator.png",
               name: "Maria Rodriguez",
               phone: "+39 345 678 9123",
               time: "12:00 AM - 12:15 AM",
@@ -102,6 +103,7 @@ export default function DashboardSalonOwnerLayout() {
             },
             {
               id: "2",
+              photo: "/images/avator.png",
               name: "Maria Rodriguez",
               phone: "+39 345 678 9123",
               time: "12:00 AM - 12:15 AM",
