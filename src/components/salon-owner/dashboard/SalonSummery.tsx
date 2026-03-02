@@ -21,7 +21,7 @@ export default function SalonSummery() {
   return (
     <>
       <div className="p-6 bg-white rounded-[12px]">
-        <div className="flex justify-between items-center max-[992px]:flex-col items-start">
+        <div className="flex justify-between items-center max-[992px]:flex-col max-[992px] max-[992px]:items-start">
           <h2 className="text-[16px] text-[#29343D] font-manrope font-semibold">
             Daily Summary
           </h2>
@@ -36,7 +36,7 @@ export default function SalonSummery() {
           </div>
         </div>
         {/* summer box */}
-        <div className="mt-6 grid grid-cols-1 max-[1220px]:grid-cols-2 max-[992px]:grid-cols-1 gap-4">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {summaryData.map((item) => (
             <SummeyBox
               key={item.id}
@@ -46,7 +46,6 @@ export default function SalonSummery() {
             />
           ))}
         </div>
-
         {/* recept summary */}
         <div className="bg-[#635BFF] p-6 mt-5 rounded-xl">
           <ReceptSummer />

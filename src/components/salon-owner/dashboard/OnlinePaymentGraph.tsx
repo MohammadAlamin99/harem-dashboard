@@ -18,12 +18,12 @@ export default function OnlinePaymentGraph({
     {
       name: "To Confirm",
       value: toConfirm,
-      color: "#5B5FEF",
+      color: "#635BFF",
     },
     {
       name: "Overdue",
       value: overdue,
-      color: "#F35D7F",
+      color: "#FF6692",
     },
   ];
 
@@ -40,7 +40,7 @@ export default function OnlinePaymentGraph({
           </p>
         </div>
 
-        <button className="px-4 py-2 rounded-xl border border-indigo-500 text-indigo-600 text-sm font-medium font-manrope cursor-pointer">
+        <button className="px-4 py-2 rounded-xl border border-[#635BFF] text-[#635BFF] text-sm font-medium font-manrope cursor-pointer">
           View Payments
         </button>
       </div>
@@ -54,7 +54,7 @@ export default function OnlinePaymentGraph({
               dataKey="value"
               startAngle={180}
               endAngle={0}
-              innerRadius="80%"
+              innerRadius="90%"
               outerRadius="100%"
               paddingAngle={6}
               cornerRadius={25}

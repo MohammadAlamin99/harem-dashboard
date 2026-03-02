@@ -37,6 +37,8 @@ export default function TrandGraph() {
         open={open}
         setOpen={setOpen}
         options={options}
+        title="Revenue Trend"
+        subtitle="Last 12 Months"
       />
 
       {/* Chart */}

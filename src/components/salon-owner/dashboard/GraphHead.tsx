@@ -6,21 +6,25 @@ export default function GraphHead({
   setOpen,
   open,
   options,
+  title,
+  subtitle,
 }: {
   selected: string;
   setSelected: (value: string) => void;
   setOpen: (value: boolean) => void;
   open: boolean;
   options: string[];
+  title: string;
+  subtitle: string;
 }) {
   return (
-    <div>
+    <>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
         <div>
           <h2 className="text-xl font-semibold text-[#1E293B] font-manrope">
-            Revenue Trend
+            {title}
           </h2>
-          <p className="text-sm text-[#94A3B8] font-manrope">Last 12 Months</p>
+          <p className="text-sm text-[#94A3B8] font-manrope">{subtitle}</p>
         </div>
 
         <div className="flex gap-3">
@@ -58,6 +62,6 @@ export default function GraphHead({
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
