@@ -1,4 +1,6 @@
 import { ChevronDown } from "lucide-react";
+import { useState } from "react";
+import ExportModal from "./ExportModal";
 
 export default function GraphHead({
   selected,
@@ -17,6 +19,10 @@ export default function GraphHead({
   title: string;
   subtitle: string;
 }) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const onExportClick = () => {
+    setModalOpen(true);
+  };
   return (
     <>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
@@ -57,11 +63,17 @@ export default function GraphHead({
           </div>
 
           {/* Export */}
-          <button className="px-4 py-2 rounded-xl border border-indigo-500 text-indigo-600 text-sm font-medium font-manrope cursor-pointer">
+          <button
+            className="px-4 py-2 rounded-xl border border-[#635BFF] text-[#635BFF] text-sm font-medium font-manrope cursor-pointer"
+            onClick={onExportClick}
+          >
             Export Data
           </button>
         </div>
       </div>
+      {modalOpen && (
+        <ExportModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      )}
     </>
   );
 }

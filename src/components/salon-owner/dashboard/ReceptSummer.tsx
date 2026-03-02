@@ -1,11 +1,17 @@
 import { Logs, Play, Plus } from "lucide-react";
+import { useState } from "react";
+import NewReceiptModal from "./NewReceiptModal";
 
 export default function ReceptSummer() {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <>
       <div className="grid grid-cols-3 max-[1220px]:grid-cols-2 max-[992px]:grid-cols-3 max-[600px]:grid-cols-1 gap-4">
         {/* count 1 */}
-        <div className="py-[22px] px-[16px] bg-white rounded-[12px]">
+        <div
+          className="py-[22px] px-[16px] bg-white rounded-[12px] cursor-pointer"
+          onClick={() => setOpenModal(true)}
+        >
           <div className="bg-[#635BFF] w-fit p-2 rounded-full">
             <Plus color="white" />
           </div>
@@ -38,6 +44,13 @@ export default function ReceptSummer() {
           </h4>
         </div>
       </div>
+
+      {openModal && (
+        <NewReceiptModal
+          isOpen={openModal}
+          onClose={() => setOpenModal(false)}
+        />
+      )}
     </>
   );
 }
