@@ -3,6 +3,7 @@ import { useState } from "react";
 import { salonOwnerNavigation } from "@/config/navigation/salon-owner";
 import Sidebar from "@/components/accountProtal/Sidebar";
 import Topbar from "@/components/accountProtal/Topbar";
+import AppoinmentContent from "./AppoinmentContent";
 
 export const AppointmentLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -22,7 +23,7 @@ export const AppointmentLayout = () => {
         <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
         <main className="flex-1 overflow-y-auto p-6 bg-[#F4F7FB] mr-4 rounded-[20px]">
-          <h1>salon appointment</h1>
+          <AppoinmentContent />
         </main>
       </div>
     </div>

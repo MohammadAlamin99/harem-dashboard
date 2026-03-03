@@ -153,7 +153,7 @@ export default function AgendaAppointments({ appointments }: Props) {
                   </h3>
                   <div className="relative flex justify-between items-start">
                     {/* Connector Line */}
-                    <div className="absolute top-5 left-6 right-6 h-[2px] bg-[#B9C3CC]" />
+                    <div className="absolute top-5 left-[calc(16.67%)] right-[calc(16.67%)] h-[2px] bg-[#B9C3CC]" />
                     {[1, 2, 3].map((step) => {
                       const isActive = step === 1;
                       return (
