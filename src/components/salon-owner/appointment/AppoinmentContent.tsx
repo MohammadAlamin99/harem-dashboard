@@ -1,91 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronLeft, House } from "lucide-react";
+import { ChevronLeft, House } from "lucide-react";
+import ReusableCheckbox from "./ReusableCheckbox";
+import SectionCard from "./SectionCard";
+import Select from "./Select";
 
-// ── Reusable Select ──────────────────────────────────────────────
-function Select({
-  value,
-  placeholder,
-  disabled,
-}: {
-  value?: string;
-  placeholder?: string;
-  disabled?: boolean;
-}) {
-  return (
-    <div
-      className={`flex items-center justify-between border border-[#E2E8F0] rounded-[8px] px-3 py-2.5 bg-white text-sm font-manrope cursor-pointer ${
-        disabled ? "bg-[#F4F6FA] text-[#B9C3CC]" : "text-[#29343D]"
-      }`}
-    >
-      <span className={value ? "text-[#29343D]" : "text-[#B9C3CC]"}>
-        {value || placeholder}
-      </span>
-      <ChevronDown size={16} className="text-[#B9C3CC]" />
-    </div>
-  );
-}
-
-// ── Reusable Checkbox ────────────────────────────────────────────
-function Checkbox({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: () => void;
-}) {
-  return (
-    <label className="flex items-center gap-2.5 cursor-pointer select-none">
-      <div
-        onClick={onChange}
-        className={`w-4 h-4 rounded-[4px] flex items-center justify-center border transition-colors ${
-          checked
-            ? "bg-[#635BFF] border-[#635BFF]"
-            : "bg-white border-[#B9C3CC]"
-        }`}
-      >
-        {checked && (
-          <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-            <path
-              d="M1 4l2.5 2.5L9 1"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        )}
-      </div>
-      <span className="text-sm font-manrope text-[#29343D]">{label}</span>
-    </label>
-  );
-}
-
-// ── Section Card ─────────────────────────────────────────────────
-function SectionCard({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="bg-white rounded-[12px] p-6 border border-[#EFF4FA]">
-      <h3 className="text-[14px] font-semibold font-manrope text-[#29343D] mb-5">
-        {title}
-      </h3>
-      {children}
-    </div>
-  );
-}
-
-// ── Tabs ─────────────────────────────────────────────────────────
+// tabs
 const TABS = ["General Settings", "Notifications & Communication", "Employees"];
 
-// ── Main Component ───────────────────────────────────────────────
 export default function AppoinmentContent() {
   const [activeTab, setActiveTab] = useState(0);
   const [displaySecondary, setDisplaySecondary] = useState(false);
@@ -170,7 +93,7 @@ export default function AppoinmentContent() {
         {/* Time Zone */}
         <SectionCard title="Time Zone">
           <div className="mb-4">
-            <Checkbox
+            <ReusableCheckbox
               label="Display secondary time zone"
               checked={displaySecondary}
               onChange={() => setDisplaySecondary((p) => !p)}
@@ -190,7 +113,7 @@ export default function AppoinmentContent() {
               <Select placeholder="None" disabled />
             </div>
           </div>
-          <Checkbox
+          <ReusableCheckbox
             label="Request to update primary time zone based on current location"
             checked={requestLocation}
             onChange={() => setRequestLocation((p) => !p)}
@@ -210,17 +133,17 @@ export default function AppoinmentContent() {
         {/* Events — Display Options */}
         <SectionCard title="Events">
           <div className="space-y-3 mb-5">
-            <Checkbox
+            <ReusableCheckbox
               label="Show weekends"
               checked={showWeekends}
               onChange={() => setShowWeekends((p) => !p)}
             />
-            <Checkbox
+            <ReusableCheckbox
               label="Show cancelled events"
               checked={showCancelled}
               onChange={() => setShowCancelled((p) => !p)}
             />
-            <Checkbox
+            <ReusableCheckbox
               label="Show completed events"
               checked={showCompleted}
               onChange={() => setShowCompleted((p) => !p)}
