@@ -8,8 +8,10 @@ export const salonOwnerNavigation = [
   {
     label: "Dashboard",
     href: "/salon-owner/dashboard",
+    matchUrls: ["/salon-owner/dashboard", "/salon-owner/dashboard/checkout"],
     icon: IDashboard,
   },
+
   // {
   //   label: "Salaries",
   //   icon: ISales,

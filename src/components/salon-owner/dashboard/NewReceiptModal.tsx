@@ -1,5 +1,9 @@
+"use client";
+
 import { X, Search, ChevronRight, Plus } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+
 export default function NewReceiptModal({
   isOpen,
   onClose,
@@ -26,28 +30,31 @@ export default function NewReceiptModal({
               Select an appointment or create an independent receipt
             </p>
           </div>
+
           <button onClick={onClose} className="cursor-pointer">
             <X size={18} color="#29343D" />
           </button>
         </div>
 
         {/* Independent Receipt */}
-        <div className="bg-[#F1F2FE] rounded-xl p-6 flex items-center justify-between mb-6 cursor-pointe">
-          <div className="flex items-center gap-4">
-            <div className="bg-[#DDDBFF] p-3 rounded-lg">
-              <Plus color="#635BFF" />
+        <Link href="/salon-owner/dashboard/checkout">
+          <div className="bg-[#F1F2FE] rounded-xl p-6 flex items-center justify-between mb-6 cursor-pointer hover:bg-[#e8e9fd] transition-colors">
+            <div className="flex items-center gap-4">
+              <div className="bg-[#DDDBFF] p-3 rounded-lg">
+                <Plus color="#635BFF" />
+              </div>
+              <div>
+                <h4 className="text-sm text-[#29343D] font-semibold font-manrope mb-1">
+                  Create Independent Receipt
+                </h4>
+                <p className="text-sm text-[#98A4AE] font-manrope font-normal">
+                  Not linked to any appointment
+                </p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-sm text-[#29343D] font-semibold font-manrope mb-1">
-                Create Independent Receipt
-              </h4>
-              <p className="text-sm text-[#98A4AE] font-manrope font-normal">
-                Not linked to any appointment
-              </p>
-            </div>
+            <ChevronRight size={24} color="#635BFF" />
           </div>
-          <ChevronRight size={24} color="#635BFF" />
-        </div>
+        </Link>
 
         {/* Search */}
         <p className="text-[15px] text-[#29343D] font-manrope font-semibold mb-4">
@@ -66,11 +73,11 @@ export default function NewReceiptModal({
           />
         </div>
 
-        {/* Appointment List (Example Static Data) */}
+        {/* Appointment List */}
         {[1, 2, 3, 4].map((item) => (
           <div
             key={item}
-            className="flex items-center justify-between p-4 border shadow-sm border-[#E0E6EB] rounded-xl mb-3 cursor-pointer"
+            className="flex items-center justify-between p-4 border shadow-sm border-[#E0E6EB] rounded-xl mb-3 cursor-pointer hover:bg-[#F8F9FA] transition-colors"
           >
             <div className="flex items-center gap-4">
               <Image
@@ -81,7 +88,7 @@ export default function NewReceiptModal({
                 className="rounded-[12px]"
               />
               <div>
-                <h4 className="font-semibold text-[#29343D] font-manrope ">
+                <h4 className="font-semibold text-[#29343D] font-manrope">
                   Maria Rodriguez • 11:00
                 </h4>
                 <p className="text-sm text-[#999] font-manrope font-normal">
