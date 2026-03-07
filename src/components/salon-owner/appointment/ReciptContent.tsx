@@ -282,7 +282,7 @@ const filterMethods = [
 ];
 
 // ── Main Component ───────────────────────────────────────────────
-export default function AppointmentDashboard() {
+export default function ReceiptContent() {
   const [activeMethod, setActiveMethod] = useState("All");
   const [search, setSearch] = useState("");
   const [itemsPerPage] = useState(5);
