@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import {
   Plus,
@@ -10,16 +10,14 @@ import {
   ChevronFirst,
   ChevronLast,
   EllipsisVertical,
-  Eye,
-  Pencil,
-  Trash2,
   Search,
   ChevronUp,
-  Clock,
-  User,
-  Scissors,
 } from "lucide-react";
 import IAppoinUser from "./IAppoinUser";
+import SearchMemberModal from "./SearchMemberModal";
+import RowActions from "./RowActions";
+import { Appointment } from "@/@types/salon-owner/Appointment.type";
+import { BookingStep } from "@/@types/salon-owner/bookingStep.type";
 
 // ── Types ────────────────────────────────────────────────────────
 type Status =
@@ -29,16 +27,6 @@ type Status =
   | "Started"
   | "Completed"
   | "Canceled";
-
-interface Appointment {
-  id: string;
-  clientName: string;
-  clientPhone: string;
-  service: string;
-  scheduledDate: string;
-  price: string;
-  status: Status;
-}
 
 // ── Static Data ──────────────────────────────────────────────────
 const allAppointments: Appointment[] = [
@@ -154,66 +142,10 @@ function StatusBadge({ status }: { status: Status }) {
   );
 }
 
-// ── Row Actions Dropdown ─────────────────────────────────────────
-function RowActions() {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node))
-        setOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setOpen((p) => !p)}
-        className="p-1.5 hover:bg-[#F4F6FA] rounded-lg transition-colors cursor-pointer"
-      >
-        <EllipsisVertical size={16} className="text-[#526B7A]" />
-      </button>
-      {open && (
-        <div className="absolute right-0 top-9 z-50 bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#F0F2F5] py-1.5 w-44">
-          <button
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F8F9FA] transition-colors cursor-pointer"
-          >
-            <Eye size={15} className="text-[#635BFF] flex-shrink-0" />
-            View Details
-          </button>
-          <button
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F8F9FA] transition-colors cursor-pointer"
-          >
-            <Pencil size={15} className="text-[#526B7A] flex-shrink-0" />
-            Edit
-          </button>
-          <button
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#FFF5F7] transition-colors cursor-pointer"
-          >
-            <Trash2 size={15} className="text-[#FF6692] flex-shrink-0" />
-            Delete
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ── Booking Order Stepper ────────────────────────────────────────
 type StepState = "done" | "active" | "todo" | "canceled";
 
-interface BookingStep {
-  time: string;
-  service: string;
-  staff: string;
-  state: StepState;
-}
+
 
 function getSteps(status: Status): BookingStep[] {
   const base = [
@@ -375,8 +307,6 @@ function ExpandedRowDetail({ row }: { row: Appointment }) {
     </tr>
   );
 }
-
-// ── Search Member Modal ──────────────────────────────────────────
 const recentMembers = [
   {
     name: "Maria Rodriguez",
@@ -400,104 +330,6 @@ const recentMembers = [
   },
 ];
 
-function SearchMemberModal({ onClose }: { onClose: () => void }) {
-  const [query, setQuery] = useState("");
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [onClose]);
-
-  const filtered = recentMembers.filter(
-    (m) =>
-      !query ||
-      m.name.toLowerCase().includes(query.toLowerCase()) ||
-      m.phone.includes(query),
-  );
-
-  return (
-    <div
-      ref={overlayRef}
-      onClick={(e) => {
-        if (e.target === overlayRef.current) onClose();
-      }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4"
-    >
-      <div className="bg-white rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] w-full max-w-md overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-5 pb-4">
-          <h2 className="text-base font-bold font-manrope text-[#29343D]">
-            Search a Member
-          </h2>
-          <button
-            onClick={onClose}
-            className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-[#F4F6FA] transition-colors cursor-pointer text-[#98A4AE] hover:text-[#29343D] text-lg leading-none"
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Search input */}
-        <div className="px-6 pb-4">
-          <div className="flex items-center gap-2 border border-[#E0E6EB] rounded-[10px] px-3 py-2.5 focus-within:border-[#635BFF] transition-colors">
-            <Search size={16} className="text-[#98A4AE] flex-shrink-0" />
-            <input
-              ref={inputRef}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search"
-              className="flex-1 text-sm font-manrope text-[#29343D] placeholder:text-[#C4CDD5] outline-none bg-transparent"
-            />
-          </div>
-        </div>
-
-        {/* Recent / Results */}
-        <div className="px-6 pb-5">
-          <p className="text-xs font-semibold font-manrope text-[#98A4AE] mb-3">
-            {query ? "Results" : "Recent research"}
-          </p>
-          <div className="space-y-1">
-            {filtered.map((m, i) => (
-              <button
-                key={i}
-                onClick={onClose}
-                className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-[#F4F6FA] transition-colors cursor-pointer text-left"
-              >
-                <Image
-                  src={m.avatar}
-                  alt={m.name}
-                  width={38}
-                  height={38}
-                  className="rounded-xl object-cover flex-shrink-0"
-                />
-                <div>
-                  <p className="text-sm font-semibold font-manrope text-[#29343D]">
-                    {m.name}
-                  </p>
-                  <p className="text-xs font-manrope text-[#98A4AE]">
-                    {m.phone}
-                  </p>
-                </div>
-              </button>
-            ))}
-            {filtered.length === 0 && (
-              <p className="text-sm font-manrope text-[#98A4AE] text-center py-4">
-                No members found
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ── Status Filters ───────────────────────────────────────────────
 const statusFilters: (Status | "All")[] = [
   "All",
@@ -508,99 +340,6 @@ const statusFilters: (Status | "All")[] = [
   "Completed",
   "Canceled",
 ];
-
-// ── Mobile Card ──────────────────────────────────────────────────
-function MobileAppointmentCard({ row }: { row: Appointment }) {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <div className="border border-[#E0E6EB] rounded-xl bg-white overflow-hidden">
-      <div className="p-4 flex items-center gap-3">
-        {/* Avatar */}
-        <Image
-          src="/images/avator.png"
-          alt={row.clientName}
-          width={40}
-          height={40}
-          className="rounded-xl object-cover flex-shrink-0"
-        />
-
-        {/* Name + phone */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-xs font-bold font-manrope text-[#635BFF] flex-shrink-0">
-              {row.id}
-            </span>
-            <span className="text-sm font-semibold font-manrope text-[#29343D] truncate">
-              {row.clientName}
-            </span>
-          </div>
-          <p className="text-xs font-manrope text-[#98A4AE] mt-0.5">
-            {row.clientPhone}
-          </p>
-        </div>
-
-        {/* Status + actions — fixed right side */}
-        <div className="flex items-center gap-1.5 flex-shrink-0">
-          <StatusBadge status={row.status} />
-          <RowActions />
-          <button
-            onClick={() => setExpanded((p) => !p)}
-            className="p-1 hover:bg-[#F4F6FA] rounded-lg transition-colors cursor-pointer"
-          >
-            {expanded ? (
-              <ChevronUp size={16} className="text-[#635BFF]" />
-            ) : (
-              <ChevronDown size={16} className="text-[#635BFF]" />
-            )}
-          </button>
-        </div>
-      </div>
-      {expanded && (
-        <div className="border-t border-[#EFF4FA] bg-[#FAFBFF] px-4 py-4 grid grid-cols-2 gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#EEEEFF] flex items-center justify-center flex-shrink-0">
-              <Scissors size={13} className="text-[#635BFF]" />
-            </div>
-            <div>
-              <p className="text-[10px] text-[#98A4AE] font-manrope uppercase tracking-wide">
-                Service
-              </p>
-              <p className="text-sm font-semibold font-manrope text-[#29343D]">
-                {row.service}
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#EEEEFF] flex items-center justify-center flex-shrink-0">
-              <User size={13} className="text-[#635BFF]" />
-            </div>
-            <div>
-              <p className="text-[10px] text-[#98A4AE] font-manrope uppercase tracking-wide">
-                Price
-              </p>
-              <p className="text-sm font-bold font-manrope text-[#635BFF]">
-                {row.price}
-              </p>
-            </div>
-          </div>
-          <div className="col-span-2 flex items-start gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#EEEEFF] flex items-center justify-center flex-shrink-0 mt-0.5">
-              <Clock size={13} className="text-[#635BFF]" />
-            </div>
-            <div>
-              <p className="text-[10px] text-[#98A4AE] font-manrope uppercase tracking-wide">
-                Scheduled Date
-              </p>
-              <p className="text-sm font-manrope text-[#526B7A]">
-                {row.scheduledDate}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 // ── Main Component ───────────────────────────────────────────────
 export default function AppoinmentTableviewContent() {
@@ -629,7 +368,12 @@ export default function AppoinmentTableviewContent() {
 
   return (
     <div className="min-h-screen bg-[#F4F6FA] font-manrope space-y-4">
-      {searchOpen && <SearchMemberModal onClose={() => setSearchOpen(false)} />}
+      {searchOpen && (
+        <SearchMemberModal
+          recentMembers={recentMembers}
+          onClose={() => setSearchOpen(false)}
+        />
+      )}
 
       {/* ── Header Card ─────────────────────────────────────────── */}
       <div className="bg-white rounded-xl py-4 px-4 sm:px-6 border border-[#EFF4FA]">
@@ -737,7 +481,7 @@ export default function AppoinmentTableviewContent() {
         </div>
 
         {/* ── DESKTOP TABLE (md+) ─────────────────────────────── */}
-        <div className="hidden md:block border border-[#E0E6EB] rounded-[12px] overflow-visible">
+        <div className="border border-[#E0E6EB] rounded-[12px] overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-[#F3F3FF] border-b border-[#E0E6EB]">
@@ -843,13 +587,6 @@ export default function AppoinmentTableviewContent() {
               })}
             </tbody>
           </table>
-        </div>
-
-        {/* ── MOBILE CARDS (< md) ─────────────────────────────── */}
-        <div className="md:hidden space-y-3">
-          {paginated.map((row, i) => (
-            <MobileAppointmentCard key={i} row={row} />
-          ))}
         </div>
 
         {/* ── Pagination ──────────────────────────────────────── */}
