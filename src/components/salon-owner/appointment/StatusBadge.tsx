@@ -7,7 +7,6 @@ export default function StatusBadge({
   status: Status;
   statusStyles: Record<Status, string>;
 }) {
-  const hasBackground = ["Booked", "Arrived", "Canceled"].includes(status);
   return (
     <span
       className={`inline-block px-3 py-1 text-xs font-manrope font-semibold w-fit rounded-full ${statusStyles[status]}`}

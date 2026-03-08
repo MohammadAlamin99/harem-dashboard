@@ -16,19 +16,12 @@ import {
 import IAppoinUser from "./IAppoinUser";
 import SearchMemberModal from "./SearchMemberModal";
 import RowActions from "./RowActions";
-import { Appointment } from "@/@types/salon-owner/Appointment.type";
-import { BookingStep } from "@/@types/salon-owner/bookingStep.type";
+import { Appointment } from "@/@types/salon-owner/appointment.type";
+import StatusBadge from "./StatusBadge";
+import ExpandedRowDetail from "./ExpandedRowDetail";
+import { Status } from "@/@types/salon-owner/Statu.type";
 
-// ── Types ────────────────────────────────────────────────────────
-type Status =
-  | "Booked"
-  | "Confirmed"
-  | "Arrived"
-  | "Started"
-  | "Completed"
-  | "Canceled";
-
-// ── Static Data ──────────────────────────────────────────────────
+// static appointment
 const allAppointments: Appointment[] = [
   {
     id: "#001",
@@ -122,7 +115,7 @@ const allAppointments: Appointment[] = [
   },
 ];
 
-// ── Status Badge ─────────────────────────────────────────────────
+// status badge styles
 const statusStyles: Record<Status, string> = {
   Booked: "bg-[#DDDBFF] text-[#635BFF]",
   Confirmed: "bg-[#ECFDFD] text-[#16CDC7]",
@@ -132,181 +125,6 @@ const statusStyles: Record<Status, string> = {
   Canceled: "bg-[#FFE5ED] text-[#FF6692]",
 };
 
-function StatusBadge({ status }: { status: Status }) {
-  return (
-    <span
-      className={`inline-block text-xs font-manrope font-semibold w-fit px-3 py-1 rounded-[8px] ${statusStyles[status]}`}
-    >
-      {status}
-    </span>
-  );
-}
-
-// ── Booking Order Stepper ────────────────────────────────────────
-type StepState = "done" | "active" | "todo" | "canceled";
-
-
-
-function getSteps(status: Status): BookingStep[] {
-  const base = [
-    { time: "12:00-12:05", service: "Shampoo", staff: "Angelica" },
-    { time: "12:00-12:05", service: "Shampoo", staff: "Angelica" },
-    { time: "12:00-12:05", service: "Shampoo", staff: "Angelica" },
-  ];
-  switch (status) {
-    case "Booked":
-    case "Confirmed":
-      return base.map((s) => ({ ...s, state: "todo" as StepState }));
-    case "Arrived":
-      return [
-        { ...base[0], state: "active" as StepState },
-        { ...base[1], state: "todo" as StepState },
-        { ...base[2], state: "todo" as StepState },
-      ];
-    case "Started":
-      return [
-        { ...base[0], state: "done" as StepState },
-        { ...base[1], state: "active" as StepState },
-        { ...base[2], state: "todo" as StepState },
-      ];
-    case "Completed":
-      return base.map((s) => ({ ...s, state: "done" as StepState }));
-    case "Canceled":
-      return base.map((s) => ({ ...s, state: "canceled" as StepState }));
-    default:
-      return base.map((s) => ({ ...s, state: "todo" as StepState }));
-  }
-}
-
-function StepIcon({ state, index }: { state: StepState; index: number }) {
-  const base =
-    "w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold font-manrope z-10 relative";
-  if (state === "done")
-    return (
-      <div className={`${base} bg-[#4CD964] text-white`}>
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path
-            d="M4 10l4.5 4.5L16 6"
-            stroke="white"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-    );
-  if (state === "active")
-    return <div className={`${base} bg-[#635BFF] text-white`}>{index + 1}</div>;
-  if (state === "canceled")
-    return (
-      <div className={`${base} bg-[#FF6692] text-white`}>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M3 3l10 10M13 3L3 13"
-            stroke="white"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
-    );
-  return (
-    <div
-      className={`${base} bg-white border-2 border-[#D1D5DB] text-[#9CA3AF]`}
-    >
-      {index + 1}
-    </div>
-  );
-}
-
-function stepBadge(state: StepState): { label: string; className: string } {
-  if (state === "done")
-    return { label: "Completed", className: "bg-[#EBFAF0] text-[#36C76C]" };
-  if (state === "active")
-    return { label: "Doing", className: "bg-[#DDDBFF] text-[#635BFF]" };
-  if (state === "canceled")
-    return { label: "Cancelled", className: "bg-[#FFE5ED] text-[#FF6692]" };
-  return { label: "To Do", className: "bg-[#EFF4FA] text-[#0A2540]" };
-}
-
-function stepLineColor(state: StepState): string {
-  if (state === "done") return "bg-[#4CD964]";
-  if (state === "active") return "bg-[#635BFF]";
-  if (state === "canceled") return "bg-[#FF6692]";
-  return "bg-[#D1D5DB]";
-}
-
-// ── Inline Expanded Row Detail ───────────────────────────────────
-function ExpandedRowDetail({ row }: { row: Appointment }) {
-  const steps = getSteps(row.status);
-  const showReceipt = row.status === "Started" || row.status === "Completed";
-
-  return (
-    <tr className="bg-[#F9FAFB]">
-      <td colSpan={7} className="px-6 py-8 border-b border-[#E0E6EB]">
-        {/* Title */}
-        <p className="text-base font-bold font-manrope text-[#29343D] mb-4 text-center tracking-tight">
-          Booking Order
-        </p>
-
-        {/* Stepper — circles connected by full-width lines */}
-        <div className="max-w-[361px] mx-auto">
-          {/* Top row: line + circles */}
-          <div className="flex items-center justify-center px-4">
-            {steps.map((step, idx) => (
-              <React.Fragment key={idx}>
-                {/* Circle */}
-                <div className="flex-shrink-0">
-                  <StepIcon state={step.state} index={idx} />
-                </div>
-                {/* Full connector line between circles */}
-                {idx < steps.length - 1 && (
-                  <div
-                    className={`flex-1 h-[2px] ${stepLineColor(step.state)}`}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-
-          {/* Bottom row: labels under each circle */}
-          <div className="flex items-start justify-between mt-3">
-            {steps.map((step, idx) => {
-              const badge = stepBadge(step.state);
-              return (
-                <div key={idx} className="flex flex-col items-center">
-                  <span
-                    className={`px-2.5 py-0.5 rounded-[8px] text-[11px] font-semibold font-manrope whitespace-nowrap ${badge.className}`}
-                  >
-                    {badge.label}
-                  </span>
-                  <p className="mt-2 text-[11px] font-manrope text-[#9CA3AF] text-center">
-                    {step.time}
-                  </p>
-                  <p className="mt-0.5 text-[12px] font-bold font-manrope text-[#1A2332] text-center">
-                    {step.service}
-                  </p>
-                  <p className="mt-0.5 text-[11px] font-manrope text-[#9CA3AF] text-center">
-                    {step.staff}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Print Receipt */}
-        {showReceipt && (
-          <div className="flex justify-center mt-8">
-            <button className="px-10 py-3 bg-[#DDDCFF] hover:bg-[#c9c8ff] text-[#635BFF] text-sm font-semibold font-manrope rounded-2xl transition-colors cursor-pointer tracking-wide">
-              Print Receipt
-            </button>
-          </div>
-        )}
-      </td>
-    </tr>
-  );
-}
 const recentMembers = [
   {
     name: "Maria Rodriguez",
@@ -330,7 +148,7 @@ const recentMembers = [
   },
 ];
 
-// ── Status Filters ───────────────────────────────────────────────
+// status filter
 const statusFilters: (Status | "All")[] = [
   "All",
   "Booked",
@@ -341,7 +159,6 @@ const statusFilters: (Status | "All")[] = [
   "Canceled",
 ];
 
-// ── Main Component ───────────────────────────────────────────────
 export default function AppoinmentTableviewContent() {
   const [activeStatus, setActiveStatus] = useState<Status | "All">("All");
   const [activeView, setActiveView] = useState<"calendar" | "table">("table");
@@ -480,7 +297,6 @@ export default function AppoinmentTableviewContent() {
           </div>
         </div>
 
-        {/* ── DESKTOP TABLE (md+) ─────────────────────────────── */}
         <div className="border border-[#E0E6EB] rounded-[12px] overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
@@ -558,7 +374,10 @@ export default function AppoinmentTableviewContent() {
                       </td>
                       {/* Status */}
                       <td className="px-4 py-4 border-r border-[#E0E6EB]">
-                        <StatusBadge status={row.status} />
+                        <StatusBadge
+                          status={row.status}
+                          statusStyles={statusStyles}
+                        />
                       </td>
                       {/* Actions */}
                       <td className="px-4 py-4">

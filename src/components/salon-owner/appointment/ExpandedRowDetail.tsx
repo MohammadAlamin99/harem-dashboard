@@ -1,6 +1,57 @@
-import { Appointment } from "@/@types/salon-owner/Appointment.type";
+import { Appointment } from "@/@types/salon-owner/appointment.type";
+import { BookingStep } from "@/@types/salon-owner/bookingStep.type";
+import { Status } from "@/@types/salon-owner/Statu.type";
 import React from "react";
+import StepIcon from "./StepIcon";
+function getSteps(status: Status): BookingStep[] {
+  const base = [
+    { time: "12:00-12:05", service: "Shampoo", staff: "Angelica" },
+    { time: "12:00-12:05", service: "Shampoo", staff: "Angelica" },
+    { time: "12:00-12:05", service: "Shampoo", staff: "Angelica" },
+  ];
+  switch (status) {
+    case "Booked":
+    case "Confirmed":
+      return base.map((s) => ({ ...s, state: "todo" as StepState }));
+    case "Arrived":
+      return [
+        { ...base[0], state: "active" as StepState },
+        { ...base[1], state: "todo" as StepState },
+        { ...base[2], state: "todo" as StepState },
+      ];
+    case "Started":
+      return [
+        { ...base[0], state: "done" as StepState },
+        { ...base[1], state: "active" as StepState },
+        { ...base[2], state: "todo" as StepState },
+      ];
+    case "Completed":
+      return base.map((s) => ({ ...s, state: "done" as StepState }));
+    case "Canceled":
+      return base.map((s) => ({ ...s, state: "canceled" as StepState }));
+    default:
+      return base.map((s) => ({ ...s, state: "todo" as StepState }));
+  }
+}
 
+function stepLineColor(state: StepState): string {
+  if (state === "done") return "bg-[#4CD964]";
+  if (state === "active") return "bg-[#635BFF]";
+  if (state === "canceled") return "bg-[#FF6692]";
+  return "bg-[#D1D5DB]";
+}
+
+// Boking steper
+type StepState = "done" | "active" | "todo" | "canceled";
+function stepBadge(state: StepState): { label: string; className: string } {
+  if (state === "done")
+    return { label: "Completed", className: "bg-[#EBFAF0] text-[#36C76C]" };
+  if (state === "active")
+    return { label: "Doing", className: "bg-[#DDDBFF] text-[#635BFF]" };
+  if (state === "canceled")
+    return { label: "Cancelled", className: "bg-[#FFE5ED] text-[#FF6692]" };
+  return { label: "To Do", className: "bg-[#EFF4FA] text-[#0A2540]" };
+}
 export default function ExpandedRowDetail({ row }: { row: Appointment }) {
   const steps = getSteps(row.status);
   const showReceipt = row.status === "Started" || row.status === "Completed";
