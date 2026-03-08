@@ -1,154 +1,19 @@
 "use client";
-
-import React from "react";
-import { ArrowLeft, Download } from "lucide-react";
+import InvoiceHead from "./InvoiceHead";
+import ReceiptNav from "./ReceiptNav";
+import Transfer from "./Transfer";
 
 export default function PrientReceiptContent() {
   return (
     <div className="w-full min-h-screen bg-[#F4F6FA] font-manrope">
-      {/* ── Top Nav ─────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-[#EFF4FA] px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button className="w-8 h-8 flex items-center justify-center hover:bg-[#F4F6FA] rounded-[6px] transition-colors cursor-pointer">
-            <ArrowLeft size={18} className="text-[#526B7A]" />
-          </button>
-          <div>
-            <p className="text-sm font-bold font-manrope text-[#29343D]">
-              Service Receipt
-            </p>
-            <p className="text-xs font-manrope text-[#98A4AE]">
-              Italian Fiscal Invoice
-            </p>
-          </div>
-        </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-[#EEEEFF] hover:bg-[#DDDBFF] transition-colors text-[#635BFF] text-sm font-semibold font-manrope rounded-[8px] cursor-pointer">
-          <Download size={15} />
-          <span>Download PDF</span>
-        </button>
-      </div>
-
-      {/* ── Page Content ─────────────────────────────────────────── */}
+      {/* Top Nav */}
+      <ReceiptNav />
+      {/* Page Content */}
       <div className="w-full space-y-5">
-        {/* ── Electronic Invoice ─────────────────────────────────── */}
-        <section className="bg-white rounded-[14px] border border-[#EFF4FA] p-6">
-          <h2 className="text-base font-bold font-manrope text-[#29343D] mb-5">
-            Eletronic Invoice
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="border border-[#EFF4FA] rounded-[10px] px-4 py-4 bg-[#FAFBFF]">
-              <p className="text-base font-bold font-manrope text-[#29343D] mb-1">
-                2025-000123
-              </p>
-              <p className="text-xs font-manrope text-[#98A4AE]">Receipt No.</p>
-            </div>
-            <div className="border border-[#EFF4FA] rounded-[10px] px-4 py-4 bg-[#FAFBFF]">
-              <p className="text-base font-bold font-manrope text-[#29343D] mb-1">
-                11/30/2024
-              </p>
-              <p className="text-xs font-manrope text-[#98A4AE]">Date</p>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Transferor / Transferee ─────────────────────────────── */}
-        <section className="bg-white rounded-[14px] border border-[#EFF4FA] p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Transferor/Provider */}
-            <div>
-              <h2 className="text-base font-bold font-manrope text-[#29343D] mb-5">
-                Transferor/Provider
-              </h2>
-              <p className="text-sm font-bold font-manrope text-[#29343D] mb-0.5">
-                Bella Vista Salon
-              </p>
-              <p className="text-xs font-manrope text-[#526B7A]">
-                Via Roma, 123
-              </p>
-              <p className="text-xs font-manrope text-[#526B7A] mb-4">
-                20121 Milan (MI) - Italy
-              </p>
-
-              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                <div>
-                  <p className="text-[10px] font-manrope text-[#98A4AE] mb-0.5">
-                    PIVA
-                  </p>
-                  <p className="text-xs font-semibold font-manrope text-[#29343D]">
-                    IT12345678901
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-manrope text-[#98A4AE] mb-0.5">
-                    Tax Code
-                  </p>
-                  <p className="text-xs font-semibold font-manrope text-[#29343D]">
-                    12345678901
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-manrope text-[#98A4AE] mb-0.5">
-                    PEC
-                  </p>
-                  <p className="text-xs font-semibold font-manrope text-[#29343D]">
-                    amministrazione@pec.salonflow.it
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-manrope text-[#98A4AE] mb-0.5">
-                    Recipient Code
-                  </p>
-                  <p className="text-xs font-semibold font-manrope text-[#29343D]">
-                    XXXXXXX
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-manrope text-[#98A4AE] mb-0.5">
-                    Telephone
-                  </p>
-                  <p className="text-xs font-semibold font-manrope text-[#29343D]">
-                    +39 02 1234567
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-manrope text-[#98A4AE] mb-0.5">
-                    Email
-                  </p>
-                  <p className="text-xs font-semibold font-manrope text-[#29343D]">
-                    fatturazione@salonflow.it
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Divider */}
-            <div className="hidden lg:block border-l border-[#EFF4FA]" />
-
-            {/* Transferee/Client */}
-            <div className="lg:-ml-6">
-              <h2 className="text-base font-bold font-manrope text-[#29343D] mb-5">
-                Transferee/Client
-              </h2>
-              <p className="text-sm font-bold font-manrope text-[#29343D] mb-0.5">
-                Maria Rodriguez
-              </p>
-              <p className="text-xs font-manrope text-[#526B7A]">
-                Via Esempio, 456
-              </p>
-              <p className="text-xs font-manrope text-[#526B7A] mb-4">
-                10100 Turin (TO) - Italy
-              </p>
-
-              <div>
-                <p className="text-[10px] font-manrope text-[#98A4AE] mb-0.5">
-                  Tax Code
-                </p>
-                <p className="text-xs font-semibold font-manrope text-[#29343D]">
-                  98765432109
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Electronic Invoice */}
+        <InvoiceHead />
+        {/* transfer */}
+        <Transfer />
 
         {/* ── Service Description ─────────────────────────────────── */}
         <section className="bg-white rounded-[14px] border border-[#EFF4FA] p-6">
