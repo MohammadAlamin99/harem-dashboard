@@ -31,6 +31,10 @@ export const salonOwnerNavigation = [
   {
     label: "Appointments",
     href: "/salon-owner/appointment",
+    matchUrls: [
+      "/salon-owner/appointment",
+      "/salon-owner/appointment/settings",
+    ],
     icon: ICalaender,
   },
 ];
