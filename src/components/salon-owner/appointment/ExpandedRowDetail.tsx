@@ -3,6 +3,7 @@ import { BookingStep } from "@/@types/salon-owner/bookingStep.type";
 import { Status } from "@/@types/salon-owner/Statu.type";
 import React from "react";
 import StepIcon from "./StepIcon";
+import Link from "next/link";
 function getSteps(status: Status): BookingStep[] {
   const base = [
     { time: "12:00-12:05", service: "Shampoo", staff: "Angelica" },
@@ -113,9 +114,11 @@ export default function ExpandedRowDetail({ row }: { row: Appointment }) {
         {/* Print Receipt */}
         {showReceipt && (
           <div className="flex justify-center mt-8">
-            <button className="px-10 py-3 bg-[#DDDCFF] hover:bg-[#c9c8ff] text-[#635BFF] text-sm font-semibold font-manrope rounded-2xl transition-colors cursor-pointer tracking-wide">
-              Print Receipt
-            </button>
+            <Link href={`/salon-owner/appointment/print-receipt/${row.id}`}>
+              <button className="px-4 py-2.5 bg-[#DDDBFF] hover:bg-[#c9c8ff] text-[#635BFF] text-[12px] font-semibold font-manrope rounded-[8px] transition-colors cursor-pointer tracking-wide">
+                Print Receipt
+              </button>
+            </Link>
           </div>
         )}
       </td>

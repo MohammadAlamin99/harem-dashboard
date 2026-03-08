@@ -34,6 +34,7 @@ export const salonOwnerNavigation = [
     matchUrls: [
       "/salon-owner/appointment",
       "/salon-owner/appointment/settings",
+      "/salon-owner/appointment/print-receipt",
     ],
     icon: ICalaender,
   },

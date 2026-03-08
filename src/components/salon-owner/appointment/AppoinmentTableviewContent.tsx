@@ -24,7 +24,7 @@ import Link from "next/link";
 
 const allAppointments: Appointment[] = [
   {
-    id: "#001",
+    id: "001",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -33,7 +33,7 @@ const allAppointments: Appointment[] = [
     status: "Booked",
   },
   {
-    id: "#002",
+    id: "002",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -42,7 +42,7 @@ const allAppointments: Appointment[] = [
     status: "Started",
   },
   {
-    id: "#003",
+    id: "003",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -51,7 +51,7 @@ const allAppointments: Appointment[] = [
     status: "Canceled",
   },
   {
-    id: "#004",
+    id: "004",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -60,7 +60,7 @@ const allAppointments: Appointment[] = [
     status: "Confirmed",
   },
   {
-    id: "#005",
+    id: "005",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -69,7 +69,7 @@ const allAppointments: Appointment[] = [
     status: "Arrived",
   },
   {
-    id: "#006",
+    id: "006",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -78,7 +78,7 @@ const allAppointments: Appointment[] = [
     status: "Completed",
   },
   {
-    id: "#007",
+    id: "007",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -87,7 +87,7 @@ const allAppointments: Appointment[] = [
     status: "Arrived",
   },
   {
-    id: "#008",
+    id: "008",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -96,7 +96,7 @@ const allAppointments: Appointment[] = [
     status: "Arrived",
   },
   {
-    id: "#009",
+    id: "009",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
@@ -105,7 +105,7 @@ const allAppointments: Appointment[] = [
     status: "Canceled",
   },
   {
-    id: "#010",
+    id: "010",
     clientName: "Maria Rodriguez",
     clientPhone: "+39 345 678 9123",
     service: "Haircut",
