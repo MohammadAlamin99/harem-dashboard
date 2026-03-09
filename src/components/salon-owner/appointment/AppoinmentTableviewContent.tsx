@@ -280,12 +280,14 @@ export default function AppoinmentTableviewContent() {
                         </div>
                       )}
                     </div>
-                    <button
-                      className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      Import Appointments
-                    </button>
+                    <Link href="/salon-owner/appointment/import-appointments">
+                      <button
+                        className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Import Appointments
+                      </button>
+                    </Link>
                     <button
                       className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
                       onClick={() => setMenuOpen(false)}

@@ -21,6 +21,7 @@ import SelectServiceModal from "./SelectServiceModal";
 import DividePaymentModal from "./DividePaymentModel";
 import SuccessModal from "./SuccessModal";
 import Image from "next/image";
+import PageHeader from "../../common-component/PageHeader";
 
 const paymentMethods = [
   {
@@ -96,24 +97,11 @@ export default function DashbordCheckoutContent({
       )}
 
       {/* Top Bar */}
-      <div className="bg-white px-6 py-3.5 flex items-center justify-between border-b border-[#EFF4FA] rounded-xl">
-        <div className="flex items-center gap-2 text-sm text-[#29343D]">
-          <button
-            onClick={onBack}
-            className="cursor-pointer hover:opacity-70 transition-opacity"
-          >
-            <ChevronLeft size={16} className="text-[#635BFF]" />
-          </button>
-          <span className="font-semibold">Checkout</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-[#98A4AE]">
-          <House size={15} />
-          <span className="text-[#29343D]">/</span>
-          <span className="text-[#635BFF] font-medium bg-[#EEEEFF] px-2 py-0.5 rounded-md text-xs">
-            Dashboard
-          </span>
-        </div>
-      </div>
+      <PageHeader
+        title="Checkout"
+        onBack={() => console.log("Go Back")}
+        breadcrumb={[{ label: "Dashboard", active: true }]}
+      />
 
       {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto mt-6 space-y-4">
