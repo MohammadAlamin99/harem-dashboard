@@ -1,4 +1,5 @@
 import { EllipsisVertical, Eye, Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function RowActions() {
@@ -24,13 +25,15 @@ export default function RowActions() {
       </button>
       {open && (
         <div className="absolute right-0 top-9 z-50 bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#F0F2F5] py-1.5 w-44">
-          <button
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F8F9FA] transition-colors cursor-pointer"
-          >
-            <Eye size={15} className="text-[#635BFF] flex-shrink-0" />
-            View Details
-          </button>
+          <Link href={"/salon-owner/appointment/view-appointment"}>
+            <button
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F8F9FA] transition-colors cursor-pointer"
+            >
+              <Eye size={15} className="text-[#635BFF] flex-shrink-0" />
+              View Details
+            </button>
+          </Link>
           <button
             onClick={() => setOpen(false)}
             className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F8F9FA] transition-colors cursor-pointer"

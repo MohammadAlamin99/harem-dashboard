@@ -36,6 +36,7 @@ export const salonOwnerNavigation = [
       "/salon-owner/appointment/settings",
       "/salon-owner/appointment/print-receipt",
       "/salon-owner/appointment/import-appointments",
+      "/salon-owner/appointment/view-appointment",
     ],
     icon: ICalaender,
   },

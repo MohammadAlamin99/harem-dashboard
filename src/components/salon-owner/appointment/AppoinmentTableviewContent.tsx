@@ -323,7 +323,7 @@ export default function AppoinmentTableviewContent() {
                   }}
                   className={`flex-shrink-0 px-3 py-1.5 text-sm font-manrope font-medium rounded-[6px] border transition-all cursor-pointer ${activeStatus === s ? "border-[#635BFF] text-[#635BFF] bg-white" : "border-[#E0E6EB] text-[#526B7A] hover:border-[#635BFF] hover:text-[#635BFF]"}`}
                 >
-                  {s}
+                  {s} 
                 </button>
               ))}
             </div>
