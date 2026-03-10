@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { ChevronDown, EllipsisVertical, Home, ChevronLeft } from "lucide-react";
+import Link from "next/link";
 
 type AppStatus = "Booked" | "Confirmed" | "Arrived" | "Started" | "No-show";
 
@@ -395,9 +396,11 @@ export default function ViewAppointmentContent() {
             </button>
             <div className="flex items-center gap-3">
               <EllipsisDropdown onAddNote={handleAddNote} />
-              <button className="px-5 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-semibold font-manrope rounded-[8px] transition-colors cursor-pointer">
-                Checkout
-              </button>
+              <Link href="/salon-owner/appointment/checkout">
+                <button className="px-5 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-semibold font-manrope rounded-[8px] transition-colors cursor-pointer">
+                  Checkout
+                </button>
+              </Link>
             </div>
           </div>
         </div>
