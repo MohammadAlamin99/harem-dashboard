@@ -615,68 +615,71 @@ export default function ReviewAppointmentTable() {
               </span>
             </div>
           </div>
-        </div>
 
-        {/* ── Total bar ── */}
-        <div className="mt-4 bg-white rounded-2xl border border-[#EBEBEB] px-8 py-5 flex items-center justify-between">
-          <span className="text-base font-bold text-[#1A1A2E]">Total</span>
-          <span className="text-base font-bold text-[#1A1A2E]">
-            € {totalPrice}
-          </span>
-        </div>
+          {/* ── Total bar ── */}
+          <div className="mt-4 bg-white rounded-2xl border border-[#EBEBEB] px-8 py-5 flex items-center justify-between">
+            <span className="text-base font-bold text-[#1A1A2E]">Total</span>
+            <span className="text-base font-bold text-[#1A1A2E]">
+              € {totalPrice}
+            </span>
+          </div>
 
-        {/* ── Bottom bar ── */}
-        <div className="mt-5 flex items-center justify-between">
-          <button className="px-6 py-2.5 border border-[#E0E6EB] bg-white hover:bg-[#F4F6FA] text-sm font-semibold text-[#29343D] rounded-[10px] transition-colors cursor-pointer">
-            Back
-          </button>
+          {/* ── Bottom bar ── */}
+          <div className="mt-5 flex items-center justify-between">
+            <button className="px-6 py-2.5 border border-[#E0E6EB] bg-white hover:bg-[#F4F6FA] text-sm font-semibold text-[#29343D] rounded-[10px] transition-colors cursor-pointer">
+              Back
+            </button>
 
-          <div className="flex items-center gap-3">
-            {/* ··· */}
-            <div ref={moreRef} className="relative">
-              <button
-                onClick={() => setMoreOpen((o) => !o)}
-                className="w-10 h-10 flex items-center justify-center border border-[#E0E6EB] bg-white rounded-[10px] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
-              >
-                <MoreVertical size={17} className="text-[#526B7A]" />
+            <div className="flex items-center gap-3">
+              {/* ··· */}
+              <div ref={moreRef} className="relative">
+                <button
+                  onClick={() => setMoreOpen((o) => !o)}
+                  className="w-10 h-10 flex items-center justify-center border border-[#E0E6EB] bg-white rounded-[10px] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
+                >
+                  <MoreVertical size={17} className="text-[#526B7A]" />
+                </button>
+
+                {moreOpen && (
+                  <div className="absolute bottom-full right-0 mb-2 bg-white border border-[#E8ECF0] rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,0.10)] z-30 py-2 w-60 overflow-hidden">
+                    <button
+                      onClick={() => {
+                        setAddNoteOpen(true);
+                        setMoreOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
+                    >
+                      <ClipboardList
+                        size={16}
+                        className="text-[#635BFF] shrink-0"
+                      />
+                      Add a Note
+                    </button>
+                    <button
+                      onClick={() => {
+                        setUpfrontOpen(true);
+                        setMoreOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
+                    >
+                      <CreditCard
+                        size={16}
+                        className="text-[#635BFF] shrink-0"
+                      />
+                      Request upfront payment
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <button className="px-6 py-2.5 bg-[#EEEEFF] hover:bg-[#E0DEFF] text-[#635BFF] text-sm font-semibold rounded-[10px] transition-colors cursor-pointer">
+                Checkout
               </button>
 
-              {moreOpen && (
-                <div className="absolute bottom-full right-0 mb-2 bg-white border border-[#E8ECF0] rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,0.10)] z-30 py-2 w-60 overflow-hidden">
-                  <button
-                    onClick={() => {
-                      setAddNoteOpen(true);
-                      setMoreOpen(false);
-                    }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
-                  >
-                    <ClipboardList
-                      size={16}
-                      className="text-[#635BFF] shrink-0"
-                    />
-                    Add a Note
-                  </button>
-                  <button
-                    onClick={() => {
-                      setUpfrontOpen(true);
-                      setMoreOpen(false);
-                    }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
-                  >
-                    <CreditCard size={16} className="text-[#635BFF] shrink-0" />
-                    Request upfront payment
-                  </button>
-                </div>
-              )}
+              <button className="px-6 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-semibold rounded-[10px] transition-colors cursor-pointer shadow-[0_2px_10px_rgba(99,91,255,0.35)]">
+                Save and Leave
+              </button>
             </div>
-
-            <button className="px-6 py-2.5 bg-[#EEEEFF] hover:bg-[#E0DEFF] text-[#635BFF] text-sm font-semibold rounded-[10px] transition-colors cursor-pointer">
-              Checkout
-            </button>
-
-            <button className="px-6 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-semibold rounded-[10px] transition-colors cursor-pointer shadow-[0_2px_10px_rgba(99,91,255,0.35)]">
-              Save and Leave
-            </button>
           </div>
         </div>
       </div>
