@@ -57,7 +57,7 @@ export default function Frequency({ onNext }: { onNext?: () => void }) {
         <div ref={dropRef} className="relative">
           <button
             onClick={() => setOpen((o) => !o)}
-            className={`w-full flex items-center justify-between px-4 py-3.5 border rounded-[10px] bg-white transition-colors cursor-pointer text-left ${
+            className={`w-full flex items-center justify-between px-4 py-3.5 border rounded-[4px] bg-white transition-colors cursor-pointer text-left ${
               open
                 ? "border-[#635BFF]"
                 : "border-[#E0E6EB] hover:border-[#B0BAC5]"
@@ -98,16 +98,16 @@ export default function Frequency({ onNext }: { onNext?: () => void }) {
         </div>
 
         {/* Set up frequency link */}
-        <button className="mt-3 text-sm font-semibold text-[#635BFF] hover:underline cursor-pointer">
+        <h5 className="mt-3 text-sm font-semibold text-[#635BFF]">
           Set up frequency
-        </button>
+        </h5>
       </div>
 
       {/* ── Next button ── */}
       <div className="flex justify-end">
         <button
           onClick={onNext}
-          className="px-8 py-3 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-bold rounded-[10px] transition-colors cursor-pointer shadow-[0_2px_10px_rgba(99,91,255,0.35)]"
+          className="px-4 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-bold rounded-[8px] transition-colors cursor-pointer"
         >
           Next
         </button>

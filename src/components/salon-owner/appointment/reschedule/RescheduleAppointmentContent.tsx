@@ -197,9 +197,7 @@ export default function RescheduleAppointmentContent() {
         <div className="flex flex-1 min-h-0 flex-col md:flex-row overflow-hidden m-7 border border-[#E0E6EB] rounded-xl">
           {/* ── LEFT: services panel ── */}
           <div className="shrink-0 border-r min-h-0 w-[222px] border-[#EEF2F8] flex flex-col">
-            <div
-              className="shrink-0 border-r border-b border-[#E0E6EB] px-5 flex flex-col justify-center bg-[#F3F3FF] h-[88px]"
-            >
+            <div className="shrink-0 border-r border-b border-[#E0E6EB] px-5 flex flex-col justify-center bg-[#F3F3FF] h-[88px]">
               <p className="text-base font-semibold font-manrope text-[#29343D]">
                 Available Services
               </p>
@@ -243,9 +241,7 @@ export default function RescheduleAppointmentContent() {
             className="flex-1 min-w-0 flex flex-col overflow-hidden"
           >
             {/* Staff header row */}
-            <div
-              className="shrink-0 bg-[#F3F3FF] relative h-[88px]"
-            >
+            <div className="shrink-0 bg-[#F3F3FF] relative h-[88px]">
               {/* Left arrow */}
               <button
                 onClick={() => slide("l")}
@@ -418,14 +414,14 @@ export default function RescheduleAppointmentContent() {
             </div>
           </div>
         </div>
+        <div className="shrink-0 flex justify-end p-[30px_30px] pt-[0px]">
+          <button className="px-4 py-2.5 text-[#635BFF] border border-[#635BFF] font-semibold font-manrope rounded-[12px] transition-colors cursor-pointer">
+            Save
+          </button>
+        </div>
       </div>
 
       {/* ── Save ── */}
-      <div className="shrink-0 flex justify-end">
-        <button className="px-6 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-semibold font-manrope rounded-[10px] transition-colors cursor-pointer">
-          Save
-        </button>
-      </div>
     </div>
   );
 }

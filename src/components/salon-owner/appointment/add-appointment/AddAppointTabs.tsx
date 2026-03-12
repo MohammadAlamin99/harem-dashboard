@@ -1,4 +1,3 @@
-
 import React from "react";
 import IListIcon from "./IListIcon";
 import ICalaender from "@/app/account-protal/svg/ICalaender";
@@ -42,7 +41,7 @@ export default function AddAppointTabs({
   const currentIdx = STEPS.findIndex((s) => s.key === currentStep);
 
   return (
-    <div className="bg-white rounded-2xl border border-[#EEF2F8] p-[30px] flex items-center gap-3">
+    <div className="bg-white rounded-xl border border-[#EEF2F8] p-[30px] flex flex-wrap items-center gap-3">
       {STEPS.map((step, i) => {
         const isActive = currentStep === step.key;
         const isDone = currentIdx > i;
@@ -67,7 +66,7 @@ export default function AddAppointTabs({
                 {step.icon(isActive)}
               </div>
 
-              {step.label}
+              <span className="text-start">{step.label}</span>
             </button>
           </React.Fragment>
         );

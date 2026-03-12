@@ -26,7 +26,7 @@ export default function BasicInformation({
 
         <p className="text-[10px] font-manrope text-[#98A4AE] mb-2">Client</p>
 
-        <div className="flex items-center justify-between bg-[#F4F6FA] rounded-[10px] p-4 mb-4">
+        <div className="flex items-center justify-between bg-[#F4F6FA] rounded-[10px] p-4 mb-4 flex-wrap gap-3">
           <div className="flex items-center gap-3">
             <Image
               src="/images/avator.png"
