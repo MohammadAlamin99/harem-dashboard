@@ -299,10 +299,12 @@ export default function AppoinmentTableviewContent() {
               )}
             </div>
 
-            <button className="flex items-center gap-1.5 px-4 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] transition-colors text-white text-sm font-semibold font-manrope rounded-[8px] cursor-pointer">
-              <Plus size={16} />
-              <span className="hidden sm:inline">Add Appointment</span>
-            </button>
+            <Link href={"/salon-owner/appointment/add"}>
+              <button className="flex items-center gap-1.5 px-4 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] transition-colors text-white text-sm font-semibold font-manrope rounded-[8px] cursor-pointer">
+                <Plus size={16} />
+                <span className="hidden sm:inline">Add Appointment</span>
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -323,7 +325,7 @@ export default function AppoinmentTableviewContent() {
                   }}
                   className={`flex-shrink-0 px-3 py-1.5 text-sm font-manrope font-medium rounded-[6px] border transition-all cursor-pointer ${activeStatus === s ? "border-[#635BFF] text-[#635BFF] bg-white" : "border-[#E0E6EB] text-[#526B7A] hover:border-[#635BFF] hover:text-[#635BFF]"}`}
                 >
-                  {s} 
+                  {s}
                 </button>
               ))}
             </div>

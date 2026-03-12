@@ -5,10 +5,12 @@ export default function BasicInformation({
   status,
   setStatus,
   onReschedule,
+  onSetRepeating,
 }: {
   status: AppStatus;
   setStatus: (status: AppStatus) => void;
   onReschedule: () => void;
+  onSetRepeating?: () => void;
 }) {
   return (
     <div>
@@ -72,7 +74,7 @@ export default function BasicInformation({
               Repeating
             </p>
             <button
-              onClick={onReschedule}
+              onClick={onSetRepeating}
               className="px-3 py-1.5 bg-[#F6F7F9] text-[#0A2540] text-xs font-semibold font-manrope rounded-[8px] hover:text-[#635BFF] transition-colors cursor-pointer"
             >
               Set as Repeating

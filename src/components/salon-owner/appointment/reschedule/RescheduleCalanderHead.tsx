@@ -19,7 +19,7 @@ export default function RescheduleCalanderHead({
 }) {
   return (
     <div>
-      <div className="flex items-center justify-between px-7 py-7 flex-shrink-0">
+      <div className="flex items-center justify-between flex-wrap gap-4 px-7 py-7 flex-shrink-0">
         <button className="flex items-center gap-2 px-4 py-2 border border-[#E0E6EB] rounded-[8px] text-sm font-semibold font-manrope text-[#0A2540] hover:bg-[#F4F6FA] transition-colors cursor-pointer">
           <div className="w-6 h-6 rounded-[4px] bg-[#DDDBFF] flex items-center justify-center">
             <IAppoinUser />
@@ -40,7 +40,7 @@ export default function RescheduleCalanderHead({
             <ChevronRight size={18} className="text-[#635BFF]" />
           </button>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center flex-wrap gap-4">
           <div className="flex items-center border border-[#E0E6EB] rounded-[8px] overflow-hidden bg-[#F7F9FC]">
             {(["Month", "Week", "Day"] as const).map((p, i) => (
               <button

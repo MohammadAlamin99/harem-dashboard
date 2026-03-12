@@ -170,7 +170,7 @@ export default function RescheduleAppointmentContent() {
   return (
     <div className="h-full font-manrope flex flex-col gap-5">
       {/* ── Top bar ── */}
-      <div className="shrink-0 bg-white rounded-2xl border border-[#EEF2F8] px-7 py-[18px] flex items-center justify-between">
+      <div className="shrink-0 bg-white rounded-2xl border border-[#EEF2F8] px-7 py-[18px] flex items-center justify-between flex-wrap gap-4">
         <h1 className="text-lg font-bold font-manrope text-[#29343D]">
           Reschedule Appointment
         </h1>
@@ -194,15 +194,11 @@ export default function RescheduleAppointmentContent() {
         </div>
 
         {/* ── Two-column body ── */}
-        <div className="flex flex-1 min-h-0 overflow-hidden m-7 border border-[#E0E6EB] rounded-xl">
+        <div className="flex flex-1 min-h-0 flex-col md:flex-row overflow-hidden m-7 border border-[#E0E6EB] rounded-xl">
           {/* ── LEFT: services panel ── */}
-          <div
-            className="shrink-0 border-r border-[#EEF2F8] flex flex-col"
-            style={{ width: 222 }}
-          >
+          <div className="shrink-0 border-r min-h-0 w-[222px] border-[#EEF2F8] flex flex-col">
             <div
-              className="shrink-0 border-r border-b border-[#E0E6EB] px-5 flex flex-col justify-center bg-[#F3F3FF]"
-              style={{ height: 88 }}
+              className="shrink-0 border-r border-b border-[#E0E6EB] px-5 flex flex-col justify-center bg-[#F3F3FF] h-[88px]"
             >
               <p className="text-base font-semibold font-manrope text-[#29343D]">
                 Available Services
@@ -248,8 +244,7 @@ export default function RescheduleAppointmentContent() {
           >
             {/* Staff header row */}
             <div
-              className="shrink-0 bg-[#F3F3FF] relative"
-              style={{ height: 88 }}
+              className="shrink-0 bg-[#F3F3FF] relative h-[88px]"
             >
               {/* Left arrow */}
               <button
@@ -351,7 +346,7 @@ export default function RescheduleAppointmentContent() {
                   >
                     {/* Time gutter */}
                     <div
-                      className={`shrink-0 relative border-r ${slot.isHour?"border-t":""} border-[#E0E6EB]`}
+                      className={`shrink-0 relative border-r ${slot.isHour ? "border-t" : ""} border-[#E0E6EB]`}
                       style={{ width: TIME_W }}
                     >
                       {slot.isHour && (

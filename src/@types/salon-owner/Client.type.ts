@@ -1,7 +1,8 @@
 export interface Client {
-  id: number;
+  id: number | string;
   name: string;
-  email: string;
+  email?: string;
   avatar: string;
   phone: string;
+  isStaff?: boolean;
 }

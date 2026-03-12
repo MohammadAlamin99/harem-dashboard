@@ -2,8 +2,6 @@
 
 import IUser from "@/app/account-protal/svg/IUser";
 import {
-  ChevronLeft,
-  House,
   BookOpen,
   EllipsisVertical,
   ChevronDown,

@@ -39,6 +39,7 @@ export const salonOwnerNavigation = [
       "/salon-owner/appointment/view-appointment",
       "/salon-owner/appointment/checkout",
       "/salon-owner/appointment/reschedule",
+      "/salon-owner/appointment/add",
     ],
     icon: ICalaender,
   },
