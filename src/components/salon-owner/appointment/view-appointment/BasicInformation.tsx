@@ -4,13 +4,15 @@ type AppStatus = "Booked" | "Confirmed" | "Arrived" | "Started" | "No-show";
 export default function BasicInformation({
   status,
   setStatus,
+  onReschedule,
 }: {
   status: AppStatus;
   setStatus: (status: AppStatus) => void;
+  onReschedule: () => void;
 }) {
   return (
     <div>
-      <div className="bg-white rounded-[14px] border border-[#EFF4FA] p-[30px]">
+      <div className="bg-white rounded-xl h-full border border-[#EFF4FA] p-[30px]">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-bold font-manrope text-[#29343D]">
             Basic Informations
@@ -69,7 +71,10 @@ export default function BasicInformation({
             <p className="text-xs font-manrope text-[#98A4AE] mb-1.5">
               Repeating
             </p>
-            <button className="px-3 py-1.5 bg-[#F6F7F9] text-[#0A2540] text-xs font-semibold font-manrope rounded-[8px] hover:text-[#635BFF] transition-colors cursor-pointer">
+            <button
+              onClick={onReschedule}
+              className="px-3 py-1.5 bg-[#F6F7F9] text-[#0A2540] text-xs font-semibold font-manrope rounded-[8px] hover:text-[#635BFF] transition-colors cursor-pointer"
+            >
               Set as Repeating
             </button>
           </div>

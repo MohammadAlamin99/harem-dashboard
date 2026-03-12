@@ -1,5 +1,10 @@
 import { ChevronLeft, Home } from "lucide-react";
-export default function AppointViewNav() {
+import Link from "next/link";
+export default function AppointViewNav({
+  onCancelAppointment,
+}: {
+  onCancelAppointment: () => void;
+}) {
   return (
     <div>
       <div className="bg-white border-b border-[#EFF4FA] px-4 sm:px-[30px] py-3 flex items-center justify-between gap-3 rounded-xl">
@@ -12,10 +17,15 @@ export default function AppointViewNav() {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          <button className="px-3 sm:px-4 py-2 text-sm font-semibold font-manrope text-[#16CDC7] bg-[#ECFDFD] hover:bg-[#d4faf9] rounded-[8px] transition-colors cursor-pointer whitespace-nowrap">
-            Reschedule
-          </button>
-          <button className="px-3 sm:px-4 py-2 text-sm font-semibold font-manrope text-[#FF6692] bg-[#FFE5ED] hover:bg-[#ffd0e0] rounded-[8px] transition-colors cursor-pointer whitespace-nowrap">
+          <Link href="/salon-owner/appointment/reschedule">
+            <button className="px-3 sm:px-4 py-2 text-sm font-semibold font-manrope text-[#16CDC7] bg-[#ECFDFD] hover:bg-[#d4faf9] rounded-[8px] transition-colors cursor-pointer whitespace-nowrap">
+              Reschedule
+            </button>
+          </Link>
+          <button
+            onClick={onCancelAppointment}
+            className="px-3 sm:px-4 py-2 text-sm font-semibold font-manrope text-[#FF6692] bg-[#FFE5ED] hover:bg-[#ffd0e0] rounded-[8px] transition-colors cursor-pointer whitespace-nowrap"
+          >
             Cancel Appointment
           </button>
           <div className="hidden sm:flex items-center gap-1.5">

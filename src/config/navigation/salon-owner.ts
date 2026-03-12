@@ -38,6 +38,7 @@ export const salonOwnerNavigation = [
       "/salon-owner/appointment/import-appointments",
       "/salon-owner/appointment/view-appointment",
       "/salon-owner/appointment/checkout",
+      "/salon-owner/appointment/reschedule",
     ],
     icon: ICalaender,
   },

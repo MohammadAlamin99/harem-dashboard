@@ -6,6 +6,8 @@ import AppointmentAcvitvity from "./AppointmentAcvitvity";
 import { ActivityItem } from "@/@types/salon-owner/ActivityItem.type";
 import BasicInformation from "./BasicInformation";
 import AppointViewNav from "./AppointViewNav";
+import RepeatingModal from "./Repeatingmodal";
+import CancelAppointmentModal from "./Cancelappointmentmodal";
 
 type AppStatus = "Booked" | "Confirmed" | "Arrived" | "Started" | "No-show";
 
@@ -47,7 +49,10 @@ export default function ViewAppointmentContent() {
   const [noteEditing, setNoteEditing] = useState<boolean>(false);
   const [noteDraft, setNoteDraft] = useState<string>("");
   const [savedNote, setSavedNote] = useState<string>("");
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [cancelOpen, setCancelOpen] = useState<boolean>(false);
+  const [repeatingOpen, setRepeatingOpen] = useState<boolean>(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const closeNoteEditor = () => setNoteEditing(false);
 
   function saveNote(): void {
     setSavedNote(noteDraft);
@@ -62,11 +67,15 @@ export default function ViewAppointmentContent() {
   return (
     <div className="min-h-screen bg-[#F4F6FA] font-manrope">
       {/* page header and breadcrumb */}
-      <AppointViewNav />
+      <AppointViewNav onCancelAppointment={() => setCancelOpen(true)} />
       <div className="mx-auto py-5 space-y-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Basic Informations */}
-          <BasicInformation status={status} setStatus={setStatus} />
+          <BasicInformation
+            status={status}
+            setStatus={setStatus}
+            onReschedule={() => setRepeatingOpen(true)}
+          />
           {/* Appointment Activity */}
           <AppointmentAcvitvity activities={activities} />
         </div>
@@ -74,6 +83,7 @@ export default function ViewAppointmentContent() {
         {/* Note Section */}
         <ApppointNote
           openNoteEditor={openNoteEditor}
+          closeNoteEditor={closeNoteEditor}
           savedNote={savedNote}
           noteEditing={noteEditing}
           textareaRef={textareaRef}
@@ -85,6 +95,20 @@ export default function ViewAppointmentContent() {
         {/* ── Services ── */}
         <ViewServiceAppoint openNoteEditor={openNoteEditor} />
       </div>
+      {/* Repeating Modal */}
+      <RepeatingModal
+        open={repeatingOpen}
+        onClose={() => setRepeatingOpen(false)}
+      />
+      {/* Cancel Appointment Modal */}
+      <CancelAppointmentModal
+        open={cancelOpen}
+        onClose={() => setCancelOpen(false)}
+        onSave={(reason: string) => {
+          console.log("Cancelled with reason:", reason);
+          setCancelOpen(false);
+        }}
+      />
     </div>
   );
 }
