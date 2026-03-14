@@ -109,7 +109,7 @@ export default function AddPayment({ onBack }: { onBack: () => void }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {PAYMENT_METHODS_DATA.map((method) => (
               <button
                 key={method.key}
@@ -120,7 +120,7 @@ export default function AddPayment({ onBack }: { onBack: () => void }) {
                     : "border-[#E8ECF0] bg-white hover:border-[#635BFF] hover:bg-[#FAFAFE]"
                 }`}
               >
-                <div className="w-20 h-20 rounded-full bg-[#DDDBFF] flex items-center justify-center">
+                <div className="w-15 h-15 lg:h-20 lg:w-20  rounded-full bg-[#DDDBFF] flex items-center justify-center">
                   {method.icon}
                 </div>
 

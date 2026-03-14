@@ -23,12 +23,12 @@ export default function AddBottombar({
 }) {
   return (
     <div>
-      <div className="mt-5 flex items-center justify-between">
+      <div className="mt-5 flex items-center flex-wrap gap-4 justify-between">
         <button className="px-4 py-2.5 leading-6 bg-[#F6F7F9] hover:bg-gray-50 text-sm font-semibold text-[#29343D] rounded-[8px] transition-colors cursor-pointer">
           Back
         </button>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center flex-wrap gap-3">
           <div ref={moreRef} className="relative">
             <button
               onClick={() => setMoreOpen((o) => !o)}

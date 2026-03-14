@@ -92,89 +92,98 @@ export default function ReviewAppointmentTable() {
             Review Appointment
           </h2>
 
-          {/* Table header */}
-          <div className="grid grid-cols-[1.4fr_1.4fr_0.9fr_1fr_1fr_2.2fr_44px] pb-4 border-b border-[#F0F2F5]">
-            {[
-              "Service",
-              "Date",
-              "Price",
-              "Start Time",
-              "Duration",
-              "Employee",
-              "",
-            ].map((h, i) => (
-              <p key={i} className="text-sm font-semibold text-[#1A1A2E]">
-                {h}
-              </p>
-            ))}
-          </div>
-
-          {/* Service rows */}
-          {services.map((svc) => (
-            <div
-              key={svc.id}
-              className="grid grid-cols-[1.4fr_1.4fr_0.9fr_1fr_1fr_2.2fr_44px] items-center py-6 border-b border-[#F0F2F5]"
-            >
-              <p className="text-base text-[#29343D] font-semibold">
-                {svc.name}
-              </p>
-              <p className="text-base text-[#29343D]">{svc.date}</p>
-              <p className="text-base text-[#29343D]">€ {svc.price}</p>
-              <p className="text-base text-[#29343D]">{svc.startTime}</p>
-              <p className="text-base text-[#29343D]">{svc.duration}</p>
-
-              {/* Employee chip */}
-              <div className="flex items-center gap-4 p-2 rounded-xl bg-[#EFF4FA] w-fit">
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-[#F5E8FF]">
-                  <Image
-                    src={svc.employeeAvatar}
-                    alt={svc.employee}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <span className="text-base font-semibold text-[#1A1A2E] whitespace-nowrap">
-                  {svc.employee}
-                </span>
-                <ChevronDown size={24} className="text-[#29343D] shrink-0" />
+          {/* ── Scrollable table wrapper (mobile: scrolls, desktop: full width) ── */}
+          <div className="overflow-x-auto -mx-8 px-8">
+            <div className="min-w-[700px]">
+              {/* Table header */}
+              <div className="grid grid-cols-[1.4fr_1.4fr_0.9fr_1fr_1fr_2.2fr_44px] pb-4 border-b border-[#F0F2F5]">
+                {[
+                  "Service",
+                  "Date",
+                  "Price",
+                  "Start Time",
+                  "Duration",
+                  "Employee",
+                  "",
+                ].map((h, i) => (
+                  <p key={i} className="text-sm font-semibold text-[#1A1A2E]">
+                    {h}
+                  </p>
+                ))}
               </div>
 
-              {/* Delete */}
-              <button
-                onClick={() =>
-                  setServices((prev) => prev.filter((s) => s.id !== svc.id))
-                }
-                className="w-6 h-6 flex items-center justify-center cursor-pointer"
-              >
-                <Trash2 size={24} color="#FF6692" />
-              </button>
-            </div>
-          ))}
+              {/* Service rows */}
+              {services.map((svc) => (
+                <div
+                  key={svc.id}
+                  className="grid grid-cols-[1.4fr_1.4fr_0.9fr_1fr_1fr_2.2fr_44px] items-center py-6 border-b border-[#F0F2F5]"
+                >
+                  <p className="text-base text-[#29343D] font-semibold">
+                    {svc.name}
+                  </p>
+                  <p className="text-base text-[#29343D]">{svc.date}</p>
+                  <p className="text-base text-[#29343D]">€ {svc.price}</p>
+                  <p className="text-base text-[#29343D]">{svc.startTime}</p>
+                  <p className="text-base text-[#29343D]">{svc.duration}</p>
 
-          {/* Add Service + Total Time row */}
-          <div className="grid grid-cols-[1.4fr_1.4fr_0.9fr_1fr_1fr_2.2fr_44px] items-center pt-5">
-            <button
-              onClick={() => setAddServiceOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2.5 bg-[#DDDBFF] hover:bg-[#E0DEFF] text-[#635BFF] text-sm font-semibold rounded-[8px] transition-colors cursor-pointer w-fit"
-            >
-              <Plus size={14} strokeWidth={2.5} />
-              Add Service
-            </button>
+                  {/* Employee chip */}
+                  <div className="flex items-center gap-4 p-2 rounded-xl bg-[#EFF4FA] w-fit">
+                    <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-[#F5E8FF]">
+                      <Image
+                        src={svc.employeeAvatar}
+                        alt={svc.employee}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <span className="text-base font-semibold text-[#1A1A2E] whitespace-nowrap">
+                      {svc.employee}
+                    </span>
+                    <ChevronDown
+                      size={24}
+                      className="text-[#29343D] shrink-0"
+                    />
+                  </div>
 
-            {/* empty: date, price */}
-            <div />
-            <div />
+                  {/* Delete */}
+                  <button
+                    onClick={() =>
+                      setServices((prev) => prev.filter((s) => s.id !== svc.id))
+                    }
+                    className="w-6 h-6 flex items-center justify-center cursor-pointer"
+                  >
+                    <Trash2 size={24} color="#FF6692" />
+                  </button>
+                </div>
+              ))}
 
-            {/* Total Time — spans start-time + duration */}
-            <div className="col-span-1 flex items-center justify-between">
-              <span className="text-sm font-semibold text-[#29343D]">
-                Total Time
-              </span>
-              <span className="text-sm font-semibold px-3 py-1 rounded-full bg-teal-50 text-teal-400">
-                {totalTime} min
-              </span>
+              {/* Add Service + Total Time row */}
+              <div className="grid grid-cols-[1.4fr_1.4fr_0.9fr_1fr_1fr_2.2fr_44px] items-center pt-5">
+                <button
+                  onClick={() => setAddServiceOpen(true)}
+                  className="flex items-center gap-1.5 px-4 py-2.5 bg-[#DDDBFF] hover:bg-[#E0DEFF] text-[#635BFF] text-sm font-semibold rounded-[8px] transition-colors cursor-pointer w-fit"
+                >
+                  <Plus size={14} strokeWidth={2.5} />
+                  Add Service
+                </button>
+
+                {/* empty: date, price */}
+                <div />
+                <div />
+
+                {/* Total Time */}
+                <div className="col-span-1 flex items-center justify-between">
+                  <span className="text-sm font-semibold text-[#29343D]">
+                    Total Time
+                  </span>
+                  <span className="text-sm font-semibold px-3 py-1 rounded-full bg-teal-50 text-teal-400">
+                    {totalTime} min
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
+          {/* ── end scrollable table wrapper ── */}
 
           {/* ── Total bar ── */}
           <div className="mt-[48px] bg-white rounded-xl border border-[#EBEBEB] p-[30px] flex items-center justify-between">
