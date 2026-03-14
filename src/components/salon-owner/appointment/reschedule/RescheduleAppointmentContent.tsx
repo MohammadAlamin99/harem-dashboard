@@ -170,14 +170,14 @@ export default function RescheduleAppointmentContent() {
   return (
     <div className="h-full font-manrope flex flex-col gap-5">
       {/* ── Top bar ── */}
-      <div className="shrink-0 bg-white rounded-2xl border border-[#EEF2F8] px-7 py-[18px] flex items-center justify-between flex-wrap gap-4">
+      {/* <div className="shrink-0 bg-white rounded-2xl border border-[#EEF2F8] px-7 py-[18px] flex items-center justify-between flex-wrap gap-4">
         <h1 className="text-lg font-bold font-manrope text-[#29343D]">
           Reschedule Appointment
         </h1>
         <button className="flex items-center gap-2 px-5 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-semibold font-manrope rounded-[10px] transition-colors cursor-pointer">
           <Plus size={16} strokeWidth={2.5} /> Add Appointment
         </button>
-      </div>
+      </div> */}
 
       {/* ── Calendar card ── */}
       <div className="flex-1 min-h-0 bg-white rounded-2xl border border-[#EEF2F8] flex flex-col overflow-hidden">

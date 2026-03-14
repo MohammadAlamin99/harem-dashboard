@@ -11,7 +11,7 @@ export default function PageHeader({
   breadcrumb?: { label: string; active: boolean }[];
 }) {
   return (
-    <div className="bg-white md:mb-0 mb-[16px] px-6 py-3.5 flex items-center justify-between border-b border-[#EFF4FA] rounded-xl">
+    <div className="bg-white md:mb-0 mb-[16px] px-6 py-3.5 flex items-center justify-between border-b border-[#EFF4FA] rounded-xl flex-wrap gap-3">
       {/* Left side: Back button and title */}
       <div className="flex items-center gap-2 text-sm text-[#29343D]">
         {onBack && (

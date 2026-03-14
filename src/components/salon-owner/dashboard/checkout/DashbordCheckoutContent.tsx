@@ -1,12 +1,7 @@
 "use client";
 
 import IUser from "@/app/account-protal/svg/IUser";
-import {
-  BookOpen,
-  EllipsisVertical,
-  ChevronDown,
-  Plus,
-} from "lucide-react";
+import { BookOpen, EllipsisVertical, ChevronDown, Plus } from "lucide-react";
 import { useState } from "react";
 import SelectClientModal from "./SelectClientModal";
 import { Client } from "@/@types/salon-owner/Client.type";
@@ -20,6 +15,7 @@ import DividePaymentModal from "./DividePaymentModel";
 import SuccessModal from "./SuccessModal";
 import Image from "next/image";
 import PageHeader from "../../common-component/PageHeader";
+import Payment from "@/components/Payment";
 
 const paymentMethods = [
   {
@@ -30,7 +26,7 @@ const paymentMethods = [
   {
     id: "gift",
     label: "Gift Card",
-    icon: <GiftCardIcon />,
+    icon: <GiftCardIcon size={65} color="#635BFF" />,
   },
   {
     id: "card",
@@ -180,37 +176,12 @@ export default function DashbordCheckoutContent({
         </div>
 
         {/* Payment Methods */}
-        <div className="bg-white rounded-xl p-[30px] border border-[#E0E6EB]">
-          <h3 className="text-sm font-semibold text-[#29343D] mb-2">
-            Payment Methods
-          </h3>
-          <p className="text-xs font-manrope text-[#98A4AE] mb-4">
-            Select one or more methods.
-          </p>
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3">
-            {paymentMethods.map((method) => (
-              <button
-                key={method.id}
-                onClick={() => {
-                  setSelectedPayment(method.id);
-                  setShowDivideModal(true);
-                }}
-                className={`flex flex-col items-center justify-center py-6 rounded-xl border transition-all cursor-pointer ${
-                  selectedPayment === method.id
-                    ? "border-[#635BFF] bg-[#F5F4FF]"
-                    : "border-[#EFF4FA] hover:border-[#635BFF] hover:bg-[#F5F4FF]"
-                }`}
-              >
-                <div className="w-20 h-20 rounded-full bg-[#DDDBFF] flex items-center justify-center mb-3">
-                  {method.icon}
-                </div>
-                <span className="text-sm font-medium text-[#29343D]">
-                  {method.label}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
+        <Payment
+          paymentMethods={paymentMethods}
+          setSelectedPayment={setSelectedPayment}
+          setShowDivideModal={setShowDivideModal}
+          selectedPayment={selectedPayment}
+        />
 
         {/* Services */}
         <div className="bg-white rounded-xl p-[30px] border border-[#EFF4FA]">
@@ -283,7 +254,7 @@ export default function DashbordCheckoutContent({
                   <div className="flex items-center gap-4 p-1 bg-[#EFF4FA] rounded-xl">
                     <Image
                       src="/images/avator.png"
-                      alt={s.employee}
+                      alt="image"
                       width={48}
                       height={48}
                       className="rounded-xl bg-[#EFF4FA]"
