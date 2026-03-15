@@ -1,5 +1,6 @@
 import ICalaender from "@/app/account-protal/svg/ICalaender";
 import IDashboard from "@/app/account-protal/svg/IDashboard";
+import IUser from "@/app/account-protal/svg/IUser";
 // import IOverview from "@/app/account-protal/svg/IOverview";
 // import ISales from "@/app/account-protal/svg/ISales";
 // import IUpload from "@/app/account-protal/svg/IUpload";
@@ -42,5 +43,11 @@ export const salonOwnerNavigation = [
       "/salon-owner/appointment/add",
     ],
     icon: ICalaender,
+  },
+  {
+    label: "Clients",
+    href: "/salon-owner/clients",
+    matchUrls: ["/salon-owner/clients"],
+    icon: IUser,
   },
 ];
