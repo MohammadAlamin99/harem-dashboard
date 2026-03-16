@@ -1,34 +1,45 @@
 import ICalaender from "@/app/account-protal/svg/ICalaender";
-import { CalendarDays, Eye, MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { Eye, MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ActionDropdown({ clientId }: { clientId: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    const h = (e: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node))
         setOpen(false);
     };
-    document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const actions = [
     {
       label: "View Details",
       icon: <Eye size={20} className="text-[#635BFF]" />,
+      href: `/salon-owner/clients/${clientId}`,
     },
     {
       label: "Book now",
       icon: <ICalaender color="#36C76C" size={20} />,
+      href: `#`,
     },
-    { label: "Edit", icon: <Pencil size={16} className="text-[#46CAEB]" /> },
+    {
+      label: "Edit",
+      icon: <Pencil size={16} className="text-[#46CAEB]" />,
+      href: `#`,
+    },
     {
       label: "Delete",
       icon: <Trash2 size={16} className="text-[#FF6692]" />,
       danger: true,
+      onClick: () => {
+        console.log("Delete client:", clientId);
+      },
     },
   ];
 
@@ -46,7 +57,11 @@ export default function ActionDropdown({ clientId }: { clientId: string }) {
           {actions.map((a) => (
             <button
               key={a.label}
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                if (a.href) router.push(a.href);
+                if (a.onClick) a.onClick();
+              }}
               className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-manrope transition-colors cursor-pointer ${
                 a.danger
                   ? "text-[#29343D] hover:bg-red-50"

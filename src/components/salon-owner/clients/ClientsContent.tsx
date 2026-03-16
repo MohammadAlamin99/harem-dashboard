@@ -2,23 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import {
-  Search,
-  Download,
-  Plus,
-  Trash2,
-  Check,
-  Filter,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronFirst,
-  ChevronLast,
-} from "lucide-react";
+import { Search, Trash2, Check } from "lucide-react";
 import AddClientModal from "./AddClientModal";
 import ActionDropdown from "./ActionDropdown";
 import Checkbox from "./ClientCheckBox";
-import Link from "next/link";
 import ImportTopBar from "./import/ImportTopBar";
 import PaginationClient from "./PaginationClient";
 
