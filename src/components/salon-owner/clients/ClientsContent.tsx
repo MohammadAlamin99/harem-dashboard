@@ -12,14 +12,15 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
   ChevronFirst,
   ChevronLast,
 } from "lucide-react";
 import AddClientModal from "./AddClientModal";
 import ActionDropdown from "./ActionDropdown";
 import Checkbox from "./ClientCheckBox";
+import Link from "next/link";
+import ImportTopBar from "./import/ImportTopBar";
+import PaginationClient from "./PaginationClient";
 
 interface Client {
   id: string;
@@ -75,7 +76,7 @@ export default function ClientsTable() {
   const [activeReg, setActiveReg] = useState("All");
   const [lastAppt, setLastAppt] = useState("Last 7 days");
   const [addClientOpen, setAddClientOpen] = useState(false);
-  const ippRef = useRef<HTMLDivElement>(null);
+  const ippRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const h = (e: MouseEvent) => {
@@ -133,105 +134,20 @@ export default function ClientsTable() {
         onClose={() => setAddClientOpen(false)}
       />
       {/* Top bar */}
-      <div className="bg-white rounded-2xl border border-[#EEF2F8] px-6 py-4">
-        {/* Header row */}
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-base font-bold text-[#29343D]">Clients</h1>
-          <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 px-4 py-2.5 border border-[#635BFF] text-[#635BFF] text-sm font-semibold rounded-[8px] hover:bg-[#F0EEFF] transition-colors cursor-pointer">
-              Import Clients
-            </button>
-            <button className="flex items-center gap-2.5 px-4 py-2.5 border border-[#DDDBFF] text-[#635BFF] text-sm font-semibold rounded-[8px] hover:bg-[#F4F6FA] transition-colors cursor-pointer bg-[#F8FAFC]">
-              <Download size={15} className="text-[#635BFF]" />
-              Export Data
-            </button>
-            <button
-              onClick={() => setAddClientOpen(true)}
-              className="flex items-center gap-2.5 px-4 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-semibold rounded-[8px] transition-colors cursor-pointer"
-            >
-              <Plus size={15} />
-              Add Client
-            </button>
-          </div>
-        </div>
-        {/* Filters */}
-        <div className="flex items-end gap-8 flex-wrap">
-          {/* Client Since */}
-          <div>
-            <p className="text-xs font-semibold text-[#98A4AE] mb-2 flex items-center gap-1">
-              Client Since <Filter size={12} className="text-[#98A4AE]" />
-            </p>
-            <div className="flex items-center gap-2">
-              {["All Years", "2025", "2024", "2023"].map((y) => (
-                <button
-                  key={y}
-                  onClick={() => setActiveYear(y)}
-                  className={`px-4 py-2.5 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
-                    activeYear === y
-                      ? "border-[#635BFF] text-[#635BFF] bg-white"
-                      : "border-[#EFF4FA] text-[#526B7A] hover:bg-[#F4F6FA]"
-                  }`}
-                >
-                  {y}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Registration */}
-          <div>
-            <p className="text-xs text-[#98A4AE] font-semibold mb-2">
-              Registration
-            </p>
-            <div className="flex items-center gap-2">
-              {["All", "Imported", "Mannual"].map((r) => (
-                <button
-                  key={r}
-                  onClick={() => setActiveReg(r)}
-                  className={`px-4 py-2.5 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
-                    activeReg === r
-                      ? "border-[#635BFF] text-[#635BFF] bg-white"
-                      : "border-[#EFF4FA] text-[#526B7A] hover:bg-[#F4F6FA]"
-                  }`}
-                >
-                  {r}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Sales */}
-          <div>
-            <p className="text-xs text-[#98A4AE] font-semibold mb-2">Sales</p>
-            <div className="flex items-center gap-2">
-              <span className="px-4 py-2.5 text-xs text-[#526B7A] border border-[#E0E6EB] rounded-lg bg-white">
-                € 0
-              </span>
-              <span className="text-xs text-[#98A4AE]">-</span>
-              <span className="px-4 py-2.5 text-xs text-[#526B7A] border border-[#E0E6EB] rounded-lg bg-white">
-                € 200
-              </span>
-            </div>
-          </div>
-
-          {/* Last Appointment */}
-          <div>
-            <p className="text-xs text-[#98A4AE] font-semibold mb-2">
-              Last Appointment
-            </p>
-            <button className="flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-[#526B7A] border border-[#E0E6EB] rounded-lg bg-white hover:border-[#635BFF] transition-colors cursor-pointer">
-              {lastAppt}
-              <ChevronDown size={13} className="text-[#98A4AE]" />
-            </button>
-          </div>
-        </div>
-      </div>
+      <ImportTopBar
+        setAddClientOpen={setAddClientOpen}
+        setActiveYear={setActiveYear}
+        activeYear={activeYear}
+        setActiveReg={setActiveReg}
+        activeReg={activeReg}
+        lastAppt={lastAppt}
+      />
 
       {/* Table card */}
       <div className="bg-white rounded-2xl border border-[#EEF2F8]">
-        {/* Search Mass Deletion */}
-        <div className="px-[30px] pt-5 pb-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2 px-4 py-2.5 border border-[#E0E6EB] rounded-lg bg-white w-72">
+        {/* Search + Mass Deletion */}
+        <div className="px-4 md:px-[30px] pt-5 pb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex items-center gap-2 px-4 py-2.5 border border-[#E0E6EB] rounded-lg bg-white w-full md:w-72">
             <Search size={15} className="text-[#29343D] shrink-0" />
             <input
               type="text"
@@ -246,14 +162,15 @@ export default function ClientsTable() {
           </div>
 
           {selectionMode && (
-            <button className="flex items-center gap-2 px-5 py-2.5 bg-[#FFE5ED] hover:bg-[#FFD6E0] text-[#FF6692] text-sm font-semibold rounded-lg transition-colors cursor-pointer">
+            <button className="flex items-center gap-2 px-5 py-2.5 bg-[#FFE5ED] hover:bg-[#FFD6E0] text-[#FF6692] text-sm font-semibold rounded-lg transition-colors cursor-pointer w-full md:w-auto justify-center md:justify-start">
               <Trash2 size={15} />
               Mass Deletion
             </button>
           )}
         </div>
+
         {/* Table */}
-        <div className="overflow-x-auto border-t rounded-[12px_12px_0_0] m-[0_30px_0px_30px] border border-[#E0E6EB]">
+        <div className="overflow-x-auto border-t rounded-[12px_12px_0_0] mx-4 md:m-[0_30px_0px_30px] border border-[#E0E6EB]">
           <table className="w-full min-w-[750px] border-collapse">
             <thead>
               <tr
@@ -262,10 +179,9 @@ export default function ClientsTable() {
                 {/* Combined checkbox + Name column */}
                 <th className="px-5 py-4 text-left bg-[#F3F3FF]">
                   <div className="flex items-center gap-3">
-                    {/* Checkbox — always visible, triggers selection mode */}
                     {selectionMode ? (
                       <button
-                        onClick={allSelected ? exitSelection : exitSelection}
+                        onClick={allSelected ? exitSelection : toggleAll}
                         className={`w-6 h-6 rounded-lg flex items-center justify-center border-2 transition-all cursor-pointer shrink-0 ${
                           allSelected
                             ? "bg-[#635BFF] border-[#635BFF]"
@@ -288,7 +204,6 @@ export default function ClientsTable() {
                         className="w-6 h-6 rounded-lg border-2 border-[#CACFD8] bg-white hover:border-[#635BFF] transition-colors cursor-pointer shrink-0"
                       />
                     )}
-                    {/* Name label */}
                     {selectionMode ? (
                       <button
                         onClick={allSelected ? exitSelection : toggleAll}
@@ -305,6 +220,7 @@ export default function ClientsTable() {
                     )}
                   </div>
                 </th>
+
                 {[
                   "Telephone",
                   "Last Appointment",
@@ -335,14 +251,12 @@ export default function ClientsTable() {
                     {/* Combined checkbox + Name cell */}
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
-                        {/* Row checkbox — only shows in selection mode */}
                         {selectionMode && (
                           <Checkbox
                             checked={isSelected}
                             onChange={() => toggleOne(client.id)}
                           />
                         )}
-                        {/* Avatar + name */}
                         <div className="flex items-center gap-3">
                           <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-[#F0F2F5]">
                             <Image
@@ -409,91 +323,21 @@ export default function ClientsTable() {
             </tbody>
           </table>
         </div>
+
         {/* Pagination */}
-        <div className="mx-[30px] mb-[30px] py-4 flex items-center justify-end gap-4 border-t-0 border-b border-l border-r rounded-[0_0_8px_8px] border-[#EEF2F8]">
-          {/* Items per page */}
-          <div className="flex items-center gap-2 text-sm text-[#29343D]">
-            <span>Items per page:</span>
-            <div ref={ippRef} className="relative">
-              <button
-                onClick={() => setIppOpen((o) => !o)}
-                className="flex items-center gap-1.5 px-3 py-1.5 border border-[#E0E6EB] rounded-lg text-sm text-[#29343D] font-semibold hover:border-[#635BFF] transition-colors cursor-pointer bg-white"
-              >
-                {itemsPerPage}
-                <ChevronDown
-                  size={13}
-                  className={`text-[#98A4AE] transition-transform ${ippOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-              {ippOpen && (
-                <div className="absolute bottom-full left-0 mb-1 bg-white rounded-xl shadow-lg z-10 py-1 overflow-hidden w-20">
-                  {ITEMS_PER_PAGE_OPTIONS.map((n) => (
-                    <button
-                      key={n}
-                      onClick={() => {
-                        setItemsPerPage(n);
-                        setCurrentPage(1);
-                        setIppOpen(false);
-                      }}
-                      className={`w-full text-left px-3 py-2 text-sm cursor-pointer transition-colors ${
-                        itemsPerPage === n
-                          ? "bg-[#F0EEFF] text-[#29343D] font-semibold"
-                          : "text-[#29343D] hover:bg-[#F4F6FA]"
-                      }`}
-                    >
-                      {n}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Page info */}
-          <span className="text-sm text-[#526B7A]">
-            {start + 1}-{Math.min(start + itemsPerPage, filtered.length)} of{" "}
-            {filtered.length}
-          </span>
-
-          {/* Nav buttons */}
-          <div className="flex items-center gap-1">
-            {[
-              {
-                icon: <ChevronFirst size={15} />,
-                action: () => setCurrentPage(1),
-                disabled: currentPage === 1,
-              },
-              {
-                icon: <ChevronLeft size={15} />,
-                action: () => setCurrentPage((p) => p - 1),
-                disabled: currentPage === 1,
-              },
-              {
-                icon: <ChevronRight size={15} />,
-                action: () => setCurrentPage((p) => p + 1),
-                disabled: currentPage === totalPages,
-              },
-              {
-                icon: <ChevronLast size={15} />,
-                action: () => setCurrentPage(totalPages),
-                disabled: currentPage === totalPages,
-              },
-            ].map((btn, i) => (
-              <button
-                key={i}
-                onClick={btn.action}
-                disabled={btn.disabled}
-                className={`w-8 h-8 flex items-center justify-center rounded-lg transition-colors cursor-pointer ${
-                  btn.disabled
-                    ? "text-[#C4CDD5] cursor-not-allowed"
-                    : "text-[#526B7A] hover:bg-[#F4F6FA]"
-                }`}
-              >
-                {btn.icon}
-              </button>
-            ))}
-          </div>
-        </div>
+        <PaginationClient
+          ippRef={ippRef}
+          setIppOpen={setIppOpen}
+          itemsPerPage={itemsPerPage}
+          ippOpen={ippOpen}
+          ITEMS_PER_PAGE_OPTIONS={ITEMS_PER_PAGE_OPTIONS}
+          setItemsPerPage={setItemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          start={start}
+          filtered={filtered}
+        />
       </div>
     </div>
   );
