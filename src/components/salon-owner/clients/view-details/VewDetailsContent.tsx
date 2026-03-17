@@ -1,40 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import {
-  ChevronLeft,
-  Home,
-  Calendar,
-  Hash,
-  Users,
-  CreditCard,
-  Paperclip,
-  Stethoscope,
-  MessageSquare,
-  LayoutGrid,
-  Edit2,
-  Facebook,
-  Instagram,
-  FileText,
-  Eye,
-  Download,
-  Trash2,
-  ChevronDown,
-  ChevronFirst,
-  ChevronLast,
-  ChevronRight,
-  Ban,
-} from "lucide-react";
+import { Ban } from "lucide-react";
 import PageHeader from "../../common-component/PageHeader";
 import ClientProfile from "./ClientProfile";
 import IListIcon from "../../appointment/add-appointment/IListIcon";
 import ICalaender from "@/app/account-protal/svg/ICalaender";
-import ICash from "@/app/account-protal/svg/ICash";
 import IIncome from "@/app/account-protal/svg/IIncome";
-import IBudget from "@/app/account-protal/svg/IBudget";
 import IDeadline from "@/app/account-protal/svg/IDeadline";
 import ITex from "@/app/account-protal/svg/ITex";
-import ISales from "@/app/account-protal/svg/ISales";
 import OverviewCard from "../../common-component/OverviewCard";
 import INoShow from "./INoShow";
 import PersonalDataCard from "../../common-component/Personaldatacard";
@@ -60,39 +34,6 @@ interface EditHistoryRow {
   action: "Update" | "Creation";
 }
 
-const STAFF: StaffMember[] = [
-  {
-    id: "1",
-    name: "Lola Ortega",
-    role: "Staff",
-    avatar: "/images/staff1.png",
-    bgColor: "#F4C0D1",
-  },
-  {
-    id: "2",
-    name: "Virgie Sutton",
-    role: "Staff",
-    avatar: "/images/staff2.png",
-    bgColor: "#D3D1C7",
-  },
-  {
-    id: "3",
-    name: "Lois Gregory",
-    role: "Staff",
-    avatar: "/images/staff3.png",
-    bgColor: "#9FE1CB",
-  },
-];
-
-const SERVICES = ["Haircuts", "Coloring", "Treatments"];
-
-const PREFERRED_DAYS = [
-  { time: "09:45 AM", day: "Monday", color: "#1D9E75", bg: "#E1F5EE" },
-  { time: "10:00 AM", day: "Tuesday", color: "#1D9E75", bg: "#E1F5EE" },
-  { time: "12:00 AM", day: "Thursday", color: "#1D9E75", bg: "#E1F5EE" },
-  { time: "09:30 AM", day: "Friday", color: "#EF9F27", bg: "#FAEEDA" },
-  { time: "09:30 AM", day: "Saturday", color: "#EF9F27", bg: "#FAEEDA" },
-];
 const OverviewData = [
   {
     title: "Total Sales",
@@ -176,32 +117,8 @@ const HISTORY: EditHistoryRow[] = [
   },
 ];
 
-/* ─── Sub-components ─── */
-function ActionBadge({ action }: { action: "Update" | "Creation" }) {
-  if (action === "Update") {
-    return (
-      <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold bg-[#EEEDFE] text-[#635BFF]">
-        Update
-      </span>
-    );
-  }
-  return (
-    <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold bg-[#E1F5EE] text-[#085041]">
-      Creation
-    </span>
-  );
-}
-
 /* ─── Main Component ─── */
 export default function VewDetailsContent() {
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [ippOpen, setIppOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(HISTORY.length / itemsPerPage);
-  const start = (currentPage - 1) * itemsPerPage;
-  const paginatedHistory = HISTORY.slice(start, start + itemsPerPage);
-
   return (
     <div className="min-h-screen bg-[#F4F6FA] font-manrope">
       {/*  Breadcrumb bar  */}
@@ -217,49 +134,57 @@ export default function VewDetailsContent() {
           <ClientProfile />
           {/* tabs */}
           <div
-            className="bg-[#DDDBFF] flex items-center justify-center gap-4 flex-wrap mt-4"
+            className="bg-[#DDDBFF] mt-4 overflow-x-auto"
             style={{ borderRadius: "0 0 12px 12px" }}
           >
-            <div className="flex items-center gap-2 p-3 cursor-pointer border-b-2 border-[#635BFF]">
-              <IListIcon color="#635BFF" />
-              <h4 className="font-manrope text-[#635BFF] text-sm font-medium">
-                Basic Data
-              </h4>
-            </div>
-            <div className="flex items-center gap-2 p-3 cursor-pointer">
-              <ICalaender color="#29343D" />
-              <h4 className="font-manrope text-[#29343D] text-sm font-medium">
-                Appointments
-              </h4>
-            </div>
-            <div className="flex items-center gap-2 p-3 cursor-pointer">
-              <IIncome color="#29343D" />
-              <h4 className="font-manrope text-[#29343D] text-sm font-medium">
-                Financial Information
-              </h4>
-            </div>
-            <div className="flex items-center gap-2 p-3 cursor-pointer">
-              <IListIcon color="#29343D" />
-              <h4 className="font-manrope text-[#29343D] text-sm font-medium">
-                Notes & Attachments
-              </h4>
-            </div>
-            <div className="flex items-center gap-2 p-3 cursor-pointer">
-              <IListIcon color="#29343D" />
-              <h4 className="font-manrope text-[#29343D] text-sm font-medium">
-                Medical{" "}
-              </h4>
-            </div>
-            <div className="flex items-center gap-2 p-3 cursor-pointer">
-              <IListIcon color="#29343D" />
-              <h4 className="font-manrope text-[#29343D] text-sm font-medium">
-                Communication Log
-              </h4>
+            <div className="flex items-center md:justify-center gap-2 md:gap-4 min-w-max px-2">
+              {/* Tab */}
+              <div className="flex items-center gap-2 p-3 cursor-pointer border-b-2 border-[#635BFF] whitespace-nowrap">
+                <IListIcon color="#635BFF" />
+                <h4 className="font-manrope text-[#635BFF] text-sm font-medium">
+                  Basic Data
+                </h4>
+              </div>
+
+              <div className="flex items-center gap-2 p-3 cursor-pointer whitespace-nowrap">
+                <ICalaender color="#29343D" />
+                <h4 className="font-manrope text-[#29343D] text-sm font-medium">
+                  Appointments
+                </h4>
+              </div>
+
+              <div className="flex items-center gap-2 p-3 cursor-pointer whitespace-nowrap">
+                <IIncome color="#29343D" />
+                <h4 className="font-manrope text-[#29343D] text-sm font-medium">
+                  Financial Information
+                </h4>
+              </div>
+
+              <div className="flex items-center gap-2 p-3 cursor-pointer whitespace-nowrap">
+                <IListIcon color="#29343D" />
+                <h4 className="font-manrope text-[#29343D] text-sm font-medium">
+                  Notes & Attachments
+                </h4>
+              </div>
+
+              <div className="flex items-center gap-2 p-3 cursor-pointer whitespace-nowrap">
+                <IListIcon color="#29343D" />
+                <h4 className="font-manrope text-[#29343D] text-sm font-medium">
+                  Medical
+                </h4>
+              </div>
+
+              <div className="flex items-center gap-2 p-3 cursor-pointer whitespace-nowrap">
+                <IListIcon color="#29343D" />
+                <h4 className="font-manrope text-[#29343D] text-sm font-medium">
+                  Communication Log
+                </h4>
+              </div>
             </div>
           </div>
         </div>
         {/*  Overview */}
-        <div className="p-[30px] bg-white rounded-xl">
+        <div className="p-[20px] lg:p-[30px] bg-white rounded-xl">
           <h2 className="font-manrope text-[22px] font-semibold text-[#29343D] mb-[30px]">
             Overview
           </h2>
@@ -270,7 +195,7 @@ export default function VewDetailsContent() {
           </div>
         </div>
 
-        {/* ── Personal Data + Full Address ── */}
+        {/* Personal Data + Full Address */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px]">
           {/* Personal Data */}
           <PersonalDataCard
@@ -298,13 +223,13 @@ export default function VewDetailsContent() {
           />
         </div>
 
-        {/* ── Waivers ── */}
+        {/* Waivers */}
         <WaiversCard />
 
-        {/* ── Preferences & Behavior ── */}
+        {/*Preferences & Behavior */}
         <PreferencesBehavior />
 
-        {/* ── History of Edit ── */}
+        {/* History of Edit*/}
         <Historyofedit />
       </div>
     </div>

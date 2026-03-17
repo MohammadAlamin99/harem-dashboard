@@ -16,6 +16,7 @@ interface ProfileHeaderProps {
   bannerUrl?: string;
   tags?: Tag[];
 }
+
 const tagStyles: Record<string, string> = {
   vip: "bg-[#16CDC7] text-white",
   new: "bg-[#EBFAF0] text-[#36C76C]",
@@ -48,8 +49,8 @@ const ClientProfile = ({
 
       {/* Avatar - centered, overlapping banner */}
       <div className="relative flex justify-center">
-        <div className="rounded-full border-2 border-white mt-[-45px]">
-          <div className="h-20 w-20 overflow-hidden rounded-full outline-primary/30 -outline-offset-1">
+        <div className="rounded-full border-2 border-white -mt-12 sm:-mt-16">
+          <div className="h-20 w-20 sm:h-24 sm:w-24 overflow-hidden rounded-full outline-primary/30 -outline-offset-1">
             <Image
               src={"/images/avator.png"}
               alt={name}
@@ -62,9 +63,10 @@ const ClientProfile = ({
       </div>
 
       {/* Content */}
-      <div className="px-[30px] py-[30px] pt-5">
-        <div className="grid grid-cols-3 flex-wrap items-center justify-between gap-4">
-          <div className="flex gap-8">
+      <div className="px-6 sm:px-10 py-6 sm:py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:items-center md:justify-between">
+          {/* Left stats */}
+          <div className="flex justify-center md:justify-start gap-6 flex-wrap">
             <div className="flex flex-col items-center gap-1">
               <div className="mb-2">
                 <ICalaender color="#29343D" size={24} />
@@ -77,7 +79,6 @@ const ClientProfile = ({
               </span>
             </div>
             <div className="flex flex-col items-center gap-1">
-              {/* <Hash className="h-5 w-5 text-muted-foreground" /> */}
               <div className="mb-2">
                 <Hash color="#29343D" size={24} />
               </div>
@@ -91,18 +92,18 @@ const ClientProfile = ({
           </div>
 
           {/* Center identity */}
-          <div className="flex flex-col items-center gap-1 text-center">
-            <h1 className="text-[18px] font-manrope font-semibold tracking-tight text-[#29343D]">
+          <div className="flex flex-col items-center text-center gap-2">
+            <h1 className="text-[18px] sm:text-[20px] font-manrope font-semibold tracking-tight text-[#29343D]">
               {name}
             </h1>
-            <div className="flex items-center gap-1.5 text-sm font-manrope text-[#98A4AE]">
+            <div className="flex items-center gap-1.5 text-sm sm:text-base font-manrope text-[#98A4AE] flex-wrap justify-center">
               {location}
             </div>
             <div className="mt-2 flex flex-wrap justify-center gap-2">
               {tags.map((tag) => (
                 <span
                   key={tag.label}
-                  className={`rounded-full px-3 py-1 text-xs font-medium ${tagStyles[tag.variant]}`}
+                  className={`rounded-full px-3 py-1 text-xs sm:text-sm font-medium ${tagStyles[tag.variant]}`}
                 >
                   {tag.label}
                 </span>
@@ -111,7 +112,7 @@ const ClientProfile = ({
           </div>
 
           {/* Right action */}
-          <div className="ml-auto w-fit">
+          <div className="flex justify-center md:justify-end mt-4 md:mt-0">
             <button className="rounded-lg bg-[#635BFF] cursor-pointer font-manrope px-4 py-2.5 text-sm font-medium text-white hover:opacity-90 active:scale-[0.97] transition-all">
               Book Now
             </button>
