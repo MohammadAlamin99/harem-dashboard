@@ -34,12 +34,9 @@ const ClientProfile = ({
   ],
 }: ProfileHeaderProps) => {
   return (
-    <div className="w-full bg-white max-w-5xl mx-auto overflow-hidden rounded-xl">
+    <div className="w-full bg-white mx-auto overflow-hidden rounded-xl">
       {/* Banner */}
-      <div
-        className="relative h-56 w-full overflow-hidden"
-        style={{ height: "330px" }}
-      >
+      <div className="relative h-56 w-full overflow-hidden">
         <Image
           src={"/images/bannerProfile.jpg"}
           alt="Profile Banner"
@@ -51,10 +48,7 @@ const ClientProfile = ({
 
       {/* Avatar - centered, overlapping banner */}
       <div className="relative flex justify-center">
-        <div
-          className="rounded-full border-2 border-white"
-          style={{ marginTop: "-45px" }}
-        >
+        <div className="rounded-full border-2 border-white mt-[-45px]">
           <div className="h-20 w-20 overflow-hidden rounded-full outline-primary/30 -outline-offset-1">
             <Image
               src={"/images/avator.png"}
