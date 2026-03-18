@@ -1,3 +1,4 @@
+import { EditHistoryRow } from "@/@types/salon-owner/EditHistoryRow.type";
 import {
   ChevronDown,
   ChevronFirst,
@@ -5,19 +6,6 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-
-interface Client {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string;
-  telephone: string;
-  lastAppointment: string;
-  allergy: string;
-  allergyColor: "yellow" | "purple" | "pink";
-  createdAt: string;
-}
-
 type Props = {
   ippRef: React.RefObject<HTMLDivElement | null>;
   setIppOpen: (open: boolean | ((o: boolean) => boolean)) => void;
@@ -29,7 +17,7 @@ type Props = {
   setCurrentPage: (page: number | ((p: number) => number)) => void;
   totalPages: number;
   start: number;
-  filtered: Client[];
+  filtered: EditHistoryRow[];
 };
 
 export default function PaginationClient({
@@ -47,7 +35,11 @@ export default function PaginationClient({
 }: Props) {
   return (
     <div>
-      <div className="mx-4 md:mx-[30px] mb-[30px] py-4 flex flex-wrap md:flex-nowrap items-center md:justify-end justify-between gap-4 border-t-0 border-b border-l border-r rounded-[0_0_8px_8px] border-[#EEF2F8]">
+      <div
+        className="mx-4 md:mx-[30px] mb-[30px] py-4 flex flex-wrap md:flex-nowrap items-center
+       md:justify-end justify-between gap-4 border-t-0 border-b border-l 
+       border-r rounded-[0_0_8px_8px] border-[#EEF2F8]"
+      >
         {/* Items per page */}
         <div className="flex items-center gap-2 text-sm text-[#29343D]">
           <span className="whitespace-nowrap">Items per page:</span>

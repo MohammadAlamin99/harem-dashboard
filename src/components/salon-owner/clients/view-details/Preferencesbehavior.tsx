@@ -1,10 +1,9 @@
 "use client";
+import { memo } from "react";
+import StylistCard from "./StylistCard";
+import ServiceRowComponent from "./ClientViewService";
+import ClientPreferedTime from "./ClientPreferedTime";
 
-import Image from "next/image";
-
-/* ══════════════════════════════════════════════════════════════
-   TYPES
-══════════════════════════════════════════════════════════════ */
 export interface Stylist {
   id: string;
   name: string;
@@ -21,7 +20,6 @@ export interface BookedService {
 export interface PreferredTime {
   time: string;
   day: string;
-  /** dot color: "purple" | "teal" | "green" | "yellow" | "pink" */
   color: "purple" | "teal" | "green" | "yellow" | "pink";
 }
 
@@ -37,131 +35,9 @@ export interface PreferencesBehaviorProps {
   className?: string;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   DOT COLORS
-══════════════════════════════════════════════════════════════ */
-const DOT_COLOR: Record<PreferredTime["color"], string> = {
-  purple: "bg-purple-400",
-  teal: "bg-teal-400",
-  green: "bg-green-400",
-  yellow: "bg-yellow-400",
-  pink: "bg-pink-400",
-};
+const ServiceRow = memo(ServiceRowComponent);
+ServiceRow.displayName = "ServiceRow";
 
-/* ══════════════════════════════════════════════════════════════
-   TRASH ICON
-══════════════════════════════════════════════════════════════ */
-const TrashIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#F87171"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="3 6 5 6 21 6" />
-    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-    <path d="M10 11v6M14 11v6" />
-    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-  </svg>
-);
-
-/* ══════════════════════════════════════════════════════════════
-   STYLIST CARD
-══════════════════════════════════════════════════════════════ */
-const StylistCard = ({
-  stylist,
-  onDelete,
-}: {
-  stylist: Stylist;
-  onDelete?: () => void;
-}) => (
-  <div
-    className="relative flex flex-col items-center justify-center gap-2
-                  border border-[#E8EBF4] rounded-2xl pt-8 pb-6 px-6 bg-white flex-1 min-w-0"
-  >
-    {/* Delete */}
-    <button
-      onClick={onDelete}
-      className="absolute top-3.5 right-3.5 hover:opacity-70 active:scale-90
-                 transition-all duration-150 focus:outline-none"
-    >
-      <TrashIcon />
-    </button>
-
-    {/* Avatar */}
-    <div
-      className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0"
-      style={{ background: stylist.avatarBg ?? "#f0e8ff" }}
-    >
-      <Image
-        src={stylist.avatarUrl}
-        alt={stylist.name}
-        width={80}
-        height={80}
-        className="object-cover w-full h-full"
-      />
-    </div>
-
-    {/* Name + role */}
-    <div className="flex flex-col items-center gap-0.5 text-center">
-      <span className="text-[15px] font-semibold text-[#29343D] font-manrope leading-snug">
-        {stylist.name}
-      </span>
-      <span className="text-[12.5px] text-[#98A4AE] font-manrope">
-        {stylist.role}
-      </span>
-    </div>
-  </div>
-);
-
-/* ══════════════════════════════════════════════════════════════
-   SERVICE ROW
-══════════════════════════════════════════════════════════════ */
-const ServiceRow = ({ service }: { service: BookedService }) => (
-  <div className="flex items-center gap-4 bg-[#F3F5FB] rounded-xl px-4 py-4">
-    <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center flex-shrink-0">
-      <span className="text-white text-[12px] font-bold font-manrope">
-        {service.rank}
-      </span>
-    </div>
-    <span className="text-[14px] font-medium text-[#29343D] font-manrope">
-      {service.label}
-    </span>
-  </div>
-);
-
-/* ══════════════════════════════════════════════════════════════
-   PREFERRED TIME ROW
-══════════════════════════════════════════════════════════════ */
-const TimeRow = ({
-  entry,
-  isLast,
-}: {
-  entry: PreferredTime;
-  isLast: boolean;
-}) => (
-  <div
-    className={`flex items-center gap-4 py-3.5 ${!isLast ? "border-b border-[#F0F2F8]" : ""}`}
-  >
-    <span className="text-[13.5px] font-semibold text-[#29343D] font-manrope w-[80px] flex-shrink-0">
-      {entry.time}
-    </span>
-    <span
-      className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${DOT_COLOR[entry.color]}`}
-    />
-    <span className="text-[13.5px] font-medium text-[#29343D] font-manrope">
-      {entry.day}
-    </span>
-  </div>
-);
-
-/* ══════════════════════════════════════════════════════════════
-   DEFAULT DATA
-══════════════════════════════════════════════════════════════ */
 const DEFAULT_STYLISTS: Stylist[] = [
   {
     id: "1",
@@ -200,9 +76,6 @@ const DEFAULT_TIMES: PreferredTime[] = [
   { time: "09:30 AM", day: "Saturday", color: "pink" },
 ];
 
-/* ══════════════════════════════════════════════════════════════
-   MAIN EXPORT
-══════════════════════════════════════════════════════════════ */
 export default function PreferencesBehavior({
   title = "Preferences & Behavior",
   stylistSectionLabel = "Preferred stylist/employee",
@@ -217,57 +90,62 @@ export default function PreferencesBehavior({
   return (
     <div
       className={[
-        "font-manrope w-full bg-white rounded-2xl border border-[#E8EBF0] shadow-sm p-6",
+        "w-full bg-white rounded-xl border border-[#E8EBF0] p-5 sm:p-6 lg:p-[30px]",
         className,
       ].join(" ")}
     >
-      {/* ── Page title ───────────────────────────────────── */}
-      <h2 className="text-[22px] font-semibold text-[#29343D] mb-5 tracking-tight">
-        {title}
-      </h2>
+      <div className="space-y-6">
+        {/* Title */}
+        <h2 className="text-[22px] font-semibold text-[#29343D] tracking-tight">
+          {title}
+        </h2>
 
-      {/* ── Stylist section ──────────────────────────────── */}
-      <p className="text-[14px] font-medium text-[#29343D] mb-3">
-        {stylistSectionLabel}
-      </p>
-
-      <div className="flex gap-4 mb-8 flex-wrap">
-        {stylists.map((s) => (
-          <StylistCard
-            key={s.id}
-            stylist={s}
-            onDelete={() => onDeleteStylist?.(s.id)}
-          />
-        ))}
-      </div>
-
-      {/* ── Bottom two-column section ─────────────────────── */}
-      <div className="flex gap-6 flex-col lg:flex-row">
-        {/* Services */}
-        <div className="flex-[2] min-w-0">
-          <p className="text-[14px] font-medium text-[#29343D] mb-3">
-            {servicesSectionLabel}
+        {/* Stylists */}
+        <div>
+          <p className="text-[18px] font-manrope font-semibold text-[#29343D] mb-3">
+            {stylistSectionLabel}
           </p>
-          <div className="flex flex-col gap-3">
-            {services.map((svc) => (
-              <ServiceRow key={svc.rank} service={svc} />
-            ))}
-          </div>
+
+          {stylists.length ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+              {stylists.map((s) => (
+                <StylistCard
+                  key={s.id}
+                  stylist={s}
+                  onDelete={() => onDeleteStylist?.(s.id)}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-400">No stylists found</p>
+          )}
         </div>
 
-        {/* Preferred times */}
-        <div className="flex-[1] min-w-[240px]">
-          <p className="text-[14px] font-medium text-[#29343D] mb-3">
-            {timeSectionLabel}
-          </p>
-          <div className="border border-[#E8EBF0] rounded-2xl px-5 py-1">
-            {preferredTimes.map((entry, i) => (
-              <TimeRow
-                key={`${entry.day}-${i}`}
-                entry={entry}
-                isLast={i === preferredTimes.length - 1}
-              />
-            ))}
+        {/* Bottom Section */}
+        <div className="flex flex-col lg:flex-row gap-6 w-full">
+          {/* Services */}
+          <div className="flex-1">
+            <p className="text-[18px] font-manrope font-semibold text-[#29343D] mb-3">
+              {servicesSectionLabel}
+            </p>
+
+            {services.length ? (
+              <div className="flex flex-col gap-4">
+                {services.map((svc) => (
+                  <ServiceRow key={svc.rank} service={svc} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-400">No services available</p>
+            )}
+          </div>
+
+          {/* Preferred Times */}
+          <div className="w-full lg:w-[264px]">
+            <ClientPreferedTime
+              label={timeSectionLabel}
+              times={preferredTimes}
+            />
           </div>
         </div>
       </div>

@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import { Ban } from "lucide-react";
 import PageHeader from "../../common-component/PageHeader";
 import ClientProfile from "./ClientProfile";
@@ -15,24 +13,7 @@ import PersonalDataCard from "../../common-component/Personaldatacard";
 import router from "next/router";
 import WaiversCard from "./Waiverscard";
 import PreferencesBehavior from "./Preferencesbehavior";
-import Historyofedit from "./Historyofedit";
-interface StaffMember {
-  id: string;
-  name: string;
-  role: string;
-  avatar: string;
-  bgColor: string;
-}
-
-interface EditHistoryRow {
-  id: string;
-  dateTime: string;
-  fieldChanged: string;
-  previousValue: string;
-  newValue: string;
-  editedBy: string;
-  action: "Update" | "Creation";
-}
+import ClientHistoryOfEdit from "./ClientHistoryEdit";
 
 const OverviewData = [
   {
@@ -69,55 +50,6 @@ const OverviewData = [
   },
 ];
 
-const HISTORY: EditHistoryRow[] = [
-  {
-    id: "1",
-    dateTime: "5 Aug 2025 09:45 AM",
-    fieldChanged: "Phone",
-    previousValue: "+39 336 789 012",
-    newValue: "+39 336 789 012",
-    editedBy: "Virgie Sutton",
-    action: "Update",
-  },
-  {
-    id: "2",
-    dateTime: "5 Aug 2025 09:45 AM",
-    fieldChanged: "Address",
-    previousValue: "Independence Street 567",
-    newValue: "Independence Street 567",
-    editedBy: "Virgie Sutton",
-    action: "Update",
-  },
-  {
-    id: "3",
-    dateTime: "5 Aug 2025 09:45 AM",
-    fieldChanged: "Email",
-    previousValue: "anna@bellavista.com",
-    newValue: "anna@gmail.com",
-    editedBy: "Lola Ortega",
-    action: "Update",
-  },
-  {
-    id: "4",
-    dateTime: "5 Aug 2025 09:45 AM",
-    fieldChanged: "Email",
-    previousValue: "anna@gmail.com",
-    newValue: "anna@bellavista.com",
-    editedBy: "Lola Ortega",
-    action: "Update",
-  },
-  {
-    id: "5",
-    dateTime: "5 Aug 2025 09:45 AM",
-    fieldChanged: "Profile Created",
-    previousValue: "–",
-    newValue: "–",
-    editedBy: "Lois Gregory",
-    action: "Creation",
-  },
-];
-
-/* ─── Main Component ─── */
 export default function VewDetailsContent() {
   return (
     <div className="min-h-screen bg-[#F4F6FA] font-manrope">
@@ -133,10 +65,7 @@ export default function VewDetailsContent() {
           {/*  Profile Card  */}
           <ClientProfile />
           {/* tabs */}
-          <div
-            className="bg-[#DDDBFF] mt-4 overflow-x-auto"
-            style={{ borderRadius: "0 0 12px 12px" }}
-          >
+          <div className="bg-[#DDDBFF] mt-4 overflow-x-auto rounded-[0px_0px_12px_12px]">
             <div className="flex items-center md:justify-center gap-2 md:gap-4 min-w-max px-2">
               {/* Tab */}
               <div className="flex items-center gap-2 p-3 cursor-pointer border-b-2 border-[#635BFF] whitespace-nowrap">
@@ -209,7 +138,6 @@ export default function VewDetailsContent() {
               { label: "Email", value: "anna@bellavista.com" },
             ]}
           />
-
           {/* Full Address */}
           <PersonalDataCard
             title="Full Address"
@@ -222,15 +150,12 @@ export default function VewDetailsContent() {
             ]}
           />
         </div>
-
         {/* Waivers */}
         <WaiversCard />
-
         {/*Preferences & Behavior */}
         <PreferencesBehavior />
-
         {/* History of Edit*/}
-        <Historyofedit />
+        <ClientHistoryOfEdit />
       </div>
     </div>
   );
