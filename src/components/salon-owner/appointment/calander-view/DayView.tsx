@@ -63,11 +63,10 @@ export default function DayView({
       className="relative flex flex-col overflow-hidden"
       onClick={() => setPreview(null)}
     >
-      <div className="border border-[#E0E6EB] mx-[30px] rounded-xl">
+      <div className="border border-[#E0E6EB] mx-[15px] md:mx-[30px] rounded-xl">
         {/* Member header row */}
         <div className="flex border-b border-[#E0E6EB] bg-[#F3F3FF] sticky top-0 z-10 rounded-[12px_12px_0px_0px]">
           <div className="w-[72px] border-r border-[#E0E6EB]" />
-          {/* scroll arrow left */}
           <div className="flex-1 flex overflow-hidden">
             {visibleMembers.map((member) => (
               <div
@@ -95,9 +94,9 @@ export default function DayView({
           className="overflow-y-auto overflow-x-auto flex-1"
           style={{ maxHeight: "calc(100vh - 280px)" }}
         >
-          <div className="flex">
+          <div className="flex min-w-[1000px]">
             {/* Time labels */}
-            <div className="w-[72px] border-r border-[#E0E6EB]">
+            <div className="w-[72px] shrink-0 border-r border-[#E0E6EB]">
               {HOURS.map((h) => (
                 <div
                   key={h}
@@ -119,44 +118,55 @@ export default function DayView({
               return (
                 <div
                   key={member.id}
-                  className="flex-1 min-w-[120px] relative border-r border-[#E0E6EB] last:border-r-0"
+                  className="flex-1 min-w-[120px] border-r border-[#E0E6EB] last:border-r-0"
                 >
-                  {HOURS.map((h) => (
-                    <div
-                      key={h}
-                      className="border-b border-[#E0E6EB] flex flex-col"
-                      style={{ height: HOUR_HEIGHT }}
-                    >
-                      {Array.from({ length: 4 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className={`flex-1 border-b border-[#F0F0F0] ${
-                            i === 3 ? "border-b-0" : ""
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  ))}
-                  {/* Appointments */}
-                  {memberAppts.map((appt) => {
-                    const startMin = timeToMinutes(appt.startTime);
-                    const endMin = timeToMinutes(appt.endTime);
-                    const top = (startMin / 100) * HOUR_HEIGHT;
-                    const height = Math.max(
-                      ((endMin - startMin) / 60) * HOUR_HEIGHT,
-                      20,
-                    );
+                  {HOURS.map((h) => {
+                    const hourAppts = memberAppts.filter((a) => {
+                      const startHour = parseInt(a.startTime.split(":")[0]);
+                      return startHour === h;
+                    });
                     return (
                       <div
-                        key={appt.id}
-                        className="absolute top-0 left-0 w-full"
-                        style={{ top, height }}
+                        key={h}
+                        className="relative border-b border-[#E0E6EB]"
+                        style={{ height: HOUR_HEIGHT }}
                       >
-                        <AppPill
-                          appt={appt}
-                          statusColor={statusColor}
-                          onClick={handlePillClick}
-                        />
+                        {/* Quarter lines */}
+                        <div className="absolute inset-0 flex flex-col pointer-events-none">
+                          {Array.from({ length: 4 }).map((_, i) => (
+                            <div
+                              key={i}
+                              className={`flex-1 ${
+                                i < 3 ? "border-b border-[#F0F0F0]" : ""
+                              }`}
+                            />
+                          ))}
+                        </div>
+
+                        {/* Appointments in this hour */}
+                        <div className="relative z-10 flex flex-col">
+                          {hourAppts.map((appt) => {
+                            const startMin = timeToMinutes(appt.startTime);
+                            const endMin = timeToMinutes(appt.endTime);
+                            const height = Math.max(
+                              ((endMin - startMin) / 60) * HOUR_HEIGHT,
+                              20,
+                            );
+                            return (
+                              <div
+                                key={appt.id}
+                                style={{ height }}
+                                className="p-2"
+                              >
+                                <AppPill
+                                  appt={appt}
+                                  statusColor={statusColor}
+                                  onClick={handlePillClick}
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     );
                   })}

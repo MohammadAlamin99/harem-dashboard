@@ -66,98 +66,115 @@ export default function WeekView({
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="relative flex flex-col overflow-hidden"
-      onClick={() => setPreview(null)}
-    >
-      {/* Day header */}
-      <div className="flex border-b border-[#E0E6EB] bg-white sticky top-0 z-10">
-        <div className="w-[72px] flex-shrink-0 border-r border-[#E0E6EB]" />
-        {days.map((d, i) => (
-          <div
-            key={i}
-            className="flex-1 min-w-[80px] flex flex-col items-center py-3 border-r border-[#E0E6EB] last:border-r-0"
-          >
-            <p className="text-xs font-manrope font-medium text-[#98A4AE]">
-              {String(d.getDate()).padStart(2, "0")} {WEEK_DAYS[d.getDay()]}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      {/* Time grid */}
-      <div
-        className="overflow-y-auto overflow-x-auto flex-1"
-        style={{ maxHeight: "calc(100vh - 280px)" }}
-      >
-        <div className="flex">
-          {/* Time labels */}
-          <div className="w-[72px] flex-shrink-0 border-r border-[#E0E6EB]">
-            {HOURS.map((h) => (
+    <div className="overflow-x-auto">
+      <div className="min-w-[1000px]">
+        <div
+          ref={containerRef}
+          className="relative flex flex-col overflow-hidden md:m-[30px] m-[15px] border border-[#E0E6EB] rounded-xl"
+          onClick={() => setPreview(null)}
+        >
+          {/* Day header */}
+          <div className="flex border-b border-[#E0E6EB] bg-white sticky top-0 z-10">
+            <div className="w-[72px] flex-shrink-0 border-r border-[#E0E6EB]" />
+            {days.map((d, i) => (
               <div
-                key={h}
-                className="relative border-b border-[#E0E6EB]"
-                style={{ height: HOUR_HEIGHT }}
+                key={i}
+                className="flex-1 min-w-[80px] flex flex-col items-center py-3 border-r border-[#E0E6EB] last:border-r-0"
               >
-                <span className="absolute -top-2.5 left-2 text-[10px] font-manrope text-[#98A4AE] whitespace-nowrap">
-                  {formatHour(h)}
-                </span>
+                <p className="text-xs font-manrope font-medium text-[#98A4AE]">
+                  {String(d.getDate()).padStart(2, "0")} {WEEK_DAYS[d.getDay()]}
+                </p>
               </div>
             ))}
           </div>
 
-          {/* Day columns */}
-          {days.map((d, di) => {
-            const dayAppts = memberAppts.filter((a) => isSameDay(a.date, d));
-            return (
-              <div
-                key={di}
-                className="flex-1 min-w-[80px] relative border-r border-[#E0E6EB] last:border-r-0"
-              >
+          {/* Time grid */}
+          <div
+            className="overflow-y-auto overflow-x-auto flex-1"
+            style={{ maxHeight: "calc(100vh - 280px)" }}
+          >
+            <div className="flex">
+              {/* Time labels */}
+              <div className="w-[72px] border-r border-[#E0E6EB]">
                 {HOURS.map((h) => (
                   <div
                     key={h}
-                    className="border-b border-[#E0E6EB]"
+                    className="relative border-b border-[#E0E6EB]"
                     style={{ height: HOUR_HEIGHT }}
                   >
-                    <div className="border-b border-dashed border-[#F0F0F0] h-1/2" />
+                    <span className="absolute top-0 left-2 text-[10px] font-manrope text-[#98A4AE] whitespace-nowrap">
+                      {formatHour(h)}
+                    </span>
                   </div>
                 ))}
-                {dayAppts.map((appt) => {
-                  const startMin = timeToMinutes(appt.startTime);
-                  const endMin = timeToMinutes(appt.endTime);
-                  const top = (startMin / 60) * HOUR_HEIGHT;
-                  const height = Math.max(
-                    ((endMin - startMin) / 60) * HOUR_HEIGHT,
-                    18,
-                  );
-                  return (
-                    <div
-                      key={appt.id}
-                      className="absolute left-1 right-1"
-                      style={{ top, height }}
-                    >
-                      <AppPill appt={appt} onClick={handlePillClick} compact />
-                    </div>
-                  );
-                })}
               </div>
-            );
-          })}
+
+              {/* Day columns */}
+              {days.map((d, di) => {
+                const dayAppts = memberAppts.filter((a) =>
+                  isSameDay(a.date, d),
+                );
+                return (
+                  <div
+                    key={di}
+                    className="flex-1 min-w-[80px] relative border-r border-[#E0E6EB] last:border-r-0"
+                  >
+                    {/* Hour grid lines */}
+                    {HOURS.map((h) => (
+                      <div
+                        key={h}
+                        className="border-b border-[#E0E6EB]"
+                        style={{ height: HOUR_HEIGHT }}
+                      >
+                        <div className="border-b border-dashed border-[#F0F0F0] h-1/2" />
+                      </div>
+                    ))}
+
+                    {/* Appointments overlay */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {dayAppts.map((appt) => {
+                        const startMin = timeToMinutes(appt.startTime);
+                        const endMin = timeToMinutes(appt.endTime);
+                        const top = (startMin / 60) * HOUR_HEIGHT;
+                        const height = Math.max(
+                          ((endMin - startMin) / 60) * HOUR_HEIGHT,
+                          18,
+                        );
+                        return (
+                          <div
+                            key={appt.id}
+                            className="absolute px-0.5 pointer-events-auto"
+                            style={{ top, height, left: 0, right: 0 }}
+                          >
+                            <AppPill
+                              appt={appt}
+                              statusColor={statusColor}
+                              onClick={handlePillClick}
+                              compact
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {preview && (
+            <PreviewCard
+              appt={preview.appt}
+              onClose={() => setPreview(null)}
+              statusBadgeColor={statusBadgeColor}
+              style={{
+                top: Math.min(preview.y, 300),
+                left: Math.min(preview.x, 100),
+              }}
+            />
+          )}
         </div>
       </div>
-
-      {preview && (
-        <PreviewCard
-          appt={preview.appt}
-          onClose={() => setPreview(null)}
-          style={{
-            top: Math.min(preview.y, 300),
-            left: Math.min(preview.x, 100),
-          }}
-        />
-      )}
     </div>
   );
 }
