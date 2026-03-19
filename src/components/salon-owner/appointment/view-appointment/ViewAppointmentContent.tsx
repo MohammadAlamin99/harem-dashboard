@@ -64,6 +64,9 @@ export default function ViewAppointmentContent() {
     setNoteEditing(true);
     setTimeout(() => textareaRef.current?.focus(), 60);
   }
+  const openRepeatingModal = () => {
+    setRepeatingOpen(true);
+  };
   return (
     <div className="min-h-screen bg-[#F4F6FA] font-manrope">
       {/* page header and breadcrumb */}
@@ -75,11 +78,11 @@ export default function ViewAppointmentContent() {
             status={status}
             setStatus={setStatus}
             onReschedule={() => setRepeatingOpen(true)}
+            onSetRepeating={openRepeatingModal}
           />
           {/* Appointment Activity */}
           <AppointmentAcvitvity activities={activities} />
         </div>
-
         {/* Note Section */}
         <ApppointNote
           openNoteEditor={openNoteEditor}
@@ -92,7 +95,7 @@ export default function ViewAppointmentContent() {
           noteDraft={noteDraft}
         />
 
-        {/* ── Services ── */}
+        {/* Services */}
         <ViewServiceAppoint openNoteEditor={openNoteEditor} />
       </div>
       {/* Repeating Modal */}

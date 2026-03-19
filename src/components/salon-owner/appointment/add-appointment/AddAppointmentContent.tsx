@@ -67,7 +67,6 @@ export default function AddAppointmentContent() {
             onReschedule={() => setCurrentStep("details")}
             onSetRepeating={openRepeatingModal}
           />
-
           <RepeatingModal
             open={repeatingOpen}
             onClose={() => setRepeatingOpen(false)}

@@ -118,7 +118,7 @@ export default function RescheduleAppointmentContent() {
       headRef.current.scrollLeft = bodyRef.current.scrollLeft;
   }, []);
 
-  // ── Date helpers ──────────────────────────────────────────────────────────
+  // Date helpers
   function fmt(d: Date) {
     return d.toLocaleDateString("en-US", {
       weekday: "long",
@@ -137,7 +137,7 @@ export default function RescheduleAppointmentContent() {
     );
   }
 
-  // ── Drag & drop ───────────────────────────────────────────────────────────
+  //  Drag & drop
   function onDragStart(e: React.DragEvent, svc: Service) {
     setDragging(svc);
     e.dataTransfer.effectAllowed = "copy";
@@ -165,20 +165,8 @@ export default function RescheduleAppointmentContent() {
     setAppointments((p) => p.filter((_, j) => j !== i));
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-
   return (
     <div className="h-full font-manrope flex flex-col gap-5">
-      {/* ── Top bar ── */}
-      {/* <div className="shrink-0 bg-white rounded-2xl border border-[#EEF2F8] px-7 py-[18px] flex items-center justify-between flex-wrap gap-4">
-        <h1 className="text-lg font-bold font-manrope text-[#29343D]">
-          Reschedule Appointment
-        </h1>
-        <button className="flex items-center gap-2 px-5 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] text-white text-sm font-semibold font-manrope rounded-[10px] transition-colors cursor-pointer">
-          <Plus size={16} strokeWidth={2.5} /> Add Appointment
-        </button>
-      </div> */}
-
       {/* ── Calendar card ── */}
       <div className="flex-1 min-h-0 bg-white rounded-2xl border border-[#EEF2F8] flex flex-col overflow-hidden">
         {/* Toolbar */}
@@ -193,9 +181,9 @@ export default function RescheduleAppointmentContent() {
           />
         </div>
 
-        {/* ── Two-column body ── */}
+        {/* Two-column body  */}
         <div className="flex flex-1 min-h-0 flex-col md:flex-row overflow-hidden m-7 border border-[#E0E6EB] rounded-xl">
-          {/* ── LEFT: services panel ── */}
+          {/*  LEFT: services panel  */}
           <div className="shrink-0 border-r min-h-0 w-[222px] border-[#EEF2F8] flex flex-col">
             <div className="shrink-0 border-r border-b border-[#E0E6EB] px-5 flex flex-col justify-center bg-[#F3F3FF] h-[88px]">
               <p className="text-base font-semibold font-manrope text-[#29343D]">

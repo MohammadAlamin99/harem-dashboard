@@ -3,10 +3,6 @@ import IAppoinUser from "../IAppoinUser";
 import IView from "./IView";
 
 export default function RescheduleCalanderHead({
-  prevDay,
-  formatDate,
-  nextDay,
-  currentDate,
   setActivePeriod,
   activePeriod,
 }: {

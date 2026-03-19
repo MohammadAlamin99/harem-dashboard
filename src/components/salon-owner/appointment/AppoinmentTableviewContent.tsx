@@ -204,9 +204,9 @@ export default function AppoinmentTableviewContent() {
         />
       )}
 
-      {/* ── Header Card ─────────────────────────────────────────── */}
+      {/* Header Card */}
       <div className="bg-white rounded-xl py-4 px-4 sm:px-6 border border-[#EFF4FA]">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-lg font-bold font-manrope text-[#29343D]">
             Appointments
           </h1>
@@ -227,7 +227,8 @@ export default function AppoinmentTableviewContent() {
               </button>
             </div>
 
-            {/* ── EllipsisVertical with Dropdown ── */}
+            {/* EllipsisVertical with Dropdown */}
+
             <div className="relative" ref={menuRef}>
               <button
                 onClick={() => {
@@ -333,10 +334,10 @@ export default function AppoinmentTableviewContent() {
         )}
       </div>
 
-      {/* ── Calendar View ─────────────────────────────────────────── */}
+      {/* Calendar View */}
       {activeView === "calendar" && <CalendarView />}
 
-      {/* ── Table Card ──────────────────────────────────────────── */}
+      {/* Table Card */}
       {activeView === "table" && (
         <div className="bg-white rounded-xl border border-[#EFF4FA] overflow-hidden p-4 sm:p-6 lg:p-[30px]">
           <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
