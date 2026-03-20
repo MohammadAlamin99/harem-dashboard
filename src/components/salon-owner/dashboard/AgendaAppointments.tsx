@@ -119,7 +119,7 @@ export default function AgendaAppointments({ appointments }: Props) {
                 </div>
 
                 {/* Status + Actions */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-6">
                   <span className="px-2.5 py-1 rounded-full bg-[#DDDBFF] text-[#635BFF] text-sm font-manrope font-medium">
                     {appointment.status}
                   </span>
