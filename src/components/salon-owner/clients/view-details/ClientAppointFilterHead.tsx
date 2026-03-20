@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type DateFilterOption =
   | "Last 7 days"
@@ -48,6 +50,25 @@ export default function ClientAppointFilterHead() {
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [showDateDrop, setShowDateDrop] = useState<boolean>(false);
   const [showStatusDrop, setShowStatusDrop] = useState<boolean>(false);
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+
+  const calendarRef = useRef<HTMLDivElement>(null);
+
+  // Close calendar on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(e.target as Node)
+      ) {
+        setShowCalendar(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleRangeChange = (value: number | number[]) => {
     if (Array.isArray(value)) {
@@ -55,6 +76,27 @@ export default function ClientAppointFilterHead() {
       setMaxVal(value[1]);
     }
   };
+
+  const handleDateOptionClick = (o: DateFilterOption) => {
+    setDateFilter(o);
+    setShowDateDrop(false);
+    if (o === "Custom Range") {
+      setShowCalendar(true);
+    }
+  };
+
+  const handleDateSelect = (dates: [Date | null, Date | null]) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+    if (start && end) setShowCalendar(false);
+  };
+
+  // Button label: show selected range if picked, otherwise show filter name
+  const dateBtnLabel =
+    dateFilter === "Custom Range" && startDate && endDate
+      ? `${startDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" })} – ${endDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" })}`
+      : dateFilter;
 
   return (
     <div className="bg-white font-manrope mb-[30px] mt-3">
@@ -116,33 +158,114 @@ export default function ClientAppointFilterHead() {
 
           {/* Right: Dropdowns */}
           <div className="flex items-center gap-4">
-            {/* Date dropdown */}
-            <div className="relative">
+            {/* Date dropdown + calendar */}
+            <div className="relative" ref={calendarRef}>
               <button
                 onClick={() => {
                   setShowDateDrop((prev) => !prev);
                   setShowStatusDrop(false);
+                  setShowCalendar(false);
                 }}
                 className="flex items-center gap-1.5 border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm text-[#29343D] font-medium hover:border-[#635BFF] transition-colors bg-white"
               >
-                {dateFilter}
+                {dateBtnLabel}
                 <ChevronDown className="w-4 h-4 text-[#9CA3AF]" />
               </button>
+
+              {/* Normal dropdown */}
               {showDateDrop && (
                 <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-[#E5E7EB] py-1 z-30 min-w-[160px]">
                   {dateOptions.map((o) => (
                     <button
                       key={o}
-                      onClick={() => {
-                        setDateFilter(o);
-                        setShowDateDrop(false);
-                      }}
+                      onClick={() => handleDateOptionClick(o)}
                       className={`w-full text-left px-4 py-2 text-sm hover:bg-[#F4F6FA] transition-colors
                       ${dateFilter === o ? "text-[#635BFF] font-semibold" : "text-[#29343D]"}`}
                     >
                       {o}
                     </button>
                   ))}
+                </div>
+              )}
+
+              {/* Calendar — opens only when Custom Range is selected */}
+              {showCalendar && (
+                <div className="absolute right-0 top-full mt-1 z-40 bg-white rounded-xl shadow-xl border border-[#E5E7EB] p-4">
+                  <style>{`
+                    .custom-cal .react-datepicker {
+                      border: none;
+                      font-family: 'Manrope', sans-serif;
+                      display: flex;
+                      gap: 24px;
+                    }
+                    .custom-cal .react-datepicker__header {
+                      background: white;
+                      border-bottom: none;
+                      padding-top: 0;
+                    }
+                    .custom-cal .react-datepicker__current-month {
+                      font-size: 15px;
+                      font-weight: 600;
+                      color: #29343D;
+                      margin-bottom: 12px;
+                    }
+                    .custom-cal .react-datepicker__day-name {
+                      color: #9CA3AF;
+                      font-size: 12px;
+                      width: 36px;
+                      line-height: 36px;
+                    }
+                    .custom-cal .react-datepicker__day {
+                      width: 36px;
+                      line-height: 36px;
+                      border-radius: 50%;
+                      font-size: 13px;
+                      color: #29343D;
+                    }
+                    .custom-cal .react-datepicker__day:hover {
+                      background-color: #EBEAFF;
+                      color: #635BFF;
+                      border-radius: 50%;
+                    }
+                    .custom-cal .react-datepicker__day--selected,
+                    .custom-cal .react-datepicker__day--range-start,
+                    .custom-cal .react-datepicker__day--range-end {
+                      background-color: #635BFF !important;
+                      color: white !important;
+                      border-radius: 50% !important;
+                    }
+                    .custom-cal .react-datepicker__day--in-range {
+                      background-color: #EBEAFF;
+                      color: #635BFF;
+                      border-radius: 50%;
+                    }
+                    .custom-cal .react-datepicker__day--in-selecting-range {
+                      background-color: #EBEAFF;
+                      color: #635BFF;
+                      border-radius: 50%;
+                    }
+                    .custom-cal .react-datepicker__day--outside-month {
+                      color: #D1D5DB;
+                    }
+                    .custom-cal .react-datepicker__navigation-icon::before {
+                      border-color: #9CA3AF;
+                    }
+                    .custom-cal .react-datepicker__month-container {
+                      float: none;
+                    }
+                  `}</style>
+                  <div className="custom-cal">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={handleDateSelect}
+                      startDate={startDate}
+                      endDate={endDate}
+                      selectsRange
+                      monthsShown={2}
+                      inline
+                      calendarStartDay={0}
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -153,6 +276,7 @@ export default function ClientAppointFilterHead() {
                 onClick={() => {
                   setShowStatusDrop((prev) => !prev);
                   setShowDateDrop(false);
+                  setShowCalendar(false);
                 }}
                 className="flex items-center gap-1.5 border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm text-[#29343D] font-medium hover:border-[#635BFF] transition-colors bg-white"
               >

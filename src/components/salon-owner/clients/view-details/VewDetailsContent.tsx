@@ -178,6 +178,7 @@ import WaiversCard from "./Waiverscard";
 import PreferencesBehavior from "./Preferencesbehavior";
 import ClientHistoryOfEdit from "./ClientHistoryEdit";
 import ClientAppointmentTab from "./ClientAppointmentTab";
+import ClientFinacialTab from "./finalcial-tab/ClientFinacialTab";
 
 const OverviewData = [
   {
@@ -394,11 +395,7 @@ export default function VewDetailsContent() {
         )}
 
         {activeTab === "appointments" && <ClientAppointmentTab />}
-        {activeTab === "financial" && (
-          <div className="bg-white rounded-xl p-8 text-center text-gray-400">
-            Financial Information coming soon
-          </div>
-        )}
+        {activeTab === "financial" && <ClientFinacialTab />}
         {activeTab === "notes" && (
           <div className="bg-white rounded-xl p-8 text-center text-gray-400">
             Notes & Attachments coming soon
