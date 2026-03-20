@@ -192,7 +192,7 @@ export default function ClientHistoryOfEdit({
             <div
               key={row.id}
               className={[
-                "flex items-center",
+                "flex",
                 i < visibleRows.length - 1 ? `border-b ${B}` : "",
               ].join(" ")}
             >
@@ -200,27 +200,27 @@ export default function ClientHistoryOfEdit({
                 {row.dateTime}
               </div>
               <div
-                className={`w-[150px] px-[14px] py-[30px] text-sm text-[#29343D] font-manrope border-l ${B}`}
+                className={`w-[150px] px-[14px] py-[30px] text-sm text-[#29343D] font-manrope border-l border-[#E0E6EB]`}
               >
                 {row.fieldChanged}
               </div>
               <div
-                className={`flex-1 px-[14px] py-[30px] text-sm text-[#29343D] font-manrope truncate border-l ${B}`}
+                className={`flex-1 px-[14px] py-[30px] text-sm text-[#29343D] font-manrope truncate border-l border-[#E0E6EB]`}
               >
                 {row.previousValue}
               </div>
               <div
-                className={`flex-1 px-[14px] py-[30px] text-sm text-[#29343D] font-manrope truncate border-l ${B}`}
+                className={`flex-1 px-[14px] py-[30px] text-sm text-[#29343D] font-manrope truncate border-l border-[#E0E6EB]`}
               >
                 {row.newValue}
               </div>
               <div
-                className={`w-[180px] px-[14px] py-[30px] text-sm text-[#29343D] font-manrope border-l ${B}`}
+                className={`w-[180px] px-[14px] py-[30px] text-sm text-[#29343D] font-manrope border-l border-[#E0E6EB]`}
               >
                 {row.editedBy}
               </div>
               <div
-                className={`w-[160px] px-[14px] py-[30px] flex justify-start border-l ${B}`}
+                className={`w-[160px] px-[14px] py-[30px] flex justify-start border-l border-[#E0E6EB]`}
               >
                 <ActionBadge action={row.action} />
               </div>
