@@ -25,9 +25,9 @@ const initialNotes: Note[] = [
 
 function NoteRow({ note, onDelete }: { note: Note; onDelete: (id: number) => void }) {
     return (
-        <div className="flex items-start justify-between p-6 border-b border-[#E0E6EB] last:border-b-0">
+        <div className="flex flex-col md:flex-row items-start justify-between p-4 md:p-6 border-b border-[#E0E6EB] last:border-b-0 flex-wrap gap-2">
             {/* Left: content */}
-            <div className="flex-1 pr-8">
+            <div className="flex-1 pr-0 md:pr-8">
                 <p className="text-[#29343D] font-semibold font-manrope text-sm mb-2">
                     {note.title}
                 </p>

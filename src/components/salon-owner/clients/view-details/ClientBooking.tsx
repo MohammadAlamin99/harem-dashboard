@@ -94,13 +94,6 @@ function ClientBooking() {
           );
         })}
       </div>
-
-      {/* Print Receipt */}
-      {/* <div className="flex justify-center">
-        <button className="px-4 py-2.5 bg-[#DDDBFF] text-[#635BFF] rounded-[8px] font-manrope hover:bg-[#D3D0FF] transition mt-4 cursor-pointer">
-          Print Receipt
-        </button>
-      </div> */}
     </div>
   );
 }

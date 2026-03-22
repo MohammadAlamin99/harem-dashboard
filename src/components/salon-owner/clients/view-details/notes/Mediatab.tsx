@@ -152,7 +152,7 @@ export default function MediaTab() {
             </div>
 
             {/* Filters */}
-            <div className="flex items-end gap-6 mb-6">
+            <div className="flex items-end gap-6 mb-6 flex-wrap">
                 {/* File Type */}
                 <div>
                     <p className="text-[#9CA3AF] text-xs font-manrope mb-2">File Type</p>
@@ -203,7 +203,7 @@ export default function MediaTab() {
             </div>
 
             {/* Media Grid */}
-            <div className="flex gap-5">
+            <div className="flex gap-5 flex-wrap flex-col md:flex-row">
                 {filtered.map((item) => (
                     <MediaCard key={item.id} item={item} />
                 ))}

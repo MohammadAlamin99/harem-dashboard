@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import {
   ChevronFirst,
@@ -11,6 +11,7 @@ import {
   Download,
   RotateCcw,
 } from "lucide-react";
+import PaginationClient from "../../PaginationClient";
 
 //  Types
 
@@ -109,6 +110,7 @@ export default function ReceiptsList() {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const rangeStart = (page - 1) * itemsPerPage + 1;
   const rangeEnd = Math.min(page * itemsPerPage, totalItems);
+  const ippRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="bg-white rounded-2xl border border-[#E0E6EB] p-[15px] md:p-[30px] font-manrope">
@@ -225,76 +227,22 @@ export default function ReceiptsList() {
       </div>
 
       {/* ── Pagination ── */}
-      <div className="flex items-center justify-end gap-4 mt-5">
-        {/* Items per page */}
-        <div className="flex items-center gap-2 text-sm text-[#526B7A]">
-          <span className="whitespace-nowrap">Items per page:</span>
-          <div className="relative">
-            <button
-              onClick={() => setShowPerPageDrop((p) => !p)}
-              className="flex items-center gap-1 border border-[#E0E6EB] rounded-lg px-2.5 py-1 text-sm text-[#29343D] font-medium hover:border-[#635BFF] transition-colors bg-white"
-            >
-              {itemsPerPage}
-              <ChevronDown className="w-3.5 h-3.5 text-[#9CA3AF]" />
-            </button>
-            {showPerPageDrop && (
-              <div className="absolute bottom-full mb-1 right-0 bg-white rounded-xl shadow-lg border border-[#E0E6EB] py-1 z-30 min-w-[60px]">
-                {ITEMS_PER_PAGE_OPTIONS.map((o) => (
-                  <button
-                    key={o}
-                    onClick={() => {
-                      setItemsPerPage(o);
-                      setPage(1);
-                      setShowPerPageDrop(false);
-                    }}
-                    className={`w-full text-left px-3 py-1.5 text-sm hover:bg-[#F4F6FA] transition-colors
-                      ${itemsPerPage === o ? "text-[#635BFF] font-semibold" : "text-[#29343D]"}`}
-                  >
-                    {o}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Range label */}
-        <span className="text-sm text-[#526B7A]">
-          {rangeStart}-{rangeEnd} of {totalItems}
-        </span>
-
-        {/* Nav buttons */}
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => setPage(1)}
-            disabled={page === 1}
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-[#526B7A] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors"
-          >
-            <ChevronFirst className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-[#526B7A] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            disabled={page === totalPages}
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-[#526B7A] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => setPage(totalPages)}
-            disabled={page === totalPages}
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-[#526B7A] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors"
-          >
-            <ChevronLast className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
+      <PaginationClient
+        ippRef={ippRef}
+        setIppOpen={setShowPerPageDrop}
+        itemsPerPage={itemsPerPage}
+        ippOpen={showPerPageDrop}
+        ITEMS_PER_PAGE_OPTIONS={ITEMS_PER_PAGE_OPTIONS}
+        setItemsPerPage={(n) => {
+          setItemsPerPage(n);
+          setPage(1);
+        }}
+        currentPage={page}
+        setCurrentPage={setPage}
+        totalPages={totalPages}
+        start={rangeStart - 1}
+        filtered={receipts}
+      />
     </div>
   );
 }
