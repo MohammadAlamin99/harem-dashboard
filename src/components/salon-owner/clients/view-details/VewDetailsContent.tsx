@@ -18,6 +18,11 @@ import PreferencesBehavior from "./Preferencesbehavior";
 import ClientHistoryOfEdit from "./ClientHistoryEdit";
 import ClientAppointmentTab from "./ClientAppointmentTab";
 import ClientFinacialTab from "./finalcial-tab/ClientFinacialTab";
+import Notes from "./notes/NotesTab";
+import NotesTab from "./notes/NotesTab";
+import MediaTab from "./notes/Mediatab";
+import CommunicationLog from "./commonication/Communicationlog";
+import MedicalPersonalNotes from "./medical/Medicalpersonalnotes";
 
 const OverviewData = [
   {
@@ -236,19 +241,16 @@ export default function VewDetailsContent() {
         {activeTab === "appointments" && <ClientAppointmentTab />}
         {activeTab === "financial" && <ClientFinacialTab />}
         {activeTab === "notes" && (
-          <div className="bg-white rounded-xl p-8 text-center text-gray-400">
-            Notes & Attachments coming soon
+          <div>
+            <NotesTab />
+            <MediaTab />
           </div>
         )}
         {activeTab === "medical" && (
-          <div className="bg-white rounded-xl p-8 text-center text-gray-400">
-            Medical coming soon
-          </div>
+          <MedicalPersonalNotes />
         )}
         {activeTab === "communication" && (
-          <div className="bg-white rounded-xl p-8 text-center text-gray-400">
-            Communication Log coming soon
-          </div>
+          <CommunicationLog />
         )}
       </div>
     </div>

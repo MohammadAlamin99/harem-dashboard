@@ -13,7 +13,7 @@ export function StatCard({ iconBg, icon, label, value }: StatCardProps) {
         <div className="flex-1 border border-[#E0E6EB] rounded-xl px-6 py-4 flex items-center justify-between bg-white">
             <div className="flex items-center gap-3">
                 <div
-                    className={`w-11 h-11 rounded-xl flex items-center justify-center ${iconBg}`}
+                    className={`w-11 h-11 rounded-full flex items-center justify-center ${iconBg}`}
                 >
                     {icon}
                 </div>

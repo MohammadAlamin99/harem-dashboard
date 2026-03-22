@@ -1,4 +1,3 @@
-import { EditHistoryRow } from "@/@types/salon-owner/EditHistoryRow.type";
 import {
   ChevronDown,
   ChevronFirst,
@@ -6,7 +5,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-type Props = {
+type Props<T> = {
   ippRef: React.RefObject<HTMLDivElement | null>;
   setIppOpen: (open: boolean | ((o: boolean) => boolean)) => void;
   itemsPerPage: number;
@@ -17,10 +16,11 @@ type Props = {
   setCurrentPage: (page: number | ((p: number) => number)) => void;
   totalPages: number;
   start: number;
-  filtered: EditHistoryRow[];
+  filtered: T[];
+  margin?: boolean;
 };
 
-export default function PaginationClient({
+export default function PaginationClient<T>({
   ippRef,
   setIppOpen,
   itemsPerPage,
@@ -32,13 +32,14 @@ export default function PaginationClient({
   totalPages,
   start,
   filtered,
-}: Props) {
+  margin
+}: Props<T>) {
   return (
     <div>
       <div
-        className="mx-4 md:mx-[30px] mb-[30px] py-4 flex flex-wrap md:flex-nowrap items-center
+        className={`${margin ? "mx-4 md:mx-[30px]" : ""} mb-[30px] py-4 flex flex-wrap md:flex-nowrap items-center
        md:justify-end justify-between gap-4 border-t-0 border-b border-l 
-       border-r rounded-[0_0_8px_8px] border-[#EEF2F8]"
+       border-r rounded-[0_0_8px_8px] border-[#EEF2F8]`}
       >
         {/* Items per page */}
         <div className="flex items-center gap-2 text-sm text-[#29343D]">
@@ -53,9 +54,8 @@ export default function PaginationClient({
 
               <ChevronDown
                 size={13}
-                className={`text-[#98A4AE] transition-transform ${
-                  ippOpen ? "rotate-180" : ""
-                }`}
+                className={`text-[#98A4AE] transition-transform ${ippOpen ? "rotate-180" : ""
+                  }`}
               />
             </button>
 
@@ -69,11 +69,10 @@ export default function PaginationClient({
                       setCurrentPage(1);
                       setIppOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2 text-sm cursor-pointer transition-colors ${
-                      itemsPerPage === n
-                        ? "bg-[#F0EEFF] text-[#29343D] font-semibold"
-                        : "text-[#29343D] hover:bg-[#F4F6FA]"
-                    }`}
+                    className={`w-full text-left px-3 py-2 text-sm cursor-pointer transition-colors ${itemsPerPage === n
+                      ? "bg-[#F0EEFF] text-[#29343D] font-semibold"
+                      : "text-[#29343D] hover:bg-[#F4F6FA]"
+                      }`}
                   >
                     {n}
                   </button>
@@ -117,11 +116,10 @@ export default function PaginationClient({
               key={i}
               onClick={btn.action}
               disabled={btn.disabled}
-              className={`w-8 h-8 flex items-center justify-center rounded-lg transition-colors cursor-pointer ${
-                btn.disabled
-                  ? "text-[#C4CDD5] cursor-not-allowed"
-                  : "text-[#526B7A] hover:bg-[#F4F6FA]"
-              }`}
+              className={`w-8 h-8 flex items-center justify-center rounded-lg transition-colors cursor-pointer ${btn.disabled
+                ? "text-[#C4CDD5] cursor-not-allowed"
+                : "text-[#526B7A] hover:bg-[#F4F6FA]"
+                }`}
             >
               {btn.icon}
             </button>
