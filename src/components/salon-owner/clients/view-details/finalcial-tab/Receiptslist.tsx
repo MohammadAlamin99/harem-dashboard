@@ -12,7 +12,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+//  Types
 
 type PaymentMethod = "Cash" | "Credit Card" | "Gift Card";
 type Status = "Pending" | "Refunded" | "Paid";
@@ -28,7 +28,7 @@ interface Receipt {
   status: Status;
 }
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+// Data
 
 const receipts: Receipt[] = [
   {
@@ -83,7 +83,7 @@ const receipts: Receipt[] = [
   },
 ];
 
-// ─── Style Maps ───────────────────────────────────────────────────────────────
+//  Style Maps
 
 const statusStyles: Record<Status, string> = {
   Pending: "bg-[#FFF9E5] text-[#FFD648]",
@@ -99,7 +99,6 @@ const paymentStyles: Record<PaymentMethod, string> = {
 
 const ITEMS_PER_PAGE_OPTIONS = [5, 10, 20];
 
-// ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function ReceiptsList() {
   const [page, setPage] = useState<number>(1);

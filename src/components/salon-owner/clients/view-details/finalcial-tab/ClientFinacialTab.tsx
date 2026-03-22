@@ -6,7 +6,7 @@ import MoneySpentChart from "./MoneySpentChart";
 import Card from "@/components/accountProtal/Card";
 import IExpense from "@/app/account-protal/svg/IExpense";
 import AvarageIcon from "./AvarageIcon";
-import ClientFinancialBreakdown from "./Clientfinancialbreakdown ";
+import ClientFinancialBreakdown from "./Clientfinancialbreakdown";
 import ReceiptsList from "./Receiptslist";
 import GiftCards from "./Giftcards";
 

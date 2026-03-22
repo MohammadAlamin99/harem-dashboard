@@ -37,7 +37,7 @@ const ClientProfile = ({
   return (
     <div className="w-full bg-white mx-auto overflow-hidden rounded-xl">
       {/* Banner */}
-      <div className="relative h-56 w-full overflow-hidden">
+      <div className="relative h-[220px] md:h-[330px] w-full overflow-hidden">
         <Image
           src={"/images/bannerProfile.jpg"}
           alt="Profile Banner"
