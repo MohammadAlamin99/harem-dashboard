@@ -181,6 +181,7 @@
 // };
 
 // export default Sidebar;
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -260,8 +261,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           <Link href={logoHref} className="flex-1 cursor-pointer">
             <Image
-              src={"/images/logo.svg"}
-              width={135}
+              src={"/images/logo.png"}
+              width={180}
               height={40}
               alt="logo"
             />
