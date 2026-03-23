@@ -46,10 +46,8 @@ const statusOptions: StatusFilterOption[] = [
 export default function ClientAppointFilterHead() {
   const [minVal, setMinVal] = useState<number>(0);
   const [maxVal, setMaxVal] = useState<number>(200);
-  const [dateFilter, setDateFilter] =
-    useState<DateFilterOption>("Last 7 days");
-  const [statusFilter, setStatusFilter] =
-    useState<StatusFilterOption>("All");
+  const [dateFilter, setDateFilter] = useState<DateFilterOption>("Last 7 days");
+  const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [showDateDrop, setShowDateDrop] = useState<boolean>(false);
   const [showStatusDrop, setShowStatusDrop] = useState<boolean>(false);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
@@ -58,6 +56,7 @@ export default function ClientAppointFilterHead() {
 
   const calendarRef = useRef<HTMLDivElement>(null);
 
+  // Close calendar on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
@@ -68,8 +67,7 @@ export default function ClientAppointFilterHead() {
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleRangeChange = (value: number | number[]) => {
@@ -82,7 +80,9 @@ export default function ClientAppointFilterHead() {
   const handleDateOptionClick = (o: DateFilterOption) => {
     setDateFilter(o);
     setShowDateDrop(false);
-    if (o === "Custom Range") setShowCalendar(true);
+    if (o === "Custom Range") {
+      setShowCalendar(true);
+    }
   };
 
   const handleDateSelect = (dates: [Date | null, Date | null]) => {
@@ -92,22 +92,17 @@ export default function ClientAppointFilterHead() {
     if (start && end) setShowCalendar(false);
   };
 
+  // Button label: show selected range if picked, otherwise show filter name
   const dateBtnLabel =
     dateFilter === "Custom Range" && startDate && endDate
-      ? `${startDate.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-      })} – ${endDate.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-      })}`
+      ? `${startDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" })} – ${endDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" })}`
       : dateFilter;
 
   return (
     <div className="bg-white font-manrope mb-[30px] mt-3">
-      {/* Slider */}
-      <div className="flex justify-end mb-3 px-4 sm:px-6 lg:px-60">
-        <div className="w-full sm:w-72 lg:w-56">
+      {/* ── Row 1: Slider centered on top ── */}
+      <div className="flex justify-end mb-3 px-60 max-[770px]:px-0">
+        <div className="w-56">
           <Slider
             range
             min={0}
@@ -139,34 +134,31 @@ export default function ClientAppointFilterHead() {
         </div>
       </div>
 
-      {/* Main Row */}
-      <div className="flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
-        {/* Title */}
-        <h2 className="text-[#29343D] font-semibold text-lg sm:text-xl md:text-[22px] whitespace-nowrap">
+      {/* ── Row 2: Title | Amount Spent + labels | Dropdowns ── */}
+      <div className="flex justify-between items-center flex-wrap">
+        {/* Left: Title */}
+        <h2 className="text-[#29343D] font-manrope font-semibold text-lg md:text-[22px] whitespace-nowrap">
           Appointments
         </h2>
 
-        <div className="flex flex-col gap-3 w-full lg:w-auto lg:flex-row lg:items-center lg:gap-[20px]">
-          {/* Amount */}
-          <div className="flex flex-wrap items-center gap-2 text-[12px] text-[#9CA3AF]">
-            <span className="whitespace-nowrap">Amount Spent</span>
-
-            <div className="flex items-center border border-[#DDE1E7] rounded-lg px-3 py-2 bg-white w-full sm:w-24">
+        <div className="flex items-center gap-[20px] flex-wrap">
+          {/* Center: Amount Spent label + bordered € value boxes */}
+          <div className="flex font-manrope items-center gap-2 text-[12px] text-[#9CA3AF] flex-wrap">
+            <span className="font-manrope whitespace-nowrap">Amount Spent</span>
+            <div className="flex items-center border border-[#DDE1E7] rounded-lg px-3 py-2 bg-white w-24">
               <span className="mr-1">€</span>
               <span>{minVal}</span>
             </div>
-
             <span>-</span>
-
-            <div className="flex items-center border border-[#DDE1E7] rounded-lg px-3 py-2 bg-white w-full sm:w-24">
+            <div className="flex items-center border border-[#DDE1E7] rounded-lg px-3 py-2 bg-white w-24">
               <span className="mr-1">€</span>
               <span>{maxVal}</span>
             </div>
           </div>
 
-          {/* Dropdowns */}
-          <div className="flex flex-col gap-2 w-full sm:flex-row sm:items-center sm:gap-4">
-            {/* Date */}
+          {/* Right: Dropdowns */}
+          <div className="flex items-center gap-4">
+            {/* Date dropdown + calendar */}
             <div className="relative" ref={calendarRef}>
               <button
                 onClick={() => {
@@ -174,23 +166,21 @@ export default function ClientAppointFilterHead() {
                   setShowStatusDrop(false);
                   setShowCalendar(false);
                 }}
-                className="flex w-full sm:w-auto justify-between items-center gap-1.5 border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm text-[#29343D] font-medium hover:border-[#635BFF] bg-white"
+                className="flex items-center gap-1.5 border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm text-[#29343D] font-medium hover:border-[#635BFF] transition-colors bg-white"
               >
                 {dateBtnLabel}
                 <ChevronDown className="w-4 h-4 text-[#9CA3AF]" />
               </button>
 
+              {/* Normal dropdown */}
               {showDateDrop && (
-                <div className="absolute right-0 left-0 sm:left-auto top-full mt-1 bg-white rounded-lg shadow-lg border z-30 min-w-[160px]">
+                <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-[#E5E7EB] py-1 z-30 min-w-[160px]">
                   {dateOptions.map((o) => (
                     <button
                       key={o}
                       onClick={() => handleDateOptionClick(o)}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-[#F4F6FA]
-                      ${dateFilter === o
-                          ? "text-[#635BFF] font-semibold"
-                          : ""
-                        }`}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-[#F4F6FA] transition-colors
+                      ${dateFilter === o ? "text-[#635BFF] font-semibold" : "text-[#29343D]"}`}
                     >
                       {o}
                     </button>
@@ -198,8 +188,72 @@ export default function ClientAppointFilterHead() {
                 </div>
               )}
 
+              {/* Calendar — opens only when Custom Range is selected */}
               {showCalendar && (
-                <div className="absolute right-0 left-0 sm:left-auto top-full mt-1 z-40 bg-white rounded-xl shadow-xl border p-4 overflow-auto">
+                <div className="absolute right-0 top-full mt-1 z-40 bg-white rounded-xl shadow-xl border border-[#E5E7EB] p-4">
+                  <style>{`
+                    .custom-cal .react-datepicker {
+                      border: none;
+                      font-family: 'Manrope', sans-serif;
+                      display: flex;
+                      gap: 24px;
+                    }
+                    .custom-cal .react-datepicker__header {
+                      background: white;
+                      border-bottom: none;
+                      padding-top: 0;
+                    }
+                    .custom-cal .react-datepicker__current-month {
+                      font-size: 15px;
+                      font-weight: 600;
+                      color: #29343D;
+                      margin-bottom: 12px;
+                    }
+                    .custom-cal .react-datepicker__day-name {
+                      color: #9CA3AF;
+                      font-size: 12px;
+                      width: 36px;
+                      line-height: 36px;
+                    }
+                    .custom-cal .react-datepicker__day {
+                      width: 36px;
+                      line-height: 36px;
+                      border-radius: 50%;
+                      font-size: 13px;
+                      color: #29343D;
+                    }
+                    .custom-cal .react-datepicker__day:hover {
+                      background-color: #EBEAFF;
+                      color: #635BFF;
+                      border-radius: 50%;
+                    }
+                    .custom-cal .react-datepicker__day--selected,
+                    .custom-cal .react-datepicker__day--range-start,
+                    .custom-cal .react-datepicker__day--range-end {
+                      background-color: #635BFF !important;
+                      color: white !important;
+                      border-radius: 50% !important;
+                    }
+                    .custom-cal .react-datepicker__day--in-range {
+                      background-color: #EBEAFF;
+                      color: #635BFF;
+                      border-radius: 50%;
+                    }
+                    .custom-cal .react-datepicker__day--in-selecting-range {
+                      background-color: #EBEAFF;
+                      color: #635BFF;
+                      border-radius: 50%;
+                    }
+                    .custom-cal .react-datepicker__day--outside-month {
+                      color: #D1D5DB;
+                    }
+                    .custom-cal .react-datepicker__navigation-icon::before {
+                      border-color: #9CA3AF;
+                    }
+                    .custom-cal .react-datepicker__month-container {
+                      float: none;
+                    }
+                  `}</style>
                   <div className="custom-cal">
                     <DatePicker
                       selected={startDate}
@@ -209,13 +263,14 @@ export default function ClientAppointFilterHead() {
                       selectsRange
                       monthsShown={2}
                       inline
+                      calendarStartDay={0}
                     />
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Status */}
+            {/* Status dropdown */}
             <div className="relative">
               <button
                 onClick={() => {
@@ -223,14 +278,13 @@ export default function ClientAppointFilterHead() {
                   setShowDateDrop(false);
                   setShowCalendar(false);
                 }}
-                className="flex w-full sm:w-auto justify-between items-center gap-1.5 border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm text-[#29343D] font-medium hover:border-[#635BFF] bg-white"
+                className="flex items-center gap-1.5 border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm text-[#29343D] font-medium hover:border-[#635BFF] transition-colors bg-white"
               >
                 {statusFilter}
                 <ChevronDown className="w-4 h-4 text-[#9CA3AF]" />
               </button>
-
               {showStatusDrop && (
-                <div className="absolute right-0 left-0 sm:left-auto top-full mt-1 bg-white rounded-xl shadow-lg border z-30 min-w-[140px]">
+                <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-[#E5E7EB] py-1 z-30 min-w-[140px]">
                   {statusOptions.map((o) => (
                     <button
                       key={o}
@@ -238,11 +292,8 @@ export default function ClientAppointFilterHead() {
                         setStatusFilter(o);
                         setShowStatusDrop(false);
                       }}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-[#F4F6FA]
-                      ${statusFilter === o
-                          ? "text-[#635BFF] font-semibold"
-                          : ""
-                        }`}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-[#F4F6FA] transition-colors
+                      ${statusFilter === o ? "text-[#635BFF] font-semibold" : "text-[#29343D]"}`}
                     >
                       {o}
                     </button>
