@@ -11,13 +11,13 @@ export default function ImportAppointmentContent() {
 
   return (
     <div className="min-h-screen bg-[#F4F6FA] font-manrope">
-      <div className="w-full md:bg-white bg-transparent border border-[#EFF4FA] rounded-[20px] overflow-hidden">
-        {/* ── Top Bar ── */}
-        <PageHeader
-          title="Import Appointments"
-          onBack={() => console.log("Go Back")}
-          breadcrumb={[{ label: "Appointments", active: true }]}
-        />
+      {/* ── Top Bar ── */}
+      <PageHeader
+        title="Import Appointments"
+        onBack={() => console.log("Go Back")}
+        breadcrumb={[{ label: "Appointments", active: true }]}
+      />
+      <div className="w-full md:bg-white bg-transparent border border-[#EFF4FA] rounded-[20px] overflow-hidden mt-[30px]">
 
         {/* ── Content ── */}
         <div className="p-0 md:p-[30px] sm:p-8 space-y-7">
