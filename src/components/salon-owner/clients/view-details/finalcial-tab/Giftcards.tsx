@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { StatCard } from "./StatCard";
 import { GiftCard } from "@/@types/salon-owner/GiftCardStatus.type";
 import { Gift } from "./Gift";
+import Link from "next/link";
 
 /* DATA */
 const giftCards: GiftCard[] = [
@@ -62,14 +63,16 @@ export default function GiftCards() {
           Gifts Cards
         </h2>
 
-        <button
-          className="w-full sm:w-auto flex justify-center items-center gap-1.5
+        <Link href="/salon-owner/clients/gift-card">
+          <button
+            className="w-full sm:w-auto flex justify-center items-center gap-1.5 cursor-pointer
           bg-[#DDDBFF] text-[#635BFF] px-4 py-2 rounded-lg text-sm font-medium
           hover:bg-[#635BFF] hover:text-white transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          Add Gift Card
-        </button>
+          >
+            <Plus className="w-4 h-4" />
+            Add Gift Card
+          </button>
+        </Link>
       </div>
 
       {/* STAT CARDS */}
