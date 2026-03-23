@@ -201,15 +201,15 @@ interface NavItem {
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  navigation: NavItem[];
-  logoHref: string;
+  navigation?: NavItem[];
+  logoHref?: string;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
   onClose,
-  navigation,
-  logoHref,
+  navigation = [],
+  logoHref = "#",
 }) => {
   const pathname = usePathname();
   const [expandedItem, setExpandedItem] = useState<string | null>(null);

@@ -1,4 +1,5 @@
-import { BookingStep } from "@/@types/salon-owner/bookingStep.type";
+import { BookingStep, StepState } from "@/@types/salon-owner/bookingStep.type";
+import { Status } from "@/@types/salon-owner/Statu.type";
 
 export default function GetSteps(status: Status): BookingStep[] {
   const base = [

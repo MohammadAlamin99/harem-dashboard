@@ -65,7 +65,7 @@ export default function SelectServiceModal({
     );
   };
 
-  const isSelected = (id: number) => selected.some((s) => s.id === id);
+  const isSelected = (id?: number) => id !== undefined && selected.some((s) => s.id === id);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -111,8 +111,8 @@ export default function SelectServiceModal({
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-xl bg-[#EEEEFF] flex items-center justify-center flex-shrink-0">
                     <Image
-                      src={service.employeeAvatar}
-                      alt={service.employee}
+                      src={service.employeeAvatar || "/images/service.svg"}
+                      alt={service.employee || "Employee"}
                       width={35}
                       height={35}
                     />

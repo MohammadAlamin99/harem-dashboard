@@ -1,5 +1,5 @@
 import { Appointment } from "@/@types/salon-owner/appointment.type";
-import { BookingStep } from "@/@types/salon-owner/bookingStep.type";
+import { BookingStep, StepState } from "@/@types/salon-owner/bookingStep.type";
 import { Status } from "@/@types/salon-owner/Statu.type";
 import React from "react";
 import StepIcon from "./StepIcon";
@@ -43,7 +43,6 @@ function stepLineColor(state: StepState): string {
 }
 
 // Boking steper
-type StepState = "done" | "active" | "todo" | "canceled";
 function stepBadge(state: StepState): { label: string; className: string } {
   if (state === "done")
     return { label: "Completed", className: "bg-[#EBFAF0] text-[#36C76C]" };

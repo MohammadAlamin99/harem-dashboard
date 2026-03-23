@@ -2,11 +2,13 @@ import React from "react";
 
 type IconProps = {
     color?: string;
+    bgColor?: string;
     className?: string;
 };
 
 export default function IHome({
     color = "currentColor",
+    bgColor = "transparent",
     className = "",
 }: IconProps) {
     return (

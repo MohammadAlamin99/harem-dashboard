@@ -1,3 +1,5 @@
+import { StepState } from "@/@types/salon-owner/bookingStep.type";
+
 export default function StepIcon({ state, index }: { state: StepState; index: number }) {
   const base =
     "w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold font-manrope z-10 relative";
