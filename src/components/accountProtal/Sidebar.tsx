@@ -195,7 +195,7 @@ interface NavItem {
   href?: string;
   icon: React.ComponentType<{ color?: string }>;
   children?: NavItem[];
-  matchUrls?: string[]; // additional URLs that should activate this menu
+  matchUrls?: string[]; 
 }
 
 interface SidebarProps {
@@ -297,11 +297,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                         setExpandedItem(expanded ? null : item.label)
                       }
                       className={`w-full flex items-center justify-between font-manrope gap-2.5 px-4 py-3 rounded-lg cursor-pointer transition text-[15px]
-                      ${
-                        expanded || childActive
+                      ${expanded || childActive
                           ? "bg-transparent text-[#635BFF] font-semibold"
                           : "text-[#29343D] hover:bg-[#F3F4F7] font-normal"
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-2.5">
                         <Icon
@@ -322,14 +321,13 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                       <ChevronDown
                         size={24}
-                        className={`transition-transform ${
-                          expanded ? "rotate-180 text-[#635BFF]" : ""
-                        }`}
+                        className={`transition-transform ${expanded ? "rotate-180 text-[#635BFF]" : "text-[#29343D]"
+                          }`}
                       />
                     </button>
 
                     {expanded && (
-                      <div className="space-y-2 px-2 pb-2">
+                      <div className="space-y-4 px-4 pb-4">
                         {item.children.map((child) => {
                           const ChildIcon = child.icon;
                           const childIsActive = pathname.startsWith(
@@ -341,11 +339,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                               key={child.href || child.label}
                               href={child.href || "#"}
                               className={`w-full flex items-center gap-2.5 px-3 py-2.5 font-manrope rounded-lg cursor-pointer transition text-[15px]
-                              ${
-                                childIsActive
+                              ${childIsActive
                                   ? "bg-[#635BFF] text-white shadow-[0_8px_20px_-8px_rgba(77,91,236,0.23)] font-semibold"
                                   : "text-[#635BFF] bg-[#DDDBFF]"
-                              }`}
+                                }`}
                             >
                               <ChildIcon
                                 color={childIsActive ? "white" : "#635BFF"}
@@ -370,11 +367,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                 key={item.href || item.label}
                 href={item.href || "#"}
                 className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-lg cursor-pointer transition
-                ${
-                  active
+                ${active
                     ? "bg-[#635BFF] text-white shadow-[0_8px_20px_-8px_rgba(77,91,236,0.23)] font-semibold"
                     : "text-[#29343D] hover:bg-[#F3F4F7] font-normal"
-                }`}
+                  }`}
               >
                 <Icon color={active ? "white" : "#98A4AE"} />
                 <span className="text-sm font-manrope">{item.label}</span>

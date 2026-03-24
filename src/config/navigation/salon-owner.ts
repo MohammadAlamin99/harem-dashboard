@@ -1,9 +1,11 @@
 import ICalaender from "@/app/account-protal/svg/ICalaender";
 import IDashboard from "@/app/account-protal/svg/IDashboard";
 import IUser from "@/app/account-protal/svg/IUser";
-// import IOverview from "@/app/account-protal/svg/IOverview";
-// import ISales from "@/app/account-protal/svg/ISales";
-// import IUpload from "@/app/account-protal/svg/IUpload";
+import TeamIcon from "@/app/account-protal/svg/TeamIcon";
+import ISales from "@/app/account-protal/svg/ISales";
+import MermbersIcon from "@/components/salon-owner/team/member/MermbersIcon";
+import ShiftIcon from "@/app/account-protal/svg/ShiftIcon";
+import WorkShift from "@/app/account-protal/svg/WorkShift";
 
 export const salonOwnerNavigation = [
   {
@@ -13,22 +15,6 @@ export const salonOwnerNavigation = [
     icon: IDashboard,
   },
 
-  // {
-  //   label: "Salaries",
-  //   icon: ISales,
-  //   children: [
-  //     {
-  //       label: "Overview",
-  //       href: "/admin/salaries/overview",
-  //       icon: IOverview,
-  //     },
-  //     {
-  //       label: "Upload",
-  //       href: "/admin/salaries/upload",
-  //       icon: IUpload,
-  //     },
-  //   ],
-  // },
   {
     label: "Appointments",
     href: "/salon-owner/appointment",
@@ -56,5 +42,32 @@ export const salonOwnerNavigation = [
       "/salon-owner/clients/gift-card/view/"
     ],
     icon: IUser,
+  },
+
+  {
+    label: "Team",
+    icon: TeamIcon,
+    children: [
+      {
+        label: "Members",
+        href: "/salon-owner/team/member",
+        icon: MermbersIcon,
+      },
+      {
+        label: "Salaries",
+        href: "/admin/salaries/salries",
+        icon: ISales,
+      },
+      {
+        label: "Scheduled Shifts",
+        href: "/admin/salaries/scheduled-shifts",
+        icon: ShiftIcon,
+      },
+      {
+        label: "Worked Shifts",
+        href: "/admin/salaries/worked-shifts",
+        icon: WorkShift,
+      },
+    ],
   },
 ];

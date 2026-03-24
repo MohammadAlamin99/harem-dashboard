@@ -1,8 +1,4 @@
 import { PreferredTime } from "./Preferencesbehavior";
-
-/* ══════════════════════════════════════════════════════════════
-   CONSTANTS
-══════════════════════════════════════════════════════════════ */
 const DOT_BORDER = {
   purple: "#635BFF",
   teal: "#16CDC7",
@@ -10,10 +6,6 @@ const DOT_BORDER = {
   yellow: "#635BFF",
   pink: "#FF6692",
 } as const;
-
-/* ══════════════════════════════════════════════════════════════
-   COMPONENT
-══════════════════════════════════════════════════════════════ */
 export default function ClientPreferedTime({
   label,
   times,

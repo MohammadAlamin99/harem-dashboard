@@ -1,7 +1,5 @@
 "use client";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 interface BookingStep {
   num: number;
   status: "Overdue" | "To Do";
@@ -10,7 +8,6 @@ interface BookingStep {
   staff: string;
 }
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
 
 const bookingSteps: BookingStep[] = [
   {
@@ -36,7 +33,6 @@ const bookingSteps: BookingStep[] = [
   },
 ];
 
-// ─── Component ────────────────────────────────────────────────────────────────
 
 function ClientBooking() {
   return (
@@ -59,10 +55,9 @@ function ClientBooking() {
               {/* Circle */}
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-manrope font-medium
-                  ${
-                    isActive
-                      ? "bg-[#FFF9E5] text-[#FFD648]"
-                      : "bg-gray-500 text-white"
+                  ${isActive
+                    ? "bg-[#FFF9E5] text-[#FFD648]"
+                    : "bg-gray-500 text-white"
                   }`}
               >
                 {step.num}
@@ -71,10 +66,9 @@ function ClientBooking() {
               {/* Status Badge */}
               <span
                 className={`mt-3 text-xs px-2 py-1 rounded-[8px] font-medium font-manrope
-                  ${
-                    isActive
-                      ? "bg-[#FFF9E5] text-[#FFD648]"
-                      : "bg-[#EFF4FA] text-[#0A2540]"
+                  ${isActive
+                    ? "bg-[#FFF9E5] text-[#FFD648]"
+                    : "bg-[#EFF4FA] text-[#0A2540]"
                   }`}
               >
                 {step.status}
