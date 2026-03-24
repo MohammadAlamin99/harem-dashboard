@@ -3,6 +3,7 @@ import { Eye, MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import StatusBadge from "./StatusBadge";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Gift({ card }: { card: GiftCard }) {
     const [showMenu, setShowMenu] = useState<boolean>(false);
@@ -26,13 +27,15 @@ export function Gift({ card }: { card: GiftCard }) {
                     </button>
                     {showMenu && (
                         <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-[#E0E6EB] py-1 z-30 min-w-[120px]">
-                            <button
-                                onClick={() => setShowMenu(false)}
-                                className="w-full flex items-center gap-2 px-4 py-2 text-sm text-[#29343D] hover:bg-[#F4F6FA] transition-colors"
-                            >
-                                <Eye className="w-4 h-4 text-[#635BFF]" />
-                                View
-                            </button>
+                            <Link href={`/salon-owner/clients/gift-card/view/${card.id}`}>
+                                <button
+                                    onClick={() => setShowMenu(false)}
+                                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-[#29343D] hover:bg-[#F4F6FA] transition-colors"
+                                >
+                                    <Eye className="w-4 h-4 text-[#635BFF]" />
+                                    View
+                                </button>
+                            </Link>
                             <button
                                 onClick={() => setShowMenu(false)}
                                 className="w-full flex items-center gap-2 px-4 py-2 text-sm text-[#29343D] hover:bg-[#F4F6FA] transition-colors"

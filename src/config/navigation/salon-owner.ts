@@ -47,7 +47,14 @@ export const salonOwnerNavigation = [
   {
     label: "Clients",
     href: "/salon-owner/clients",
-    matchUrls: ["/salon-owner/clients", "/salon-owner/clients/import", "/salon-owner/clients/", "/salon-owner/clients/gift-card", "/salon-owner/clients/gift-card/add"],
+    matchUrls: [
+      "/salon-owner/clients",
+      "/salon-owner/clients/import",
+      "/salon-owner/clients/",
+      "/salon-owner/clients/gift-card",
+      "/salon-owner/clients/gift-card/add",
+      "/salon-owner/clients/gift-card/view/"
+    ],
     icon: IUser,
   },
 ];
