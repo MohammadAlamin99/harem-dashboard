@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import TeamHead from '../TeamHead'
 import PaginationClient from '../../clients/PaginationClient';
-import ActionDropdown from '../../clients/ActionDropdown';
 import { Clock } from 'lucide-react';
 import Image from 'next/image';
 import MemberActionDropdown from './MemberActionDropdown';
+import ClosedPeriodModal from './ClosePeriodModal';
+import AddEmployeePopup from './AddEmployeePopup';
 
 interface Client {
     id: string;
@@ -61,6 +62,12 @@ export default function MemberContent() {
     const [currentPage, setCurrentPage] = useState(1);
     const [ippOpen, setIppOpen] = useState(false);
     const ippRef = useRef<HTMLDivElement | null>(null);
+    const [addOpen, setAddOpen] = useState(false)
+    const [showClosedPeriodModal, setShowClosedPeriodModal] = useState(false)
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
+    const [description, setDescription] = useState("")
+    const [showEmployeePopup, setShowEmployeePopup] = useState(false)
 
     useEffect(() => {
         const h = (e: MouseEvent) => {
@@ -76,10 +83,22 @@ export default function MemberContent() {
     const start = (currentPage - 1) * itemsPerPage;
     const paginated = filtered.slice(start, start + itemsPerPage);
 
+
+
+    function handleOptionClick(option: string) {
+        setAddOpen(false)
+        if (option === "Business Closed Period") {
+            setShowClosedPeriodModal(true)
+        }
+        if (option === "Employee") {
+            setShowEmployeePopup(true)
+        }
+    }
+
     return (
         <>
             <div className='flex flex-col gap-6 font-manrope'>
-                <TeamHead />
+                <TeamHead handleOptionClick={handleOptionClick} />
                 {/* Table */}
                 <div className='bg-white rounded-xl pt-6 overflow-hidden'>
                     <div className="overflow-x-auto mx-[15px] md:mx-[30px] rounded-[12px_12px_0px_0px] border border-[#E0E6EB]">
@@ -191,6 +210,24 @@ export default function MemberContent() {
                         filtered={filtered}
                     />
                 </div>
+
+                {/* Modal */}
+                {showClosedPeriodModal && (
+                    <ClosedPeriodModal onClose={() => setShowClosedPeriodModal(false)}
+                        handleOptionClick={handleOptionClick}
+                        addOpen={addOpen}
+                        setAddOpen={setAddOpen}
+                        startDate={startDate}
+                        setStartDate={setStartDate}
+                        endDate={endDate}
+                        setEndDate={setEndDate}
+                        description={description}
+                        setDescription={setDescription}
+                    />
+                )}
+                {showEmployeePopup && (
+                    <AddEmployeePopup onClose={() => setShowEmployeePopup(false)} />
+                )}
             </div>
         </>
     )

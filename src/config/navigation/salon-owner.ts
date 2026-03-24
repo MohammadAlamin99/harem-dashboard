@@ -51,6 +51,10 @@ export const salonOwnerNavigation = [
       {
         label: "Members",
         href: "/salon-owner/team/member",
+        matchUrls: [
+          "/salon-owner/team/member",
+          "/salon-owner/team/member/import",
+        ],
         icon: MermbersIcon,
       },
       {
