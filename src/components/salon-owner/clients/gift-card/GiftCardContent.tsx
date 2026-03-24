@@ -50,7 +50,7 @@ export default function GiftCardContent() {
             />
 
             {/* ── Main Card ── */}
-            <div className="bg-white rounded-xl shadow-[0_2px_4px_-1px_rgba(175,182,201,0.2)] p-8 mt-[30px]">
+            <div className="bg-white rounded-xl shadow-[0_2px_4px_-1px_rgba(175,182,201,0.2)] p-5 md:p-8 mt-[20px] md:mt-[30px]">
 
                 {/* Section title */}
                 <h2 className="text-[#29343D] font-semibold font-manrope text-[18px] mb-[30px]">
@@ -159,7 +159,7 @@ export default function GiftCardContent() {
                             key={tpl.id}
                             type="button"
                             onClick={() => setSelectedTemplate(tpl.id)}
-                            className={`text-left rounded-xl border p-6 transition-all cursor-pointer shadow-[0_2px_4px_-1px_rgba(175,182,201,0.2)]
+                            className={`text-left rounded-xl border md:p-6 p-3 transition-all cursor-pointer shadow-[0_2px_4px_-1px_rgba(175,182,201,0.2)]
                 ${selectedTemplate === tpl.id
                                     ? "border-[#635BFF]"
                                     : "border-[#E0E6EB] hover:border-[#635BFF]/40"
@@ -185,7 +185,7 @@ export default function GiftCardContent() {
 
                     {/* Upload Custom Gift Card */}
                     <label
-                        className={`justify-center rounded-xl border p-6 cursor-pointer transition-all min-h-[240px]
+                        className={`justify-center rounded-xl border md:p-6 p-3 cursor-pointer transition-all min-h-[240px]
               ${selectedTemplate === 0
                                 ? "border-[#635BFF] bg-[#F8F8FF]"
                                 : "border-[#E0E6EB] hover:border-[#635BFF]/40 hover:bg-[#F8F8FF]"
