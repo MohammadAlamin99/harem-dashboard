@@ -59,7 +59,10 @@ export const salonOwnerNavigation = [
       },
       {
         label: "Salaries",
-        href: "/admin/salaries/salries",
+        href: "/salon-owner/team/salaries",
+        matchUrls: [
+          "/salon-owner/team/salaries"
+        ],
         icon: ISales,
       },
       {
