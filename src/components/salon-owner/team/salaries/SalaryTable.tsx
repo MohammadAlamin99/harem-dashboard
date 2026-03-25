@@ -82,8 +82,8 @@ export default function SalaryTable({
                                             </>
                                         )}
                                         {!showActions && (
-                                            <button className="cursor-pointer flex items-center gap-1.5 text-[#6366F1] text-xs font-semibold border border-[#6366F1] px-3 py-1.5 rounded-[8px] hover:bg-[#EEF2FF] transition-colors">
-                                                <Eye size={13} />
+                                            <button className="cursor-pointer flex items-center gap-1.5 text-[#6366F1] text-xs font-medium bg-[#F1F2FE] px-4 py-2.5 rounded-[8px] hover:bg-[#EEF2FF] transition-colors">
+                                                <Eye size={24} fill="#635BFF" stroke="#F1F2FE" />
                                                 View Payslip
                                             </button>
                                         )}
@@ -118,8 +118,8 @@ export default function SalaryTable({
                                             </div>
 
                                             {/* Button */}
-                                            <button className="w-fit flex items-center gap-2 px-[14px] py-[10px] rounded-[8px] bg-[#F1F2FE] text-[#635BFF] text-[14px] font-medium hover:bg-[#EEF2FF] transition-colors">
-                                                <Eye size={16} strokeWidth={2} />
+                                            <button className="w-fit cursor-pointer flex items-center gap-1.5 text-[#6366F1] text-xs font-medium bg-[#F1F2FE] px-4 py-2.5 rounded-[8px] hover:bg-[#EEF2FF] transition-colors">
+                                                <Eye size={24} fill="#635BFF" stroke="#F1F2FE" />
                                                 View Payslip
                                             </button>
 

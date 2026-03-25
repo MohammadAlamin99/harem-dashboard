@@ -152,7 +152,7 @@ export default function SalariesContent() {
 
                 {/* Tabs */}
                 <div className="bg-white rounded-xl px-6">
-                    <div className="flex items-center justify-between border-b border-[#E0E6EB] w-fit">
+                    <div className="flex items-center justify-between border-b border-[#E0E6EB] w-full">
                         <div className="flex gap-2.5">
                             <button
                                 onClick={() => setActiveTab("pending")}
@@ -167,15 +167,15 @@ export default function SalariesContent() {
                                 Payment History (10)
                             </button>
                         </div>
-                        {/* Search — shown in tab bar for history tab */}
+                        {/* Search history tab*/}
                         {activeTab === "history" && (
                             <div className="relative mb-1">
-                                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#98A4AE]" />
+                                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#29343D]" />
                                 <input
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     placeholder="Search"
-                                    className="pl-9 pr-4 py-2 text-sm border border-[#E0E6EB] rounded-[8px] outline-none focus:border-[#6366F1] w-44 text-[#1A1A2E] placeholder:text-[#98A4AE]"
+                                    className="pl-9 pr-4 py-2 text-sm border border-[#E0E6EB] rounded-[8px] outline-none focus:border-[#6366F1] w-[240px] text-[#1A1A2E] placeholder:text-[#98A4AE]"
                                 />
                             </div>
                         )}
@@ -230,7 +230,7 @@ export default function SalariesContent() {
                     {HISTORY_GROUPS.map((group) => (
                         <div key={group.month} className="bg-white rounded-xl overflow-hidden">
                             {/* Group Header */}
-                            <div className="flex items-center justify-between px-6 py-4 bg-[#F8F9FF] border-b border-[#E0E6EB]">
+                            <div className="flex items-center justify-between mx-6 py-4 bg-[#F3F3FF] rounded-xl px-4 mt-[30px]">
                                 <p className="text-[#6366F1] font-bold text-sm">{group.month}</p>
                                 <div className="text-right">
                                     <p className="text-[#1A1A2E] font-bold text-sm">{group.totalAmount}</p>
@@ -250,7 +250,7 @@ export default function SalariesContent() {
                             </div>
 
                             {/* Footer */}
-                            <div className="flex items-center justify-between px-6 py-4 border-t border-[#E0E6EB]">
+                            <div className="flex items-center justify-between px-6 py-4 border border-[#E0E6EB] rounded-xl mx-6 mb-[30px] bg-[#FAFAFA]">
                                 <span className="text-sm font-semibold text-[#29343D]">Month Total</span>
                                 <div className="flex items-center gap-6">
                                     <span className="text-sm font-semibold text-[#29343D]">Average Salary</span>
