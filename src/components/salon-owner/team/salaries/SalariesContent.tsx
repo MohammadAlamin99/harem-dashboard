@@ -140,86 +140,111 @@ export default function SalariesContent() {
             />
 
             <div className="bg-white rounded-xl mb-4 py-4">
+
                 {/* Header */}
-                <div className="bg-white rounded-xl px-6 flex items-center justify-between py-2.5">
+                <div className="bg-white rounded-xl px-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between py-2.5 gap-3 sm:gap-0">
                     <h1 className="text-[#29343D] font-bold text-base">Salaries</h1>
-                    <button className="bg-[#DDDBFF] text-[#635BFF] text-sm font-medium px-4 py-2.5 rounded-[8px] flex items-center gap-2 hover:bg-[#E0E7FF]
-                     transition-colors cursor-pointer">
+                    <button className="bg-[#DDDBFF] text-[#635BFF] text-sm font-medium px-4 py-2.5 rounded-[8px] flex items-center gap-2 hover:bg-[#E0E7FF] transition-colors cursor-pointer">
                         <Download size={14} strokeWidth={2.5} />
                         Export Data
                     </button>
                 </div>
 
                 {/* Tabs */}
-                <div className="bg-white rounded-xl px-6">
-                    <div className="flex items-center justify-between border-b border-[#E0E6EB] w-full">
-                        <div className="flex gap-2.5">
-                            <button
-                                onClick={() => setActiveTab("pending")}
-                                className={`py-3.5 px-4 text-sm font-semibold border-b-2 transition-colors cursor-pointer ${activeTab === "pending" ? "border-[#6366F1] text-[#6366F1]" : "border-transparent text-[#98A4AE]"}`}
-                            >
-                                Pending Approval (5)
-                            </button>
-                            <button
-                                onClick={() => setActiveTab("history")}
-                                className={`py-3.5 px-4 text-sm font-semibold border-b-2 transition-colors cursor-pointer ${activeTab === "history" ? "border-[#6366F1] text-[#6366F1]" : "border-transparent text-[#98A4AE]"}`}
-                            >
-                                Payment History (10)
-                            </button>
+                <div className="bg-white rounded-xl px-4 sm:px-6 mt-4">
+                    <div className="flex flex-col gap-6 md:flex-row items-center justify-between">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#E0E6EB] w-fit gap-2 sm:gap-0">
+                            {/* Tab Buttons */}
+                            <div className="flex flex-wrap gap-0 md:gap-2.5">
+                                <button
+                                    onClick={() => setActiveTab("pending")}
+                                    className={`py-3.5 px-4 text-sm font-semibold border-b-2 transition-colors cursor-pointer ${activeTab === "pending" ? "border-[#6366F1] text-[#6366F1]" : "border-transparent text-[#98A4AE]"
+                                        }`}
+                                >
+                                    Pending Approval (5)
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab("history")}
+                                    className={`py-3.5 px-4 text-sm font-semibold border-b-2 transition-colors cursor-pointer ${activeTab === "history" ? "border-[#6366F1] text-[#6366F1]" : "border-transparent text-[#98A4AE]"
+                                        }`}
+                                >
+                                    Payment History (10)
+                                </button>
+                            </div>
                         </div>
-                        {/* Search history tab*/}
+                        {/* Search bar (only in history tab) */}
                         {activeTab === "history" && (
-                            <div className="relative mb-1">
+                            <div className="relative mb-1 w-full sm:w-auto">
                                 <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#29343D]" />
                                 <input
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     placeholder="Search"
-                                    className="pl-9 pr-4 py-2 text-sm border border-[#E0E6EB] rounded-[8px] outline-none focus:border-[#6366F1] w-[240px] text-[#1A1A2E] placeholder:text-[#98A4AE]"
+                                    className="pl-9 pr-4 py-2 text-sm border border-[#E0E6EB] rounded-[8px] outline-none focus:border-[#6366F1] w-full sm:w-[240px] text-[#1A1A2E] placeholder:text-[#98A4AE]"
                                 />
                             </div>
                         )}
                     </div>
                 </div>
             </div>
-
             {/* ── PENDING TAB ── */}
             {activeTab === "pending" && (
                 <>
-                    <div className="bg-white rounded-xl mb-4 overflow-hidden px-6 py-6">
-                        <div className="flex items-center justify-between">
+                    <div className="bg-white rounded-xl mb-4 overflow-hidden px-4 sm:px-6 py-6">
+
+                        {/* Header */}
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
                             <h2 className="text-[#29343D] font-bold text-base">Pending Review</h2>
-                            <div className="flex items-center gap-6">
-                                <div className="relative">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 w-full sm:w-auto">
+
+                                {/* Search */}
+                                <div className="relative w-full sm:w-[240px]">
                                     <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#29343D]" />
                                     <input
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                         placeholder="Search"
-                                        className="pl-9 pr-4 py-2 text-sm border border-[#E0E6EB] rounded-[8px] outline-none focus:border-[#6366F1] w-[240px] text-[#29343D] placeholder:text-[#98A4AE]"
+                                        className="pl-9 pr-4 py-2 text-sm border border-[#E0E6EB] rounded-[8px] outline-none focus:border-[#6366F1] w-full text-[#29343D] placeholder:text-[#98A4AE]"
                                     />
                                 </div>
-                                <button className="cursor-pointer bg-[#FFE5ED] text-[#FF6692] text-sm font-medium px-4 py-2.5 rounded-[8px] hover:bg-red-50 transition-colors">
+
+                                {/* Buttons */}
+                                <button className="cursor-pointer bg-[#FFE5ED] text-[#FF6692] text-sm font-medium px-4 py-2.5 rounded-[8px] hover:bg-red-50 transition-colors w-full sm:w-auto">
                                     Reapproval All (5)
                                 </button>
-                                <button className="cursor-pointer bg-[#16CDC7] text-white text-sm font-medium px-4 py-2.5 rounded-[8px] hover:bg-[#18dfd8] transition-colors">
+                                <button className="cursor-pointer bg-[#16CDC7] text-white text-sm font-medium px-4 py-2.5 rounded-[8px] hover:bg-[#18dfd8] transition-colors w-full sm:w-auto">
                                     Approval All (5)
                                 </button>
                             </div>
                         </div>
-                        <div className="my-4">
-                            <SalaryTable members={PENDING} expandedId={expandedId} toggleExpand={toggleExpand} showActions={true} onPayClick={handlePayClick} STATUS_STYLES={STATUS_STYLES} />
+
+                        {/* Salary Table */}
+                        <div className="my-4 overflow-x-auto">
+                            <SalaryTable
+                                members={PENDING}
+                                expandedId={expandedId}
+                                toggleExpand={toggleExpand}
+                                showActions={true}
+                                onPayClick={handlePayClick}
+                                STATUS_STYLES={STATUS_STYLES}
+                            />
                         </div>
-                        <div className="flex items-center justify-between border rounded-xl p-5 border-[#E0E6EB] bg-[#FAFAFA]">
+
+                        {/* Total Amount */}
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border rounded-xl p-5 border-[#E0E6EB] bg-[#FAFAFA] gap-2 sm:gap-0">
                             <span className="text-sm font-semibold text-[#29343D]">Total Amount</span>
                             <span className="bg-[#6366F1] text-white text-sm font-semibold px-4 py-1.5 rounded-full">€16,000.00</span>
                         </div>
-                        <SalaryPaymentTable
-                            members={HISTORY}
-                            expandedId={expandedHistoryId}
-                            toggleExpand={toggleHistoryExpand}
-                            totalAmount="€ 3,200.00"
-                        />
+
+                        {/* Payment History Table */}
+                        <div className="mt-4 overflow-x-auto">
+                            <SalaryPaymentTable
+                                members={HISTORY}
+                                expandedId={expandedHistoryId}
+                                toggleExpand={toggleHistoryExpand}
+                                totalAmount="€ 3,200.00"
+                            />
+                        </div>
                     </div>
                 </>
             )}

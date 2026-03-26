@@ -20,8 +20,8 @@ export default function SalaryPaymentTable({
         <div className="mt-6 rounded-[16px]">
 
             {/* TABLE CARD */}
-            <div className="bg-white border border-[#E6E8EC] rounded-[14px] overflow-hidden">
-                <table className="w-full border-collapse">
+            <div className="bg-white border border-[#E6E8EC] rounded-[14px] w-full overflow-x-auto">
+                <table className="w-full border-collapse min-w-[900px] md:min-w-full">
 
                     {/* HEADER */}
                     <thead>
