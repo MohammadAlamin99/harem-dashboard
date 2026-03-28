@@ -4,13 +4,11 @@ import Image from "next/image"
 import {
     ChevronLeft,
     ChevronRight,
-    ChevronFirst,
-    ChevronLast,
     Pencil,
     Trash2,
-    ChevronDown,
 } from "lucide-react"
 import PaginationClient from "../../clients/PaginationClient"
+import EditShiftModal from "./Editshiftmodal"
 
 interface Member {
     id: number
@@ -90,6 +88,9 @@ export default function ScheduleSection() {
     const [perPage, setPerPage] = useState(5)
     const [contextMenu, setContextMenu] = useState<ContextMenu | null>(null)
     // const [addMenu, setAddMenu] = useState<AddMenuState>({ open: false, x: 0, y: 0 })
+    const [editShiftOpen, setEditShiftOpen] = useState(false)
+    const [editShiftMember, setEditShiftMember] = useState("")
+    const [editShiftDay, setEditShiftDay] = useState("")
     const [perPageOpen, setPerPageOpen] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
     const ippRef = useRef<HTMLDivElement | null>(null)
@@ -129,7 +130,6 @@ export default function ScheduleSection() {
         })
         // setAddMenu((prev) => ({ ...prev, open: false }))
     }
-
     return (
         <div
             ref={containerRef}
@@ -239,7 +239,11 @@ export default function ScheduleSection() {
                 >
                     <button
                         className="flex items-center gap-2.5 w-full px-4 py-2.5 text-[14px] cursor-pointer text-[#29343D] hover:bg-[#F4F6FA] transition-colors"
-                        onClick={() => setContextMenu(null)}
+                        onClick={() => {
+                            setEditShiftDay(contextMenu.day)
+                            setContextMenu(null)
+                            setEditShiftOpen(true)
+                        }}
                     >
                         <Pencil size={16} className="text-[#46CAEB]" />
                         Edit Shift
@@ -253,6 +257,13 @@ export default function ScheduleSection() {
                     </button>
                 </div>
             )}
+
+            <EditShiftModal
+                isOpen={editShiftOpen}
+                onClose={() => setEditShiftOpen(false)}
+                memberName={editShiftMember}
+                dayLabel={editShiftDay}
+            />
         </div>
     )
 }
