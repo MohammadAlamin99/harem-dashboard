@@ -327,7 +327,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     </button>
 
                     {expanded && (
-                      <div className="space-y-4 px-4 pb-4">
+                      <div className="space-y-4 px-4 pb-4 pt-2.5">
                         {item.children.map((child) => {
                           const ChildIcon = child.icon;
                           const childIsActive = pathname.startsWith(

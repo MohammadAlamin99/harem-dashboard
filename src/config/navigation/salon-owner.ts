@@ -6,6 +6,9 @@ import ISales from "@/app/account-protal/svg/ISales";
 import MermbersIcon from "@/components/salon-owner/team/member/MermbersIcon";
 import ShiftIcon from "@/app/account-protal/svg/ShiftIcon";
 import WorkShift from "@/app/account-protal/svg/WorkShift";
+import { BookOpen } from "lucide-react";
+import CategoryIcon from "@/app/account-protal/svg/CategoryIcon";
+import BundlesIcon from "@/app/account-protal/svg/BundlesIcon";
 
 export const salonOwnerNavigation = [
   {
@@ -72,8 +75,29 @@ export const salonOwnerNavigation = [
       },
       {
         label: "Worked Shifts",
-        href: "/admin/salaries/worked-shifts",
+        href: "#",
         icon: WorkShift,
+      },
+    ],
+  },
+  {
+    label: "Services",
+    icon: BookOpen,
+    children: [
+      {
+        label: "Services",
+        href: "/salon-owner/service/services",
+        icon: MermbersIcon,
+      },
+      {
+        label: "Categories",
+        href: "/salon-owner/service/service-category",
+        icon: CategoryIcon,
+      },
+      {
+        label: "Bundles",
+        href: "/salon-owner/team/scheduled-shift",
+        icon: BundlesIcon,
       },
     ],
   },
