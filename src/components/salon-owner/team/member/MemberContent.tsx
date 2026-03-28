@@ -210,7 +210,6 @@ export default function MemberContent() {
                         filtered={filtered}
                     />
                 </div>
-
                 {/* Modal */}
                 {showClosedPeriodModal && (
                     <ClosedPeriodModal onClose={() => setShowClosedPeriodModal(false)}

@@ -136,9 +136,8 @@ export default function DayView({
                           {Array.from({ length: 4 }).map((_, i) => (
                             <div
                               key={i}
-                              className={`flex-1 ${
-                                i < 3 ? "border-b border-[#F0F0F0]" : ""
-                              }`}
+                              className={`flex-1 ${i < 3 ? "border-b border-[#F0F0F0]" : ""
+                                }`}
                             />
                           ))}
                         </div>

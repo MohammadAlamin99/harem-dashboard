@@ -18,7 +18,7 @@ import { Appointment } from "@/@types/salon-owner/appointment.type";
 import StatusBadge from "./StatusBadge";
 import ExpandedRowDetail from "./ExpandedRowDetail";
 import { Status } from "@/@types/salon-owner/Statu.type";
-import CalendarView from "./Calendarview ";
+import CalendarView from "./Calendarview";
 import TeamFilterDropdown from "./Teamfilterdropdown ";
 import Link from "next/link";
 

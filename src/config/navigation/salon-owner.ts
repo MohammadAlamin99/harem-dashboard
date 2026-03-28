@@ -67,7 +67,7 @@ export const salonOwnerNavigation = [
       },
       {
         label: "Scheduled Shifts",
-        href: "/admin/salaries/scheduled-shifts",
+        href: "/salon-owner/team/scheduled-shift",
         icon: ShiftIcon,
       },
       {
