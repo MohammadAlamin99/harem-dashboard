@@ -6,47 +6,37 @@ import ISales from "@/app/account-protal/svg/ISales";
 import MermbersIcon from "@/components/salon-owner/team/member/MermbersIcon";
 import ShiftIcon from "@/app/account-protal/svg/ShiftIcon";
 import WorkShift from "@/app/account-protal/svg/WorkShift";
-import { BookOpen } from "lucide-react";
 import CategoryIcon from "@/app/account-protal/svg/CategoryIcon";
 import BundlesIcon from "@/app/account-protal/svg/BundlesIcon";
+import InventoryIcon from "@/app/account-protal/svg/InventoryIcon";
+import ProductIcon from "@/app/account-protal/svg/ProductIcon";
+import StockIcon from "@/app/account-protal/svg/StockIcon";
+import { BookOpen } from "lucide-react";
 
-export const salonOwnerNavigation = [
+export interface NavItem {
+  label: string;
+  href?: string;
+  icon: React.ComponentType<{ color?: string }>;
+  children?: NavItem[];
+  matchUrls?: string[];
+}
+
+export const salonOwnerNavigation: NavItem[] = [
   {
     label: "Dashboard",
     href: "/salon-owner/dashboard",
-    matchUrls: ["/salon-owner/dashboard", "/salon-owner/dashboard/checkout"],
     icon: IDashboard,
   },
-
   {
     label: "Appointments",
     href: "/salon-owner/appointment",
-    matchUrls: [
-      "/salon-owner/appointment",
-      "/salon-owner/appointment/settings",
-      "/salon-owner/appointment/print-receipt",
-      "/salon-owner/appointment/import-appointments",
-      "/salon-owner/appointment/view-appointment",
-      "/salon-owner/appointment/checkout",
-      "/salon-owner/appointment/reschedule",
-      "/salon-owner/appointment/add",
-    ],
     icon: ICalaender,
   },
   {
     label: "Clients",
     href: "/salon-owner/clients",
-    matchUrls: [
-      "/salon-owner/clients",
-      "/salon-owner/clients/import",
-      "/salon-owner/clients/",
-      "/salon-owner/clients/gift-card",
-      "/salon-owner/clients/gift-card/add",
-      "/salon-owner/clients/gift-card/view/"
-    ],
     icon: IUser,
   },
-
   {
     label: "Team",
     icon: TeamIcon,
@@ -54,18 +44,11 @@ export const salonOwnerNavigation = [
       {
         label: "Members",
         href: "/salon-owner/team/member",
-        matchUrls: [
-          "/salon-owner/team/member",
-          "/salon-owner/team/member/import",
-        ],
         icon: MermbersIcon,
       },
       {
         label: "Salaries",
         href: "/salon-owner/team/salaries",
-        matchUrls: [
-          "/salon-owner/team/salaries"
-        ],
         icon: ISales,
       },
       {
@@ -75,7 +58,7 @@ export const salonOwnerNavigation = [
       },
       {
         label: "Worked Shifts",
-        href: "#",
+        href: "/salon-owner/team/worked-shift",
         icon: WorkShift,
       },
     ],
@@ -96,8 +79,29 @@ export const salonOwnerNavigation = [
       },
       {
         label: "Bundles",
-        href: "/salon-owner/team/scheduled-shift",
+        href: "/salon-owner/service/bundle",
         icon: BundlesIcon,
+      },
+    ],
+  },
+  {
+    label: "Inventory",
+    icon: InventoryIcon,
+    children: [
+      {
+        label: "Stock in/Stock out",
+        href: "/salon-owner/inventory/stock",
+        icon: StockIcon,
+      },
+      {
+        label: "Products",
+        href: "/salon-owner/inventory/products",
+        icon: ProductIcon,
+      },
+      {
+        label: "Categories",
+        href: "/salon-owner/inventory/categories",
+        icon: CategoryIcon,
       },
     ],
   },
