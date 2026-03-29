@@ -12,6 +12,10 @@ import InventoryIcon from "@/app/account-protal/svg/InventoryIcon";
 import ProductIcon from "@/app/account-protal/svg/ProductIcon";
 import StockIcon from "@/app/account-protal/svg/StockIcon";
 import { BookOpen } from "lucide-react";
+import IDollar from "@/components/salon-owner/appointment/add-appointment/IDollar";;
+import FinancialIcon from "@/app/account-protal/svg/FinancialIcon";
+import IReceipts from "@/app/account-protal/svg/IReceipts";
+import GiftCardIconNav from "@/app/account-protal/svg/GiftCardIconNav";
 
 export interface NavItem {
   label: string;
@@ -102,6 +106,27 @@ export const salonOwnerNavigation: NavItem[] = [
         label: "Categories",
         href: "/salon-owner/inventory/product-category",
         icon: CategoryIcon,
+      },
+    ],
+  },
+  {
+    label: "Financial",
+    icon: FinancialIcon,
+    children: [
+      {
+        label: "Payments",
+        href: "/salon-owner/financial",
+        icon: IDollar,
+      },
+      {
+        label: "Receipts",
+        href: "/salon-owner/financial/receipts",
+        icon: IReceipts,
+      },
+      {
+        label: "Gifts Cards",
+        href: "#",
+        icon: GiftCardIconNav,
       },
     ],
   },
