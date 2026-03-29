@@ -100,7 +100,7 @@ export const salonOwnerNavigation: NavItem[] = [
       },
       {
         label: "Categories",
-        href: "/salon-owner/inventory/categories",
+        href: "/salon-owner/inventory/product-category",
         icon: CategoryIcon,
       },
     ],
