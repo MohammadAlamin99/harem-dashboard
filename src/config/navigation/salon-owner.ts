@@ -95,7 +95,7 @@ export const salonOwnerNavigation: NavItem[] = [
       },
       {
         label: "Products",
-        href: "/salon-owner/inventory/products",
+        href: "/salon-owner/inventory/import-product",
         icon: ProductIcon,
       },
       {
