@@ -11,11 +11,12 @@ import BundlesIcon from "@/app/account-protal/svg/BundlesIcon";
 import InventoryIcon from "@/app/account-protal/svg/InventoryIcon";
 import ProductIcon from "@/app/account-protal/svg/ProductIcon";
 import StockIcon from "@/app/account-protal/svg/StockIcon";
-import { BookOpen } from "lucide-react";
+import { BookOpen, CalendarDays, CalendarRange, ChartSpline, Globe } from "lucide-react";
 import IDollar from "@/components/salon-owner/appointment/add-appointment/IDollar";;
 import FinancialIcon from "@/app/account-protal/svg/FinancialIcon";
 import IReceipts from "@/app/account-protal/svg/IReceipts";
 import GiftCardIconNav from "@/app/account-protal/svg/GiftCardIconNav";
+import MediaIcon from "@/app/account-protal/svg/MediaIcon";
 
 export interface NavItem {
   label: string;
@@ -127,6 +128,27 @@ export const salonOwnerNavigation: NavItem[] = [
         label: "Gifts Cards",
         href: "#",
         icon: GiftCardIconNav,
+      },
+    ],
+  },
+  {
+    label: "Social Media",
+    icon: Globe,
+    children: [
+      {
+        label: "Calendar",
+        href: "/salon-owner/social-media/calendar",
+        icon: CalendarDays,
+      },
+      {
+        label: "Media",
+        href: "/salon-owner/social-media/media",
+        icon: MediaIcon,
+      },
+      {
+        label: "Analytics",
+        href: "/salon-owner/social-media/analytics",
+        icon: ChartSpline,
       },
     ],
   },
