@@ -47,13 +47,13 @@ export default function CategoryTable() {
                     {/* HEADER */}
                     <thead>
                         <tr className="bg-[#F3F3FF]">
-                            <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-[#E0E6EB]">
+                            <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b  border-[#E0E6EB]">
                                 Category
                             </th>
                             <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-[#E0E6EB]">
                                 Related Services
                             </th>
-                            <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-r border-[#E0E6EB]">
+                            <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-[#E0E6EB]">
                                 Actions
                             </th>
                         </tr>
@@ -65,7 +65,7 @@ export default function CategoryTable() {
                             <tr key={cat.id} className="hover:bg-[#FAFBFF]">
 
                                 {/* CATEGORY */}
-                                <td className="px-4 py-5 border-b border-l border-[#E0E6EB]">
+                                <td className="px-4 py-5 border-b border-[#E0E6EB]">
                                     <span className={`px-2 py-1 text-[12px] font-semibold rounded-lg ${CATEGORY_STYLES[cat.name]}`}>
                                         {cat.name}
                                     </span>
@@ -77,7 +77,7 @@ export default function CategoryTable() {
                                 </td>
 
                                 {/* ACTIONS */}
-                                <td className="w-[120px] px-4 py-5 border-b border-l border-r border-[#E0E6EB]">
+                                <td className="w-[120px] px-4 py-5 border-b border-l border-[#E0E6EB]">
                                     <div className="flex items-center gap-4">
                                         <button className="px-4 py-2.5 rounded-lg bg-[#E6FAFF]">
                                             <Pencil size={16} className="text-[#46CAEB]" />

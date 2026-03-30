@@ -1,18 +1,16 @@
 import PageHeaderWithButton from '../../common-component/PageHeaderWithButton'
 import { Download, Plus } from 'lucide-react'
 import ServiceCategoryTable from './ServiceCategoryTable'
+import AddServiceCategoryMoal from './AddServiceCategoryMoal'
+import { useState } from 'react'
 
 export default function ServiceCategoryContent() {
+    const [isModalOpen, setIsModalOpen] = useState(false)
     return (
         <div>
             <PageHeaderWithButton
                 title="Services"
                 buttons={[
-                    // {
-                    //     label: "Import Services",
-                    //     href: "/salon-owner/team/member/import",
-                    //     variant: "outline",
-                    // },
                     {
                         label: "Export Data",
                         icon: <Download size={15} strokeWidth={2.5} />,
@@ -20,14 +18,22 @@ export default function ServiceCategoryContent() {
                         variant: "secondary",
                     },
                     {
-                        label: "Add Service",
+                        label: "Add Category",
                         icon: <Plus size={15} strokeWidth={2.5} />,
-                        onClick: () => console.log("Add clicked"),
+                        onClick: () => setIsModalOpen(true),
                         variant: "primary",
                     },
                 ]}
             />
             <ServiceCategoryTable />
+            <AddServiceCategoryMoal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSave={(data) => {
+                    console.log("New Category:", data)
+                    setIsModalOpen(false)
+                }}
+            />
         </div>
     )
 }

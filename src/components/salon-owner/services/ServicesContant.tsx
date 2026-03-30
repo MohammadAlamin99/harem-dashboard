@@ -112,7 +112,7 @@ const columns: Column<Service>[] = [
         render: (item) => (
             <div className="flex items-center gap-4">
                 <Link href={`/salon-owner/service/services/view-service/${item.id}`}>
-                    <button className="px-4 py-2.5 rounded-lg bg-[#F1F2FE] hover:bg-[#ccf4ff] transition-colors">
+                    <button className="cursor-pointer px-4 py-2.5 rounded-lg bg-[#F1F2FE] hover:bg-[#ccf4ff] transition-colors">
                         <Eye size={16} className="text-[#635BFF]" />
                     </button>
                 </Link>
