@@ -6,8 +6,6 @@ import Image from "next/image";
 import { useState } from "react";
 import Table, { Column } from "@/components/salon-owner/common-component/Table";
 import AddShiftModal from "./Addshiftmodal";
-
-
 export default function ViewWorkedShiftContent() {
     const router = useRouter();
     const [month, setMonth] = useState("December")
@@ -203,7 +201,11 @@ export default function ViewWorkedShiftContent() {
 
             {/* Table */}
 
-            <Table columns={shiftColumns} data={shiftData} tableTitle={"Daily Shifts - December 2024"} showPagination={false} showBottomStatusBar={true} />
+            <Table columns={shiftColumns}
+                data={shiftData}
+                tableTitle={"Daily Shifts - December 2024"}
+                showPagination={false}
+                showBottomStatusBar={true} />
 
             <AddShiftModal
                 isOpen={shiftModalOpen}
@@ -213,6 +215,8 @@ export default function ViewWorkedShiftContent() {
                     setShiftModalOpen(false)
                 }}
             />
+
+            
         </>
     )
 }
