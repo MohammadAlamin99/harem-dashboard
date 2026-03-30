@@ -99,9 +99,9 @@ export default function MembersRequired() {
                                 <Image
                                     src={member.image}
                                     alt={member.name}
-                                    width={40}
-                                    height={40}
-                                    className="rounded-full object-cover"
+                                    width={48}
+                                    height={48}
+                                    className="rounded-xl object-cover"
                                 />
 
                                 <span className="text-sm font-medium text-[#29343D]">

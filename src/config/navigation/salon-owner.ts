@@ -76,6 +76,7 @@ export const salonOwnerNavigation: NavItem[] = [
       {
         label: "Services",
         href: "/salon-owner/service/services",
+        matchUrls: ["/salon-owner/service/services/view-service/"],
         icon: MermbersIcon,
       },
       {
