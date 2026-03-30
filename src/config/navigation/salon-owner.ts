@@ -64,6 +64,7 @@ export const salonOwnerNavigation: NavItem[] = [
       {
         label: "Worked Shifts",
         href: "/salon-owner/team/worked-shift",
+        matchUrls: ["/salon-owner/team/worked-shift/view-worked-shift/"],
         icon: WorkShift,
       },
     ],

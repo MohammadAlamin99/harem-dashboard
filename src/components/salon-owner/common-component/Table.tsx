@@ -3,6 +3,7 @@
 import { useState, useRef } from "react"
 import { MoreVertical } from "lucide-react"
 import PaginationClient from "../clients/PaginationClient"
+import BottomStatusBar from "./BottomStatusBar"
 
 export interface DropdownAction<T> {
     label: string
@@ -23,6 +24,9 @@ interface TableProps<T> {
     perPageOptions?: number[]
     defaultPerPage?: number
     dropdownActions?: DropdownAction<T>[]
+    tableTitle?: string
+    showPagination?: boolean
+    showBottomStatusBar?: boolean
 }
 
 export const CATEGORY_STYLES: Record<string, string> = {
@@ -40,6 +44,9 @@ export default function Table<T extends { id: number | string }>({
     defaultPerPage = 5,
     perPageOptions = [5, 10, 20],
     dropdownActions,
+    tableTitle,
+    showPagination = true,
+    showBottomStatusBar = false,
 }: TableProps<T>) {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(defaultPerPage)
@@ -53,6 +60,7 @@ export default function Table<T extends { id: number | string }>({
 
     return (
         <div className="relative w-full bg-white rounded-xl p-[15px] md:p-[30px] mt-6 font-manrope">
+            {tableTitle && <h3 className="text-base font-bold text-[#29343D] font-manrope mb-4">{tableTitle}</h3>}
             <div className="overflow-x-auto border rounded-[12px_12px_0px_0px] border-[#E0E6EB] border-b-0">
                 <table className="w-full min-w-[900px] border-collapse">
 
@@ -122,20 +130,43 @@ export default function Table<T extends { id: number | string }>({
                 </table>
             </div>
 
-            <PaginationClient
-                ippRef={ippRef}
-                setIppOpen={setIppOpen}
-                itemsPerPage={perPage}
-                ippOpen={ippOpen}
-                ITEMS_PER_PAGE_OPTIONS={perPageOptions}
-                setItemsPerPage={setPerPage}
-                currentPage={page}
-                setCurrentPage={setPage}
-                totalPages={totalPages}
-                start={start}
-                filtered={data}
-                margin={false}
-            />
+            {showPagination && (
+                <PaginationClient
+                    ippRef={ippRef}
+                    setIppOpen={setIppOpen}
+                    itemsPerPage={perPage}
+                    ippOpen={ippOpen}
+                    ITEMS_PER_PAGE_OPTIONS={perPageOptions}
+                    setItemsPerPage={setPerPage}
+                    currentPage={page}
+                    setCurrentPage={setPage}
+                    totalPages={totalPages}
+                    start={start}
+                    filtered={data}
+                    margin={false}
+                />
+            )}
+
+            {
+                showBottomStatusBar && (
+                    <div className="mt-4">
+                        <BottomStatusBar stats={[
+                            {
+                                label: "Total Days Worked",
+                                value: "21 Days",
+                            },
+                            {
+                                label: "Total Shifts",
+                                value: 2,
+                            },
+                            {
+                                label: "Total Revenue",
+                                value: "165h",
+                            },
+                        ]} />
+                    </div>
+                )
+            }
         </div>
     )
 }

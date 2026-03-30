@@ -4,6 +4,8 @@ import PageHeaderWithButton from '../../common-component/PageHeaderWithButton'
 import { Calendar, ChevronDown, Download, Eye, Search, Users } from 'lucide-react'
 import Table, { Column } from '../../common-component/Table'
 import Image from 'next/image'
+import Link from 'next/link'
+import BottomStatusBar from '../../common-component/BottomStatusBar'
 
 interface TeamMemberData {
     id: number
@@ -67,9 +69,11 @@ const columns: Column<TeamMemberData>[] = [
         key: "actions",
         label: "Actions",
         render: (item) => (
-            <button className="px-4 py-2.5 rounded-lg bg-[#EEF2FF] cursor-pointer">
-                <Eye size={16} />
-            </button>
+            <Link href={`/salon-owner/team/worked-shift/view-worked-shift/${item.id}`}>
+                <button className="px-4 py-2.5 rounded-lg bg-[#EEF2FF] cursor-pointer">
+                    <Eye size={16} color='#635BFF' />
+                </button>
+            </Link>
         ),
     },
 ]
@@ -88,7 +92,7 @@ export default function WorkedShiftContent() {
 
     return (
         <div>
-            <div className='bg-white'>
+            <div className='bg-white rounded-xl'>
                 <PageHeaderWithButton
                     title="Worked Shift"
                     buttons={[
@@ -159,7 +163,7 @@ export default function WorkedShiftContent() {
                         </button>
                     </div>
 
-                    {/* Search — pushed to the right */}
+                    {/* Search */}
                     <div className="ml-auto">
                         <div className="flex items-center gap-2 border border-[#EFF4FA] rounded-[8px] px-3 py-2.5 min-w-[240px] focus-within:border-[#6366F1] transition-colors">
                             <Search size={15} className="text-[#29343D]" strokeWidth={2} />
@@ -181,6 +185,14 @@ export default function WorkedShiftContent() {
                 data={filtered}
                 columns={columns}
             />
+            <div className="flex justify-between w-full mt-4">
+                <BottomStatusBar
+                    stats={[
+                        { label: "Total Company Hours", value: "840h" },
+                        { label: "Average Hours per Employee", value: "168h" },
+                    ]}
+                />
+            </div>
         </div>
     )
 }
