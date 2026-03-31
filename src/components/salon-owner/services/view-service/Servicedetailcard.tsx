@@ -46,7 +46,7 @@ export default function ServiceDetailCard({
     }
 
     return (
-        <div className="bg-white rounded-xl border border-[#E0E6EB] p-6 font-manrope">
+        <div className="bg-white rounded-xl border border-[#E0E6EB] md:p-[30px] p-[15px] font-manrope">
 
             {/* Top Row: Name + Checkbox */}
             <div className="flex items-center justify-between mb-6">
@@ -70,7 +70,6 @@ export default function ServiceDetailCard({
                 </span>
             </div>
 
-            <div className="w-full h-px bg-[#F3F4F6] mb-5" />
 
             {/* Default Duration + Post-break Min */}
             <div className="grid grid-cols-2 gap-6 mb-5">
@@ -84,7 +83,7 @@ export default function ServiceDetailCard({
                 </div>
             </div>
 
-            <div className="w-full h-px bg-[#F3F4F6] mb-5" />
+
 
             {/* Price Type + Price */}
             <div className="grid grid-cols-2 gap-6 mb-5">
@@ -98,7 +97,7 @@ export default function ServiceDetailCard({
                 </div>
             </div>
 
-            <div className="w-full h-px bg-[#F3F4F6] mb-5" />
+
 
             {/* VAT */}
             <div className="mb-5">
@@ -106,12 +105,11 @@ export default function ServiceDetailCard({
                 <p className="text-[14px] font-bold text-[#29343D]">{vat}</p>
             </div>
 
-            <div className="w-full h-px bg-[#F3F4F6] mb-5" />
 
             {/* Description */}
             <div>
                 <p className="text-[12px] font-semibold text-[#98A4AE] mb-1">Price Type</p>
-                <p className="text-[14px] text-[#29343D] leading-relaxed">{description}</p>
+                <p className="text-[13px] font-semibold text-[#29343D] leading-relaxed">{description}</p>
             </div>
 
         </div>

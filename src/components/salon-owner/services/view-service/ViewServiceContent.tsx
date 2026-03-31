@@ -9,7 +9,7 @@ export default function ViewServiceContent() {
     const router = useRouter()
     return (
         <div>
-            <PageHeader title="Add Service"
+            <PageHeader title="View Service"
                 onBack={() => router.back()}
                 breadcrumb={[{ label: "Services", active: true }]}
                 HomeIcon={<Home size={18} />}
@@ -25,7 +25,7 @@ export default function ViewServiceContent() {
                     priceType="Fixed"
                     price="€ 270"
                     vat="€ 70"
-                    description="Lorem Ipsum is simply dummy text of the printing and typesetting industry..."
+                    description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
                     onBookingToggle={(val) => console.log(val)}
                 />
             </div>

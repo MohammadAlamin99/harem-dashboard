@@ -1,8 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
-import { Pencil } from "lucide-react"
+import { Pencil, Trash2 } from "lucide-react"
 
 type Member = {
     id: number
@@ -35,67 +34,29 @@ const membersData: Member[] = [
 ]
 
 export default function MembersRequired() {
-    const [selectedMembers, setSelectedMembers] = useState<number[]>([])
-    const [allSelected, setAllSelected] = useState(true)
-
-    const toggleMember = (id: number) => {
-        setSelectedMembers((prev) =>
-            prev.includes(id)
-                ? prev.filter((m) => m !== id)
-                : [...prev, id]
-        )
-    }
-
-    const toggleAll = () => {
-        if (allSelected) {
-            setSelectedMembers([])
-        } else {
-            setSelectedMembers(membersData.map((m) => m.id))
-        }
-        setAllSelected(!allSelected)
-    }
 
     return (
-        <div className="font-manrope bg-white p-6 rounded-xl">
+        <div className="font-manrope bg-white p-6 rounded-xl border border-[#E0E6EB]">
 
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-base md:text-[22px] font-semibold text-[#29343D]">
+                <h2 className="text-lg font-semibold text-[#29343D]">
                     Members Required
                 </h2>
-
-                <label className="flex items-center gap-2 text-sm text-[#29343D]">
-                    <input
-                        type="checkbox"
-                        checked={allSelected}
-                        onChange={toggleAll}
-                        className="accent-[#635BFF]"
-                    />
-                    All Members
-                </label>
             </div>
 
             {/* Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 {membersData.map((member) => {
-                    const isSelected =
-                        allSelected || selectedMembers.includes(member.id)
 
                     return (
                         <div
                             key={member.id}
-                            className="flex items-center justify-between p-6 rounded-lg bg-[#F6F7F9]"
+                            className="flex items-center justify-between p-6 rounded-lg bg-[#F6F7F9] flex-wrap"
                         >
                             {/* Left */}
                             <div className="flex items-center gap-3">
-                                <input
-                                    type="checkbox"
-                                    checked={isSelected}
-                                    onChange={() => toggleMember(member.id)}
-                                    className="accent-[#635BFF]"
-                                />
-
                                 <Image
                                     src={member.image}
                                     alt={member.name}
@@ -110,16 +71,19 @@ export default function MembersRequired() {
                             </div>
 
                             {/* Right */}
-                            <div className="flex items-center gap-3">
-                                <div className="text-right">
-                                    <div className="text-sm text-[#29343D]">-</div>
-                                    <div className="text-xs text-[#98A4AE]">
+                            <div className="flex items-center gap-4">
+                                <div className="text-right flex flex-col justify-center items-center">
+                                    <div className="text-[24px] leading-[120%] text-[#29343D]">-</div>
+                                    <div className="text-xs text-[#526B7A]">
                                         Duration
                                     </div>
                                 </div>
 
-                                <button className="p-2 rounded-md hover:bg-[#F1F2FE]">
-                                    <Pencil size={16} className="text-[#635BFF]" />
+                                <button className="cursor-pointer">
+                                    <Pencil size={24} className="text-[#635BFF]" />
+                                </button>
+                                <button className="cursor-pointer">
+                                    <Trash2 size={24} color="#FF6692" />
                                 </button>
                             </div>
                         </div>
