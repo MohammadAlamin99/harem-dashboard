@@ -83,7 +83,7 @@ export default function BundleContent() {
     return (
         <div>
             <PageHeaderWithButton
-                title="Services"
+                title="Bundles"
                 buttons={[
                     {
                         label: "Export Data",
