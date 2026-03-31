@@ -8,7 +8,7 @@ type Option = {
     value: string
 }
 
-export default function ServicesForm() {
+export default function BundleForm() {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null)
 
     const [selected, setSelected] = useState<Record<string, Option | null>>({
@@ -84,17 +84,18 @@ export default function ServicesForm() {
                 </label>
             </div>
             {/* Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-7 mb-7">
 
                 <div>
                     <label className="text-sm font-medium text-[#29343D] mb-1 block">
-                        Service Name *
+                        Bundle Name *
                     </label>
                     <input
-                        placeholder="Enter service name"
+                        placeholder="Enter bundle name"
                         className="w-full px-4 py-2.5 text-sm text-[#29343D] border border-[#E0E6EB] rounded-[4px] placeholder:text-[#29343D] focus:outline-none"
                     />
                 </div>
+
 
                 {renderSelect(
                     "category",
@@ -109,29 +110,19 @@ export default function ServicesForm() {
                         + Add Category
                     </span>
                 )}
+            </div>
+            <div className="mb-7">
+                <label className="text-sm font-medium text-[#29343D] mb-1 block">
+                    Description (Optional)
+                </label>
+                <textarea
+                    rows={4}
+                    placeholder="Enter a description"
+                    className="w-full px-4 py-2.5 text-sm text-[#29343D] border border-[#E0E6EB] rounded-[4px] placeholder:text-[#29343D] focus:outline-none"
+                />
+            </div>
 
-                {renderSelect(
-                    "duration",
-                    "Default Duration",
-                    [
-                        { label: "15 min", value: "15" },
-                        { label: "30 min", value: "30" },
-                    ],
-                    "15 min",
-                    true
-                )}
-
-                {renderSelect(
-                    "postBreak",
-                    "Post-break Min",
-                    [
-                        { label: "15 min", value: "15" },
-                        { label: "30 min", value: "30" },
-                    ],
-                    "15 min",
-                    true
-                )}
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                 {renderSelect(
                     "priceType",
                     "Price Type",
@@ -154,25 +145,16 @@ export default function ServicesForm() {
                     />
                 </div>
 
-                <div>
-                    <label className="text-sm font-medium text-[#29343D] mb-1 block">
-                        VAT *
-                    </label>
-                    <input
-                        placeholder="Enter VAT"
-                        className="w-full px-4 py-2.5 text-sm text-[#29343D] border border-[#E0E6EB] rounded-[4px] placeholder:text-[#98A4AE] focus:outline-none"
-                    />
-                </div>
-            </div>
-            <div className="mt-6">
-                <label className="text-sm font-medium text-[#29343D] mb-1 block">
-                    Description (Optional)
-                </label>
-                <textarea
-                    rows={4}
-                    placeholder="Enter a description"
-                    className="w-full px-4 py-2.5 text-sm text-[#29343D] border border-[#E0E6EB] rounded-[4px] placeholder:text-[#29343D] focus:outline-none"
-                />
+                {renderSelect(
+                    "duration",
+                    "duration",
+                    [
+                        { label: "15 min", value: "15" },
+                        { label: "30 min", value: "30" },
+                    ],
+                    "15 min",
+                    true
+                )}
             </div>
         </div>
     )

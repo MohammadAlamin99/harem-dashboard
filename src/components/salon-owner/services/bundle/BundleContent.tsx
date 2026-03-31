@@ -1,20 +1,15 @@
-import React from 'react'
 import PageHeaderWithButton from '../../common-component/PageHeaderWithButton'
 import { Download, Plus } from 'lucide-react'
 import ServiceCategoryTable from '../service-category/ServiceCategoryTable'
-
+import { useRouter } from 'next/navigation'
 export default function BundleContent() {
+    const router = useRouter();
     return (
         <div>
 
             <PageHeaderWithButton
                 title="Services"
                 buttons={[
-                    // {
-                    //     label: "Import Services",
-                    //     href: "/salon-owner/team/member/import",
-                    //     variant: "outline",
-                    // },
                     {
                         label: "Export Data",
                         icon: <Download size={15} strokeWidth={2.5} />,
@@ -22,9 +17,9 @@ export default function BundleContent() {
                         variant: "secondary",
                     },
                     {
-                        label: "Add Service",
+                        label: "Add Bundle",
                         icon: <Plus size={15} strokeWidth={2.5} />,
-                        onClick: () => console.log("Add clicked"),
+                        onClick: () => router.push("/salon-owner/service/services/add-bundle"),
                         variant: "primary",
                     },
                 ]}

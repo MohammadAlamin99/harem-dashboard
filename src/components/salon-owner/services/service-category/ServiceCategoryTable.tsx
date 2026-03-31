@@ -40,10 +40,8 @@ export default function CategoryTable() {
 
     return (
         <div className="relative w-full bg-white rounded-xl p-[15px] md:p-[30px] mt-6 font-manrope">
-
             <div className="overflow-x-auto border rounded-[12px_12px_0px_0px] border-[#E0E6EB] border-b-0">
                 <table className="w-full min-w-[600px] border-collapse">
-
                     {/* HEADER */}
                     <thead>
                         <tr className="bg-[#F3F3FF]">
@@ -58,7 +56,6 @@ export default function CategoryTable() {
                             </th>
                         </tr>
                     </thead>
-
                     {/* BODY */}
                     <tbody>
                         {paginated.map((cat) => (
@@ -95,7 +92,6 @@ export default function CategoryTable() {
 
                 </table>
             </div>
-
             {/* PAGINATION */}
             <PaginationClient
                 ippRef={ippRef}
