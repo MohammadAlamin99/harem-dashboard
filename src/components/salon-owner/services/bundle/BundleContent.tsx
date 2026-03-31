@@ -19,7 +19,7 @@ export default function BundleContent() {
                     {
                         label: "Add Bundle",
                         icon: <Plus size={15} strokeWidth={2.5} />,
-                        onClick: () => router.push("/salon-owner/service/services/add-bundle"),
+                        onClick: () => router.push("/salon-owner/service/bundle/add-bundle"),
                         variant: "primary",
                     },
                 ]}

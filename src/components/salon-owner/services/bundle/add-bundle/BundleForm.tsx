@@ -74,7 +74,7 @@ export default function BundleForm() {
         <div className="font-manrope bg-white p-[15px] md:p-[30px] rounded-xl mt-6">
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-base md:text-[22px] font-semibold text-[#29343D]">
+                <h2 className="text-base md:text-[18px] font-semibold text-[#29343D]">
                     Basic Details
                 </h2>
 
@@ -101,14 +101,11 @@ export default function BundleForm() {
                     "category",
                     "Category",
                     [
-                        { label: "Category 1", value: "1" },
-                        { label: "Category 2", value: "2" },
+                        { label: "Regular", value: "Regular" },
+                        { label: "Promotion", value: "Promotion" },
                     ],
                     "Select Category",
                     true,
-                    <span className="text-[#635BFF] text-sm cursor-pointer">
-                        + Add Category
-                    </span>
                 )}
             </div>
             <div className="mb-7">
@@ -127,9 +124,8 @@ export default function BundleForm() {
                     "priceType",
                     "Price Type",
                     [
-                        { label: "Free", value: "free" },
-                        { label: "From", value: "from" },
                         { label: "Fixed", value: "fixed" },
+                        { label: "% Discount", value: "% Discount" },
                     ],
                     "Fixed",
                     true

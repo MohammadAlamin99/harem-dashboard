@@ -11,7 +11,7 @@ import BundlesIcon from "@/app/account-protal/svg/BundlesIcon";
 import InventoryIcon from "@/app/account-protal/svg/InventoryIcon";
 import ProductIcon from "@/app/account-protal/svg/ProductIcon";
 import StockIcon from "@/app/account-protal/svg/StockIcon";
-import { BookOpen, CalendarDays, CalendarRange, ChartSpline, Globe } from "lucide-react";
+import { BookOpen, CalendarDays, ChartSpline, Globe } from "lucide-react";
 import IDollar from "@/components/salon-owner/appointment/add-appointment/IDollar";;
 import FinancialIcon from "@/app/account-protal/svg/FinancialIcon";
 import IReceipts from "@/app/account-protal/svg/IReceipts";
@@ -76,11 +76,6 @@ export const salonOwnerNavigation: NavItem[] = [
       {
         label: "Services",
         href: "/salon-owner/service/services",
-        matchUrls: ["/salon-owner/service/services/view-service/",
-          "/salon-owner/service/services/add-service/",
-          "/salon-owner/service/services/add-bundle/",
-          "/salon-owner/service/services/view-bundle/"
-        ],
         icon: MermbersIcon,
       },
       {
@@ -91,6 +86,10 @@ export const salonOwnerNavigation: NavItem[] = [
       {
         label: "Bundles",
         href: "/salon-owner/service/bundle",
+        matchUrls: [
+          "/salon-owner/service/bundle",
+          "/salon-owner/service/bundle/add-bundle",
+        ],
         icon: BundlesIcon,
       },
     ],

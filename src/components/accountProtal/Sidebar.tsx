@@ -1,8 +1,5 @@
-
-
 "use client";
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { X, Menu, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,17 +27,23 @@ const Sidebar: React.FC<SidebarProps> = ({
   logoHref = "#",
 }) => {
   const pathname = usePathname();
-  const [expandedItem, setExpandedItem] = useState<string | null>(null);
-
-  useEffect(() => {
+  const [expandedItem, setExpandedItem] = useState<string | null>(() => {
     const activeParent = navigation.find((item) =>
       item.children?.some((child) => pathname.startsWith(child.href || "")),
     );
+    return activeParent ? activeParent.label : null;
+  });
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    const activeParent = navigation.find((item) =>
+      item.children?.some((child) => pathname.startsWith(child.href || "")),
+    );
     if (activeParent) {
       setExpandedItem(activeParent.label);
     }
-  }, [pathname, navigation]);
+  }
 
   // check if menu item should be active
   const isActive = (item: NavItem) => {
@@ -202,5 +205,3 @@ const Sidebar: React.FC<SidebarProps> = ({
 };
 
 export default Sidebar;
-
-

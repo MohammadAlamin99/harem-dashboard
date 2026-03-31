@@ -2,7 +2,7 @@ export interface Service {
   id?: number;
   name: string;
   date?: string;
-  price: number;
+  price?: number | string;
   startTime?: string;
   duration?: string;
   employee?: string;

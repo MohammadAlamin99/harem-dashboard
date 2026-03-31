@@ -7,3 +7,13 @@
 .headerLogo {
     margin-top: 12px;
 }
+
+.al-select {
+    width: 50%;
+}
+
+@media (max-width: 768px) {
+    .al-select {
+        width: 100%;
+    }
+}
