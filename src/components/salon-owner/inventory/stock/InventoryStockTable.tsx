@@ -50,7 +50,7 @@ export default function InventoryStockTable() {
                     {/* HEADER */}
                     <thead>
                         <tr className="bg-[#F3F3FF]">
-                            <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-[#E0E6EB]">
+                            <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-[#E0E6EB]">
                                 Date
                             </th>
                             <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-[#E0E6EB]">
@@ -71,7 +71,7 @@ export default function InventoryStockTable() {
                             <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-[#E0E6EB]">
                                 Price
                             </th>
-                            <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-r border-[#E0E6EB]">
+                            <th className="px-4 py-7 text-left text-[14px] font-semibold text-[#29343D] border-b border-l border-[#E0E6EB]">
                                 Actions
                             </th>
                         </tr>
@@ -83,7 +83,7 @@ export default function InventoryStockTable() {
                             <tr key={row.id} className="hover:bg-[#FAFBFF]">
 
                                 {/* DATE */}
-                                <td className="px-4 py-5 border-b border-l border-[#E0E6EB] text-[14px] font-semibold text-[#29343D]">
+                                <td className="px-4 py-5 border-b border-[#E0E6EB] text-[14px] font-semibold text-[#29343D]">
                                     {row.date}
                                 </td>
 
@@ -139,7 +139,7 @@ export default function InventoryStockTable() {
                                 </td>
 
                                 {/* ACTIONS */}
-                                <td className="w-[80px] px-4 py-5 border-b border-l border-r border-[#E0E6EB]">
+                                <td className="w-[80px] px-4 py-5 border-b border-l border-[#E0E6EB]">
                                     <div className="relative">
                                         <button
                                             onClick={() => setOpenDropdown(openDropdown === row.id ? null : row.id)}

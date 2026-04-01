@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Download, Filter, Plus } from "lucide-react"
 import ICalaender from "@/app/account-protal/svg/ICalaender"
 
-export default function InventoryHead({ handleOptionClick }: { handleOptionClick: (option: string) => void }) {
+export default function InventoryHead({ setShowModal, handleOptionClick }: { setShowModal: (value: boolean) => void, handleOptionClick: (option: string) => void }) {
     const [dateFilter, setDateFilter] = useState<"all" | string>("all")
     const [movementFilter, setMovementFilter] = useState<"all" | "stock-in" | "stock-out">("all")
     const [categoryFilter, setCategoryFilter] = useState<"all" | "cat1" | "cat2" | "cat3">("all")
@@ -22,7 +22,7 @@ export default function InventoryHead({ handleOptionClick }: { handleOptionClick
                             Export Data
                         </button>
 
-                        <button className="cursor-pointer bg-[#6366F1] text-white text-sm font-medium px-4 py-2.5 rounded-[8px] flex items-center justify-center gap-2 hover:bg-[#4F46E5] transition-colors w-full sm:w-auto">
+                        <button onClick={() => setShowModal(true)} className="cursor-pointer bg-[#6366F1] text-white text-sm font-medium px-4 py-2.5 rounded-[8px] flex items-center justify-center gap-2 hover:bg-[#4F46E5] transition-colors w-full sm:w-auto">
                             <Plus size={15} strokeWidth={2.5} />
                             Add Movement
                         </button>
