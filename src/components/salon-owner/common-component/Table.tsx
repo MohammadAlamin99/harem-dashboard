@@ -104,7 +104,7 @@ export default function Table<T extends { id: number | string }>({
                                             </button>
 
                                             {openDropdown === item.id && (
-                                                <div className="absolute right-0 top-8 z-10 bg-white border border-[#E0E6EB] rounded-[8px] shadow-lg py-1 min-w-[150px]">
+                                                <div className="absolute right-0 top-8 z-10 bg-white border border-[#E0E6EB] rounded-[8px] shadow-2xl py-1 min-w-[150px]">
                                                     {dropdownActions.map((action, idx) => (
                                                         <button
                                                             key={idx}
@@ -112,7 +112,7 @@ export default function Table<T extends { id: number | string }>({
                                                                 action.onClick(item)
                                                                 setOpenDropdown(null)
                                                             }}
-                                                            className="w-full flex items-center gap-2 px-4 py-2.5 text-[14px] font-semibold text-[#29343D] hover:bg-[#FAFBFF] transition-colors"
+                                                            className="w-full flex items-center gap-2 px-4 py-2.5 text-[14px] font-semibold text-[#29343D] hover:bg-[#FAFBFF] transition-colors cursor-pointer"
                                                         >
                                                             {action.icon}
                                                             {action.label}

@@ -1,6 +1,6 @@
 "use client"
 
-import { Download, Plus, Eye, Pencil, Trash, Search } from "lucide-react";
+import { Download, Plus, Eye, Pencil, Search, Trash2 } from "lucide-react";
 import PageHeaderWithButton from "../../common-component/PageHeaderWithButton";
 import HeaderFilter from "../../common-component/HeaderFilter";
 import { useState } from "react";
@@ -198,21 +198,21 @@ export default function AddProductContent() {
         },
     ];
 
-    // actions with icons (popup fixed)
+    // actions with icons
     const actions: DropdownAction<Product>[] = [
         {
             label: "View Details",
-            icon: <Eye size={16} className="text-[#635BFF]" />,
+            icon: <Eye size={16} className="text-[#635BFF] cursor-pointer" />,
             onClick: (item) => console.log(item),
         },
         {
             label: "Edit",
-            icon: <Pencil size={16} className="text-[#36C76C]" />,
+            icon: <Pencil size={16} className="text-[#46CAEB] cursor-pointer" />,
             onClick: (item) => console.log(item),
         },
         {
             label: "Delete",
-            icon: <Trash size={16} className="text-[#FF6692]" />,
+            icon: <Trash2 size={16} className="text-[#FF6692] cursor-pointer" />,
             onClick: (item) => console.log(item),
         },
     ];
