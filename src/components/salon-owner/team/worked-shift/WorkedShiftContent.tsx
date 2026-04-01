@@ -81,6 +81,7 @@ export default function WorkedShiftContent() {
     const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     const YEARS = ["2022", "2023", "2024", "2025", "2026"]
     const [member, setMember] = useState("All Team")
+    console.log(setMember)
     const [month, setMonth] = useState("December")
     const [year, setYear] = useState("2024")
     const [search, setSearch] = useState("")
@@ -111,7 +112,7 @@ export default function WorkedShiftContent() {
                         <span className="text-[#98A4AE] text-xs font-semibold">Member</span>
                         <div className="relative">
                             <div className="flex items-center gap-2 border border-[#EFF4FA] rounded-[8px] px-3 py-2.5 cursor-pointer hover:border-[#6366F1] transition-colors min-w-[130px]">
-                                <div className="w-6 h-6 rounded-full bg-[#DDDBFF] flex items-center justify-center flex-shrink-0">
+                                <div className="w-6 h-6 rounded-full bg-[#DDDBFF] flex items-center justify-center">
                                     <Users size={12} className="text-[#6366F1]" />
                                 </div>
                                 <span className="text-[#0A2540] text-sm font-medium flex-1">{member}</span>

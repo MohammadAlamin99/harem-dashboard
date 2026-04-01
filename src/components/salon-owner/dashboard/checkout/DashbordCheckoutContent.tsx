@@ -57,7 +57,7 @@ export default function DashbordCheckoutContent({
   const [showDivideModal, setShowDivideModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const total = selectedServices.reduce((sum, s) => sum + s.price, 0);
+  const total = selectedServices.reduce((sum, s) => sum + (Number(s.price) || 0), 0);
 
   return (
     <div className="min-h-screen bg-[#F4F6FA] font-manrope flex flex-col">
@@ -265,7 +265,7 @@ export default function DashbordCheckoutContent({
                     <ChevronDown
                       size={24}
                       color="#29343D"
-                      className="text-[#98A4AE] flex-shrink-0"
+                      className="text-[#98A4AE]"
                     />
                   </div>
                 </div>
