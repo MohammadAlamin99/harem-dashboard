@@ -1,3 +1,4 @@
+
 "use client";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -111,202 +112,7 @@ const allAppointments: CalAppointment[] = [
       employeeName: member.name,
       employeeId: member.id,
     },
-    {
-      id: `d-${mi}-4`,
-      clientName: "Client Name",
-      service: "Haircut",
-      date: makeDate(2025, 9, 2),
-      startTime: "01:10",
-      endTime: "01:25",
-      price: "€ 170",
-      duration: "15 min",
-      status: "Arrived" as AppStatus,
-      employeeName: member.name,
-      employeeId: member.id,
-    },
-    {
-      id: `d-${mi}-5`,
-      clientName: "Client Name",
-      service: "Haircut",
-      date: makeDate(2025, 9, 2),
-      startTime: "02:00",
-      endTime: "02:15",
-      price: "€ 170",
-      duration: "15 min",
-      status: "Confirmed" as AppStatus,
-      employeeName: member.name,
-      employeeId: member.id,
-    },
   ]),
-  {
-    id: "w-1",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 9, 1),
-    startTime: "00:00",
-    endTime: "00:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Canceled",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "w-2",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 9, 1),
-    startTime: "00:30",
-    endTime: "01:30",
-    price: "€ 170",
-    duration: "60 min",
-    status: "Booked",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "w-3",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 9, 2),
-    startTime: "00:00",
-    endTime: "00:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Completed",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "w-4",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 9, 5),
-    startTime: "00:00",
-    endTime: "00:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Confirmed",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "w-5",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 9, 7),
-    startTime: "00:00",
-    endTime: "00:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Arrived",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "m-1",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 10, 1),
-    startTime: "10:00",
-    endTime: "10:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Canceled",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "m-2",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 10, 9),
-    startTime: "10:00",
-    endTime: "10:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Booked",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "m-3",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 10, 11),
-    startTime: "10:00",
-    endTime: "10:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Completed",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "m-4",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 10, 11),
-    startTime: "11:00",
-    endTime: "11:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Confirmed",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "m-5",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 10, 11),
-    startTime: "12:00",
-    endTime: "12:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Arrived",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "m-6",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 10, 13),
-    startTime: "10:00",
-    endTime: "10:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Started",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "m-7",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 10, 16),
-    startTime: "10:00",
-    endTime: "10:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Arrived",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
-  {
-    id: "m-8",
-    clientName: "Client Name",
-    service: "Haircut",
-    date: makeDate(2025, 10, 28),
-    startTime: "10:00",
-    endTime: "10:15",
-    price: "€ 170",
-    duration: "15 min",
-    status: "Booked",
-    employeeName: "Maria Rodriguez",
-    employeeId: "1",
-  },
 ];
 
 //  Helpers
@@ -358,8 +164,21 @@ export default function CalendarView() {
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>(
     teamMembers.map((m) => m.id),
   );
+  const [appointments, setAppointments] = useState<CalAppointment[]>(
+    allAppointments.slice(0, 3)
+  );
 
   const isMonthOrWeek = period === "Month" || period === "Week";
+
+  const handleAppointmentCreate = (appt: CalAppointment) => {
+    setAppointments((prev) => [...prev, appt]);
+  };
+
+  const handleAppointmentUpdate = (appt: CalAppointment) => {
+    setAppointments((prev) =>
+      prev.map((a) => (a.id === appt.id ? appt : a))
+    );
+  };
 
   const navigate = (dir: -1 | 1) => {
     const d = new Date(currentDate);
@@ -435,10 +254,9 @@ export default function CalendarView() {
                 key={p}
                 onClick={() => handlePeriodChange(p)}
                 className={`relative px-6 py-[10px] text-[16px] font-manrope font-medium transition-all cursor-pointer
-                  ${
-                    period === p
-                      ? "bg-[#DDDBFF] text-[#0A2540]"
-                      : "text-[#526B7A] bg-[white] hover:text-[#29343D]"
+                  ${period === p
+                    ? "bg-[#DDDBFF] text-[#0A2540]"
+                    : "text-[#526B7A] bg-[white] hover:text-[#29343D]"
                   }
                   ${i !== 2 ? "border-r border-[#E0E6EB]" : ""}
                   `}
@@ -460,7 +278,7 @@ export default function CalendarView() {
           date={currentDate}
           selectedMemberIds={selectedMemberIds}
           teamMembers={teamMembers}
-          allAppointments={allAppointments}
+          allAppointments={appointments}
           isSameDay={isSameDay}
           HOURS={HOURS}
           HOUR_HEIGHT={HOUR_HEIGHT}
@@ -468,6 +286,8 @@ export default function CalendarView() {
           timeToMinutes={timeToMinutes}
           statusColor={statusColor}
           statusBadgeColor={statusBadgeColor}
+          onAppointmentCreate={handleAppointmentCreate}
+          onAppointmentUpdate={handleAppointmentUpdate}
         />
       )}
       {period === "Week" && (
