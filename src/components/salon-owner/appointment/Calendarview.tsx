@@ -308,7 +308,14 @@ export default function CalendarView() {
         />
       )}
       {period === "Month" && (
-        <MonthView date={currentDate} selectedMemberIds={selectedMemberIds} />
+        <MonthView
+          date={currentDate}
+          selectedMemberIds={selectedMemberIds}
+          teamMembers={teamMembers}
+          allAppointments={appointments}
+          statusColor={statusColor}
+          onAppointmentCreate={handleAppointmentCreate}
+        />
       )}
     </div>
   );
