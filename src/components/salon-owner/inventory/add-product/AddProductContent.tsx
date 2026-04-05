@@ -6,6 +6,8 @@ import HeaderFilter from "../../common-component/HeaderFilter";
 import { useState } from "react";
 import Table, { Column, DropdownAction } from "../../common-component/Table";
 import Image from "next/image";
+import AddProductModal from "./AddProductModal";
+import { useRouter } from "next/navigation";
 
 interface Product {
     id: number;
@@ -35,6 +37,8 @@ export default function AddProductContent() {
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [priority, setPriority] = useState("all");
     const [selectedStock, setSelectedStock] = useState("all");
+    const [openModal, setOpenModal] = useState(false);
+    const router = useRouter();
 
     //  data
     const data: Product[] = [
@@ -226,7 +230,7 @@ export default function AddProductContent() {
                         buttons={[
                             {
                                 label: "Import Products",
-                                onClick: () => console.log("Export clicked"),
+                                onClick: () => router.push("/salon-owner/inventory/add-product/import-product"),
                                 variant: "outline",
                             },
                             {
@@ -236,9 +240,9 @@ export default function AddProductContent() {
                                 variant: "secondary",
                             },
                             {
-                                label: "Import Product",
+                                label: "Add Product",
                                 icon: <Plus size={15} strokeWidth={2.5} />,
-                                onClick: () => console.log("Add clicked"),
+                                onClick: () => setOpenModal(true),
                                 variant: "primary",
                             },
                         ]}
@@ -303,8 +307,14 @@ export default function AddProductContent() {
                         data={data}
                         columns={columns}
                         dropdownActions={actions}
+                        onRoute="/salon-owner/inventory/add-product/view-product"
                     />
                 </div>
+                {/* MODAL */}
+                <AddProductModal
+                    open={openModal}
+                    onClose={() => setOpenModal(false)}
+                />
             </div>
         </>
     );

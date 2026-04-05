@@ -4,6 +4,7 @@ import { useState, useRef } from "react"
 import { MoreVertical } from "lucide-react"
 import PaginationClient from "../clients/PaginationClient"
 import BottomStatusBar from "./BottomStatusBar"
+import { useRouter } from "next/navigation"
 
 export interface DropdownAction<T> {
     label: string
@@ -27,6 +28,7 @@ interface TableProps<T> {
     tableTitle?: string
     showPagination?: boolean
     showBottomStatusBar?: boolean
+    onRoute?: string
 }
 
 export const CATEGORY_STYLES: Record<string, string> = {
@@ -47,12 +49,14 @@ export default function Table<T extends { id: number | string }>({
     tableTitle,
     showPagination = true,
     showBottomStatusBar = false,
+    onRoute,
 }: TableProps<T>) {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(defaultPerPage)
     const ippRef = useRef<HTMLDivElement | null>(null)
     const [ippOpen, setIppOpen] = useState(false)
     const [openDropdown, setOpenDropdown] = useState<number | string | null>(null)
+    const router = useRouter()
 
     const totalPages = Math.ceil(data.length / perPage)
     const paginatedData = data.slice((page - 1) * perPage, page * perPage)
@@ -110,6 +114,9 @@ export default function Table<T extends { id: number | string }>({
                                                             key={idx}
                                                             onClick={() => {
                                                                 action.onClick(item)
+                                                                if (onRoute) {
+                                                                    router.push(`${onRoute}/${item.id}`)
+                                                                }
                                                                 setOpenDropdown(null)
                                                             }}
                                                             className="w-full flex items-center gap-2 px-4 py-2.5 text-[14px] font-semibold text-[#29343D] hover:bg-[#FAFBFF] transition-colors cursor-pointer"

@@ -290,34 +290,6 @@ export default function CalendarView() {
           onAppointmentUpdate={handleAppointmentUpdate}
         />
       )}
-      {/* {period === "Week" && (
-        <WeekView
-          date={currentDate}
-          selectedMemberIds={selectedMemberIds}
-          teamMembers={teamMembers}
-          allAppointments={allAppointments}
-          isSameDay={isSameDay}
-          HOURS={HOURS}
-          HOUR_HEIGHT={HOUR_HEIGHT}
-          formatHour={formatHour}
-          timeToMinutes={timeToMinutes}
-          statusColor={statusColor}
-          statusBadgeColor={statusBadgeColor}
-          WEEK_DAYS={WEEK_DAYS}
-          getWeekStart={getWeekStart}
-        />
-      )}
-      {period === "Month" && (
-        <MonthView
-          date={currentDate}
-          selectedMemberIds={selectedMemberIds}
-          teamMembers={teamMembers}
-          allAppointments={appointments}
-          statusColor={statusColor}
-          onAppointmentCreate={handleAppointmentCreate}
-        />
-      )} */}
-
 
       {period === "Week" && (
         <WeekView

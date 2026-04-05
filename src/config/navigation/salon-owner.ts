@@ -107,14 +107,17 @@ export const salonOwnerNavigation: NavItem[] = [
         label: "Products",
         href: "/salon-owner/inventory/add-product",
         matchUrls: [
-          "/salon-owner/inventory/import-product",
-          "/salon-owner/inventory/add-product",
+          "/salon-owner/inventory/add-product/import-product",
+          "/salon-owner/inventory/add-product/view-product/",
         ],
         icon: ProductIcon,
       },
       {
         label: "Categories",
         href: "/salon-owner/inventory/product-category",
+        matchUrls: [
+          "/salon-owner/inventory/product-category/view-category/",
+        ],
         icon: CategoryIcon,
       },
     ],
