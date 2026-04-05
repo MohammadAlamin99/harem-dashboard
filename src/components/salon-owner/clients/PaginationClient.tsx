@@ -33,7 +33,7 @@ export default function PaginationClient<T>({
   totalPages,
   start,
   filtered,
-  margin,
+  margin = true,
   border = true,
 }: Props<T>) {
   return (

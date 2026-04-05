@@ -5,6 +5,8 @@ import PageHeaderWithButton from "../common-component/PageHeaderWithButton"
 import HeaderFilter from "../common-component/HeaderFilter"
 import { Eye, RefreshCw, Printer } from "lucide-react"
 import Table, { Column } from "../common-component/Table"
+import RefundModal from "./RefundModal"
+import CancelReceiptModal from "./CancelReceiptModal"
 
 interface Payment {
     id: number
@@ -120,6 +122,8 @@ export default function FinancialContent() {
     const [methodFilter, setMethodFilter] = useState("all")
     const [statusFilter, setStatusFilter] = useState("all")
     const [receiptFilter, setReceiptFilter] = useState("all")
+    const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
+    const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
     const filtered = payments.filter((p) => {
         const methods = Array.isArray(p.method) ? p.method : [p.method]
@@ -135,7 +139,7 @@ export default function FinancialContent() {
                 <PageHeaderWithButton
                     title="Payments"
                     buttons={[
-                        { label: "Import Receipts", href: "/salon-owner/financial/add", variant: "outline" },
+                        { label: "Import Receipts", href: "/salon-owner/financial/import-receipts", variant: "outline" },
                         { label: "Set Automations", href: "/salon-owner/financial/add", variant: "secondary" },
                     ]}
                 />
@@ -186,10 +190,30 @@ export default function FinancialContent() {
                 columns={columns}
                 dropdownActions={[
                     { label: "View Details", icon: <Eye size={14} className="text-[#635BFF]" />, onClick: (item) => console.log("View", item) },
-                    { label: "Refund", icon: <RefreshCw size={14} className="text-[#FFD648]" />, onClick: (item) => console.log("Refund", item) },
+                    { label: "Refund", icon: <RefreshCw size={14} className="text-[#FFD648]" />, onClick: (item) => setIsRefundModalOpen(true) },
                     { label: "Print Receipt", icon: <Printer size={14} className="text-[#29343D]" />, onClick: (item) => console.log("Print", item) },
                 ]}
             />
+
+            {/* refund modal - LOGIC UPDATED HERE */}
+            <RefundModal
+                isOpen={isRefundModalOpen}
+                onClose={() => setIsRefundModalOpen(false)}
+                onIssueRefund={(data) => {
+                    setIsRefundModalOpen(false);
+                    setIsCancelModalOpen(true);
+                }}
+            />
+
+            {/* cancel receipt modal */}
+            <CancelReceiptModal
+                isOpen={isCancelModalOpen}
+                onClose={() => setIsCancelModalOpen(false)}
+                onConfirm={() => {
+                    setIsCancelModalOpen(false);
+                }}
+            />
+
         </>
     )
 }
