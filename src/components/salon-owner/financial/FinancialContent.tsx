@@ -7,6 +7,7 @@ import { Eye, RefreshCw, Printer } from "lucide-react"
 import Table, { Column } from "../common-component/Table"
 import RefundModal from "./RefundModal"
 import CancelReceiptModal from "./CancelReceiptModal"
+import { useRouter } from "next/navigation"
 
 interface Payment {
     id: number
@@ -124,6 +125,7 @@ export default function FinancialContent() {
     const [receiptFilter, setReceiptFilter] = useState("all")
     const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
     const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+    const router = useRouter();
 
     const filtered = payments.filter((p) => {
         const methods = Array.isArray(p.method) ? p.method : [p.method]
@@ -189,7 +191,7 @@ export default function FinancialContent() {
                 data={filtered}
                 columns={columns}
                 dropdownActions={[
-                    { label: "View Details", icon: <Eye size={14} className="text-[#635BFF]" />, onClick: (item) => console.log("View", item) },
+                    { label: "View Details", icon: <Eye size={14} className="text-[#635BFF]" />, onClick: (item) => router.push(`/salon-owner/financial/view-payment/${item.id}`) },
                     { label: "Refund", icon: <RefreshCw size={14} className="text-[#FFD648]" />, onClick: (item) => setIsRefundModalOpen(true) },
                     { label: "Print Receipt", icon: <Printer size={14} className="text-[#29343D]" />, onClick: (item) => console.log("Print", item) },
                 ]}

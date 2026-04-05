@@ -131,6 +131,7 @@ export const salonOwnerNavigation: NavItem[] = [
         href: "/salon-owner/financial",
         matchUrls: [
           "/salon-owner/financial/import-receipts",
+          "/salon-owner/financial/view-payment/",
         ],
         icon: IDollar,
       },
