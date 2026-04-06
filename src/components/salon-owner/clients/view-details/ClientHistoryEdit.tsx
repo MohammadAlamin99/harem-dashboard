@@ -24,7 +24,7 @@ const ActionBadge = ({ action }: { action: ActionType }) => (
     className={[
       "inline-flex items-center justify-center px-3 py-1 rounded-full text-[11.5px] font-semibold font-manrope whitespace-nowrap",
       ACTION_STYLES[action] ??
-        "bg-gray-100 text-gray-500 border border-gray-200",
+      "bg-gray-100 text-gray-500 border border-gray-200",
     ].join(" ")}
   >
     {action}
@@ -169,7 +169,7 @@ export default function ClientHistoryOfEdit({
       {/* Table */}
       <div className="w-full overflow-x-auto">
         <div
-          className={`w-full border ${B} rounded-xl overflow-hidden min-w-[1200px]`}
+          className={`w-full border ${B} rounded-[12px_12px_0_0] overflow-hidden min-w-[1200px]`}
         >
           {/* Header */}
           <div className={`flex bg-[#F3F3FF] border-b ${B}`}>
@@ -226,26 +226,31 @@ export default function ClientHistoryOfEdit({
               </div>
             </div>
           ))}
+
+        </div>
+        {/* Pagination */}
+        <div className="w-full min-w-[1200px]">
+          <PaginationClient
+            ippRef={ippRef}
+            setIppOpen={setIppOpen}
+            itemsPerPage={perPage}
+            ippOpen={ippOpen}
+            ITEMS_PER_PAGE_OPTIONS={itemsPerPageOptions}
+            setItemsPerPage={(n) => {
+              setPerPage(n);
+              setPage(1);
+            }}
+            currentPage={page}
+            setCurrentPage={setPage}
+            totalPages={totalPages}
+            start={start}
+            filtered={rows}
+            margin={false}
+          />
         </div>
       </div>
 
-      {/* Pagination */}
-      <PaginationClient
-        ippRef={ippRef}
-        setIppOpen={setIppOpen}
-        itemsPerPage={perPage}
-        ippOpen={ippOpen}
-        ITEMS_PER_PAGE_OPTIONS={itemsPerPageOptions}
-        setItemsPerPage={(n) => {
-          setPerPage(n);
-          setPage(1);
-        }}
-        currentPage={page}
-        setCurrentPage={setPage}
-        totalPages={totalPages}
-        start={start}
-        filtered={rows}
-      />
+
     </div>
   );
 }

@@ -1,12 +1,11 @@
-
 "use client";
 import { useState } from "react";
 import { salonOwnerNavigation } from "@/config/navigation/salon-owner";
 import Sidebar from "@/components/accountProtal/Sidebar";
 import Topbar from "@/components/accountProtal/Topbar";
-import ViewPaymentContent from "./ViewPaymentContent";
+import AddGiftCardContent from "../../clients/gift-card/gift-card-add/AddGiftCardContent";
 
-export const ViewPaymentLayout = () => {
+export const FinalcialAddGiftPageLayout = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     return (
         <div className="flex h-screen rounded-3xl">
@@ -21,12 +20,13 @@ export const ViewPaymentLayout = () => {
 
             <div className="flex flex-col flex-1 overflow-hidden">
                 <Topbar onMenuClick={() => setSidebarOpen(true)} />
-                <main className="flex-1 overflow-y-auto p-6 bg-[#F4F7FB] rounded-[20px]">
-                    <ViewPaymentContent />
+
+                <main className="flex-1 overflow-y-auto p-6 bg-[#F4F7FB] rounded-[12px]">
+                    <AddGiftCardContent />
                 </main>
             </div>
         </div>
     );
 };
 
-export default ViewPaymentLayout;
+export default FinalcialAddGiftPageLayout;

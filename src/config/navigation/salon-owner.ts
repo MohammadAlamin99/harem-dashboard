@@ -128,21 +128,26 @@ export const salonOwnerNavigation: NavItem[] = [
     children: [
       {
         label: "Payments",
-        href: "/salon-owner/financial",
+        href: "/salon-owner/financial/list",
         matchUrls: [
-          "/salon-owner/financial/import-receipts",
-          "/salon-owner/financial/view-payment/",
+          "/salon-owner/financial/list/import-receipts",
+          "/salon-owner/financial/list/view-payment/",
         ],
         icon: IDollar,
       },
       {
         label: "Receipts",
-        href: "/salon-owner/financial/receipts",
+        href: "/salon-owner/financial/list/receipts",
         icon: IReceipts,
       },
       {
         label: "Gifts Cards",
-        href: "#",
+        href: "/salon-owner/financial/gift-card",
+        matchUrls: [
+          "/salon-owner/financial/gift-card/add",
+          "/salon-owner/financial/gift-card/create",
+          "/salon-owner/financial/gift-card/view-giftcard/",
+        ],
         icon: GiftCardIconNav,
       },
     ],

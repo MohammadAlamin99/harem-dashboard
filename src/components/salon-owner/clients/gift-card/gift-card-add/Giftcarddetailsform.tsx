@@ -23,12 +23,12 @@ export default function GiftCardDetailsForm() {
         setForm((p) => ({ ...p, [key]: val }));
 
     const inputCls =
-        "w-full px-4 py-3 border border-[#E5E7EB] rounded-lg font-manrope text-[14px] text-[#29343D] placeholder:text-[#29343D] outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#635BFF]/10 transition bg-white";
+        "w-full px-4 py-3 border border-[#E5E7EB] rounded-[4px] font-manrope text-[14px] text-[#29343D] placeholder:text-[#29343D] outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#635BFF]/10 transition bg-white";
 
     const labelCls = "block text-[14px] font-manrope font-semibold text-[#29343D] mb-2";
 
     return (
-        <div className="bg-white rounded-2xl border border-[#E0E6EB] p-7 font-manrope">
+        <div className="bg-white rounded-xl p-[15px] md:p-[30px] font-manrope">
             <h2 className="text-[#29343D] font-semibold text-[18px] font-manrope mb-7">
                 Gift Card Details
             </h2>

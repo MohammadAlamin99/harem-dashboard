@@ -1,16 +1,21 @@
 "use client";
 import { useRouter } from "next/navigation";
 import PageHeader from "../../common-component/PageHeader";
+import { Eye, Printer } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import PrintReceiptModal from "./PrintReceiptModalProps";
 
 
 export default function ViewPaymentContent() {
     const router = useRouter();
+    const [printReceiptModal, setPrintReceiptModal] = useState(false);
     return (
         <div>
-            <PageHeader title="View Related Products"
+            <PageHeader title="View Sale"
                 onBack={() => router.back()}
                 breadcrumb={[
-                    { label: "Inventory", active: true },
+                    { label: "Sales", active: true },
                 ]}
                 HomeIcon={
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -18,6 +23,303 @@ export default function ViewPaymentContent() {
                     </svg>
                 }
             />
-        </div>
+
+            {/* view details */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 font-manrope bg-[#F8FAFC] mt-6">
+
+                {/* Basic Details Card */}
+                <div className="bg-white rounded-xl p-[15px] md:p-[30px] shadow-[0px_10px_30px_rgba(0,0,0,0.04)]">
+                    <h2 className="text-lg font-semibold text-[#29343D] mb-8">Basic Details</h2>
+
+                    <div className="grid grid-cols-2 gap-y-7">
+                        {/* ID */}
+                        <div>
+                            <p className="text-[12px] font-normal text-[#999] leading-5">ID</p>
+                            <p className="text-base font-semibold text-[#29343D]">#000</p>
+                        </div>
+
+                        {/* Payment Date */}
+                        <div>
+                            <p className="text-[12px] font-normal text-[#999] leading-5">Payment Date</p>
+                            <p className="text-base font-semibold text-[#29343D]">5 Aug 2025, 12:30</p>
+                        </div>
+
+                        {/* Method */}
+                        <div>
+                            <p className="text-[12px] font-normal text-[#999] leading-5">Method</p>
+                            <span className="inline-block bg-[#EBFAF0] text-[#36C76C] text-[11px] font-bold px-3 py-1 rounded-md">
+                                Cash
+                            </span>
+                        </div>
+
+                        {/* Payment Status */}
+                        <div>
+                            <p className="text-[12px] font-normal text-[#999] leading-5">Payment Status</p>
+                            <span className="inline-block bg-[#36C76C] text-white text-[12px] font-medium leading-4 px-2 py-1 rounded-lg">
+                                Fully Paid
+                            </span>
+                        </div>
+
+                        {/* Receipt Issue */}
+                        <div>
+                            <p className="text-[12px] font-normal text-[#999] leading-5">Receipt Issue</p>
+                            <span className="inline-block border border-[#FFD648] text-[#FFD648] text-[12px] font-medium leading-4 px-2 py-1 rounded-lg">
+                                Half Printed
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Client & Issuer Section */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-7">
+                        {/* Client */}
+                        <div>
+                            <p className="text-[12px] font-normal text-[#999] leading-5 mb-2">Client</p>
+                            <div className="flex items-center gap-2">
+                                <Image
+                                    src="/images/avator.png"
+                                    className="w-[48px] h-[48px] rounded-xl bg-[#F0EFFF] object-cover"
+                                    alt="Client Avatar"
+                                    width={48}
+                                    height={48}
+                                />
+                                <div className="flex flex-col">
+                                    <span className="text-[15px] font-semibold text-[#29343D]">Maria Rodriguez</span>
+                                    <span className="text-[12px] text-[#98A4AE]">maria@beautywellness.com</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Receipt Issued By */}
+                        <div>
+                            <p className="text-[12px] font-normal text-[#999] leading-5 mb-2">Rceipt Issued By</p>
+                            <div className="flex items-center gap-2">
+                                <Image
+                                    src="/images/avator.png"
+                                    className="w-[48px] h-[48px] rounded-xl bg-[#F0EFFF] object-cover"
+                                    alt="Client Avatar"
+                                    width={48}
+                                    height={48}
+                                />
+                                <div className="flex flex-col">
+                                    <span className="text-[15px] font-semibold text-[#29343D]">Maria Rodriguez</span>
+                                    <span className="text-[12px] text-[#98A4AE]">maria@beautywellness.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Activity Card */}
+                <div className="bg-white rounded-xl p-[15px] md:p-[30px] shadow-[0px_10px_30px_rgba(0,0,0,0.04)]">
+                    <h2 className="text-lg font-semibold text-[#29343D] mb-7">Activity</h2>
+
+                    <div className="flex flex-col">
+                        {/* Timeline Item 1 */}
+                        <div className="flex gap-4">
+                            <div className="text-sm font-semibold text-[#29343D] min-w-[100px] pt-0.5">Today at 14:34</div>
+
+                            {/* Timeline Graphic */}
+                            <div className="flex flex-col items-center">
+                                <div className="w-3 h-3 rounded-full border-2 border-[#FF6692] bg-white z-10" />
+                                <div className="w-[1px] h-20 bg-[#E0E6EB] -my-1" />
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex flex-col">
+                                <p className="text-sm font-bold text-[#29343D]">€ 10 refunded by cash</p>
+                                <p className="text-[12px] text-[#98A4AE] mt-2">Completed by Maria Fernandez</p>
+                            </div>
+                        </div>
+
+                        {/* Timeline Item 2 */}
+                        <div className="flex gap-4">
+                            <div className="text-sm font-semibold text-[#29343D] min-w-[100px] pt-0.5">Today at 14:34</div>
+
+                            {/* Timeline Graphic */}
+                            <div className="flex flex-col items-center">
+                                <div className="w-3 h-3 rounded-full border-2 border-[#635BFF] bg-white z-10" />
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex flex-col">
+                                <p className="text-sm font-bold text-[#29343D]">Sale 1 created</p>
+                                <p className="text-[12px] text-[#98A4AE] mt-2">Completed by Maria Fernandez</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {/* recived  */}
+
+            <div className="bg-white rounded-xl p-[15px] md:p-[30px] font-manrope shadow-[0px_10px_30px_rgba(0,0,0,0.04)] mt-6">
+
+                {/* HEADER SECTION */}
+                <div className="mb-7">
+                    <h1 className="text-lg font-semibold text-[#29343D]">Sale #000</h1>
+                    <p className="text-base text-[#29343D] mt-2 font-normal leading-5">5 Aug 2025, 12:30</p>
+                </div>
+
+                {/* SERVICE TABLE */}
+                <div className="mb-7 overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead>
+                            <tr className="border-b border-[#E0E6EB]">
+                                <th className="p-2.5 text-base font-semibold text-[#29343D]">Service</th>
+                                <th className="p-2.5 text-base font-semibold text-[#29343D]">Employee</th>
+                                <th className="p-2.5 text-base font-semibold text-[#29343D]">Start Time</th>
+                                <th className="p-2.5 text-base font-semibold text-[#29343D]">Date</th>
+                                <th className="p-2.5 text-base font-semibold text-[#29343D]">Duration</th>
+                                <th className="p-2.5 text-base font-semibold text-[#29343D] text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td className="py-7 px-2.5 text-base font-semibold text-[#29343D]">Haircut</td>
+                                <td className="py-7 px-2.5 text-base font-normal text-[#29343D]">Maria Rodriguez</td>
+                                <td className="py-7 px-2.5 text-base font-normal text-[#29343D]">12:00</td>
+                                <td className="py-7 px-2.5 text-base font-normal text-[#29343D]">5 Aug 2025</td>
+                                <td className="py-7 px-2.5 text-base font-normal text-[#29343D]">15 min</td>
+                                <td className="py-7 px-2.5 text-base font-normal text-[#29343D] text-right">€ 170</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* ORDER SUMMARY CARD */}
+                <div className="bg-white border border-[#E0E6EB] rounded-xl mb-6 overflow-hidden p-[15px] md:p-[30px]">
+                    <div className="">
+                        <h2 className="text-base font-bold text-[#29343D] mb-3">Order Summary</h2>
+
+                        <div className="flex flex-col gap-3">
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-[#29343D] text-base font-normal">Subtotal</span>
+                                <span className="text-[#29343D] text-base font-normal">€ 170</span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm font-bold pb-3">
+                                <span className="text-[#29343D] text-base font-bold">Total</span>
+                                <span className="text-[#29343D] text-lg font-bold">€ 170</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Payment History Segment */}
+                    <div className="border-t border-[#E0E6EB] bg-[#FCFDFF]/50">
+                        <div className="flex justify-between items-start text-sm">
+                            <div className="flex flex-col">
+                                <span className="text-[#29343D] text-base font-normal mt-3">Paid with Cash</span>
+                                <span className="text-base text-[#29343D] mt-2 pb-2">5 Aug 2025, 12:30</span>
+                            </div>
+                            <span className="text-[#29343D] text-base font-normal">€ 10</span>
+                        </div>
+                    </div>
+
+                    {/* Balance Segment */}
+                    <div className="border-t border-[#E0E6EB] pt-3">
+                        <div className="flex justify-between items-center">
+                            <span className="text-base font-bold text-[#29343D]">Balance</span>
+                            <span className="text-lg font-semibold text-[#29343D]">€ 160</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* RECEIPT STATUS CARD */}
+                <div className="bg-white border border-[#E0E6EB] rounded-xl p-[15px] md:p-[30px] flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div className="flex flex-col gap-5">
+                        <h2 className="text-lg font-bold text-[#29343D]">Receipt Status</h2>
+
+                        <div className="flex flex-col gap-4">
+                            {/* Status 1 */}
+                            <div className="flex items-center gap-4">
+                                <span className="text-sm font-medium text-[#29343D] min-w-[110px]">Cash</span>
+                                <span className="border border-[#36C76C] text-[#36C76C] text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">
+                                    Printed
+                                </span>
+                            </div>
+
+                            {/* Status 2 */}
+                            <div className="flex items-center gap-4">
+                                <span className="text-sm font-medium text-[#29343D] min-w-[110px]">Online payment</span>
+                                <span className="border border-[#FFD648] text-[#FFD648] text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">
+                                    To be printed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col gap-3">
+                        <button className="cursor-pointer flex items-center justify-center gap-2.5 bg-[#F0EFFF] text-[#635BFF] px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-[#e4e2ff] transition-colors">
+                            <Eye size={16} /> View Receipt
+                        </button>
+                        <button
+                        onClick={()=> setPrintReceiptModal(true) }
+                            className="cursor-pointer flex items-center justify-center gap-2.5 bg-[#635BFF] text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-[#5249e0] transition-colors shadow-sm">
+                            <Printer size={16} /> Print Receipt
+                        </button>
+                    </div>
+                </div>
+
+            </div >
+
+            {/* footer */}
+            < div className="bg-white rounded-xl md:p-[30px] p-[15px] font-manrope shadow-[0px_10px_30px_rgba(0,0,0,0.04)] mt-6" >
+
+                {/* HEADER SECTION */}
+                < div className="mb-7" >
+                    <h1 className="text-xl font-semibold text-[#29343D]">Refund #1</h1>
+                    <p className="text-base text-[#29343D] mt-2.5 font-medium">5 Aug 2025, 12:30</p>
+                </div >
+
+                {/* REFUND SUMMARY CARD */}
+                < div className="bg-white border border-[#E0E6EB] md:p-[30px] p-[15px] rounded-xl overflow-hidden" >
+
+                    {/* Row 1: Accidental Charge */}
+                    < div className="flex justify-between items-center py-3 border-b border-[#E0E6EB]" >
+                        <span className="text-base font-normal text-[#29343D]">Accidental Charge</span>
+                        <span className="text-base font-normal text-[#29343D]">€ 170</span>
+                    </div >
+
+                    {/* Row 2: Refund Amount */}
+                    < div className="flex justify-between items-center py-3 border-b border-[#E0E6EB]" >
+                        <span className="text-base font-normal text-[#29343D]">Refund Amount</span>
+                        <span className="text-base font-normal text-[#29343D]">- € 10</span>
+                    </div >
+
+                    {/* Row 3: Subtotal */}
+                    < div className="flex justify-between items-center py-3 border-b border-[#E0E6EB]" >
+                        <span className="text-sm font-medium text-[#29343D]">Subtotal</span>
+                        <span className="text-base font-normal text-[#29343D]">- € 10</span>
+                    </div >
+
+                    {/* Row 4: Total (Bold) */}
+                    < div className="flex justify-between items-center py-3 border-b border-[#E0E6EB] bg-[#FCFDFF]/30" >
+                        <span className="text-base font-semibold text-[#29343D]">Total</span>
+                        <span className="text-base font-semibold text-[#29343D]">- € 10</span>
+                    </div >
+
+                    {/* Row 5: Refunded with Cash */}
+                    < div className="flex justify-between items-start py-3" >
+                        <div className="flex flex-col gap-1">
+                            <span className="text-base font-semibold text-[#29343D]">Refunded with Cash</span>
+                            <span className="text-base font-normal text-[#29343D]">Refund Amount</span>
+                        </div>
+                        <span className="text-base font-semibold text-[#29343D]">- € 10</span>
+                    </div >
+
+                </div >
+            </div >
+
+            { 
+                printReceiptModal && (
+                    <PrintReceiptModal
+                        open={printReceiptModal}
+                        onClose={() => setPrintReceiptModal(false)}
+                        onConfirm={() => setPrintReceiptModal(false)}
+                    />
+                )
+            }
+        </div >
     )
 }

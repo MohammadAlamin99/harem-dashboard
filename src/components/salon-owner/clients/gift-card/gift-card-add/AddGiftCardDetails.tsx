@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import Giftcarddetailsform from "./Giftcarddetailsform";
 import AddGiftGallery from "./AddGiftGallery";
 

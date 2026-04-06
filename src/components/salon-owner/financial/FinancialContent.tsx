@@ -191,7 +191,7 @@ export default function FinancialContent() {
                 data={filtered}
                 columns={columns}
                 dropdownActions={[
-                    { label: "View Details", icon: <Eye size={14} className="text-[#635BFF]" />, onClick: (item) => router.push(`/salon-owner/financial/view-payment/${item.id}`) },
+                    { label: "View Details", icon: <Eye size={14} className="text-[#635BFF]" />, onClick: (item) => router.push(`/salon-owner/financial/list/view-payment/${item.id}`) },
                     { label: "Refund", icon: <RefreshCw size={14} className="text-[#FFD648]" />, onClick: (item) => setIsRefundModalOpen(true) },
                     { label: "Print Receipt", icon: <Printer size={14} className="text-[#29343D]" />, onClick: (item) => console.log("Print", item) },
                 ]}
