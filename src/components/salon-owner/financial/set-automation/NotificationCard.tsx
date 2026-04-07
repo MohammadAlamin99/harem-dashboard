@@ -1,4 +1,4 @@
-import { useState } from "react";
+import ToggleButton from "../../common-component/Toggle";
 
 interface NotificationCardProps {
   icon: React.ReactNode;
@@ -12,7 +12,6 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
   title,
   buttonText,
 }) => {
-  const [isOn, setIsOn] = useState(false);
   return (
     <div className="bg-[#F6F7F9] p-6 rounded-xl flex flex-col justify-between">
       <div className="flex justify-between items-start mb-2">
@@ -24,16 +23,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
           {title}
         </h3>
         {/* Toggle */}
-        <div
-          className={`relative ${isOn ? "bg-[#635BFF]" : "bg-[#E0E6EB]"} rounded-[8px] w-[36px] h-6 cursor-pointer transition-colors duration-300 self-end sm:self-auto`}
-          onClick={() => setIsOn(!isOn)}
-        >
-          <div
-            className={`${isOn ? "bg-[white]" : "bg-[white]"} rounded-[6px] w-4 h-4 absolute top-1 transition-all duration-300 ${
-              isOn ? "right-0.5" : "left-0.5"
-            }`}
-          ></div>
-        </div>
+        <ToggleButton />
       </div>
 
       <button className="bg-[#DDDBFF] text-[#635BFF] px-4 py-2.5 rounded-lg text-[12px] md:text-sm font-semibold w-full md:w-fit cursor-pointer">
