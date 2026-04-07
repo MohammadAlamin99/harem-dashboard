@@ -132,12 +132,13 @@ export const salonOwnerNavigation: NavItem[] = [
         matchUrls: [
           "/salon-owner/financial/list/import-receipts",
           "/salon-owner/financial/list/view-payment/",
+          "/salon-owner/financial/list/view-receipts/"
         ],
         icon: IDollar,
       },
       {
         label: "Receipts",
-        href: "/salon-owner/financial/list/receipts",
+        href: "#",
         icon: IReceipts,
       },
       {

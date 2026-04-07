@@ -5,6 +5,7 @@ import { Eye, Printer } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import PrintReceiptModal from "./PrintReceiptModalProps";
+import Link from "next/link";
 
 
 export default function ViewPaymentContent() {
@@ -250,11 +251,13 @@ export default function ViewPaymentContent() {
 
                     {/* Action Buttons */}
                     <div className="flex flex-col gap-3">
-                        <button className="cursor-pointer flex items-center justify-center gap-2.5 bg-[#F0EFFF] text-[#635BFF] px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-[#e4e2ff] transition-colors">
+                        <button
+                            onClick={() => router.push("/salon-owner/financial/list/view-receipts/123")}
+                            className="cursor-pointer flex items-center justify-center gap-2.5 bg-[#F0EFFF] text-[#635BFF] px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-[#e4e2ff] transition-colors">
                             <Eye size={16} /> View Receipt
                         </button>
                         <button
-                        onClick={()=> setPrintReceiptModal(true) }
+                            onClick={() => setPrintReceiptModal(true)}
                             className="cursor-pointer flex items-center justify-center gap-2.5 bg-[#635BFF] text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-[#5249e0] transition-colors shadow-sm">
                             <Printer size={16} /> Print Receipt
                         </button>
@@ -311,7 +314,7 @@ export default function ViewPaymentContent() {
                 </div >
             </div >
 
-            { 
+            {
                 printReceiptModal && (
                     <PrintReceiptModal
                         open={printReceiptModal}
