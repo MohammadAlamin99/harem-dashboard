@@ -1,5 +1,6 @@
 import React from "react";
-import { ChevronLeft, House } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
+import BreadcrumbIcon from "@/app/account-protal/svg/BreadcrumbIcon";
 
 export default function PageHeader({
   title,
@@ -33,7 +34,7 @@ export default function PageHeader({
         {breadcrumb.length > 0 && (
           <>
             {/* Home Icon (JSX or fallback) */}
-            {HomeIcon ? HomeIcon : <House size={15} />}
+            {HomeIcon ? HomeIcon : <BreadcrumbIcon />}
 
             {breadcrumb.map((item, index) => (
               <React.Fragment key={index}>

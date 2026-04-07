@@ -5,7 +5,6 @@ import { Eye, Printer } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import PrintReceiptModal from "./PrintReceiptModalProps";
-import Link from "next/link";
 
 
 export default function ViewPaymentContent() {

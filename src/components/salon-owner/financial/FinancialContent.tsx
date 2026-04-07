@@ -142,7 +142,7 @@ export default function FinancialContent() {
                     title="Payments"
                     buttons={[
                         { label: "Import Receipts", href: "/salon-owner/financial/import-receipts", variant: "outline" },
-                        { label: "Set Automations", href: "/salon-owner/financial/add", variant: "secondary" },
+                        { label: "Set Automations", href: "/salon-owner/financial/list/set-automation", variant: "secondary" },
                     ]}
                 />
 
