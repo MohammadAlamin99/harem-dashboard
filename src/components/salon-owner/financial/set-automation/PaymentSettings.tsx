@@ -38,7 +38,7 @@ export default function PaymentSettings() {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`pb-[12px] sm:pb-[14px] px-3 sm:px-4 cursor-pointer text-sm sm:text-lg font-semibold whitespace-nowrap transition-all relative flex-shrink-0 ${
+            className={`pb-[12px] sm:pb-[14px] px-3 sm:px-4 cursor-pointer text-sm sm:text-lg font-semibold whitespace-nowrap transition-all relative ${
               activeTab === tab
                 ? "text-[#635BFF]"
                 : "text-[#29343D] hover:text-[#635BFF]"
