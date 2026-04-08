@@ -10,16 +10,15 @@ import {
   UserPlus,
   Search,
   ChevronDown,
-  Clock,
-  Check,
   Calendar,
+  ChevronUp,
 } from "lucide-react";
 
 const DUMMY_CLIENTS = [
   {
     id: "1",
     name: "Sofia Rossi",
-    notes: "Allergic to certain dyes. Prefers cold water during hair wash.",
+    notes: "Promised 10% discount on next haircut. Check before payment.",
     giftCards: 1,
     giftCardDetails: {
       dateOfIssue: "02/09/2025",
@@ -35,7 +34,7 @@ const DUMMY_CLIENTS = [
   {
     id: "2",
     name: "Michael Chen",
-    notes: "Prefers quiet appointments.",
+    notes: "", // Empty notes test
     giftCards: 0,
     giftCardDetails: null,
   },
@@ -48,18 +47,6 @@ const DUMMY_SERVICES = [
   { id: "s4", name: "Haircut & Blowdry", duration: "60m", price: "€50" },
   { id: "s5", name: "Highlights", duration: "100m", price: "€120" },
 ];
-
-function calcDuration(start: string, end: string): string {
-  const toMin = (t: string) => {
-    const [h, m] = t.split(":").map(Number);
-    return h * 60 + m;
-  };
-  const diff = toMin(end) - toMin(start);
-  if (diff <= 0) return "—";
-  const h = Math.floor(diff / 60);
-  const m = diff % 60;
-  return h > 0 ? `${h}h${m > 0 ? ` ${m}m` : ""}` : `${m}m`;
-}
 
 const statusOptions: AppStatus[] = ["Booked", "Confirmed"];
 
@@ -92,11 +79,10 @@ export default function NewAppointmentModal({
   const [selectedStatus, setSelectedStatus] = useState<AppStatus>("Booked");
 
   const [showGiftDetails, setShowGiftDetails] = useState(false);
-  const [showNoteDetails, setShowNoteDetails] = useState(false);
+  const [showNoteDetails, setShowNoteDetails] = useState(true);
 
   const selectedClient = DUMMY_CLIENTS.find((c) => c.id === selectedClientId);
 
-  // --- Total Duration Logic ---
   const totalDurationMins = selectedServiceIds.reduce((acc, id) => {
     const srv = DUMMY_SERVICES.find((s) => s.id === id);
     if (!srv) return acc;
@@ -139,21 +125,21 @@ export default function NewAppointmentModal({
     const clientName = isAddingNewClient
       ? newClientName
       : selectedClient?.name || "";
-    const mainService = DUMMY_SERVICES.find(
-      (s) => s.id === bookingOrder[0]?.serviceId,
-    );
-    const mainEmployee = teamMembers.find(
-      (m) => m.id === bookingOrder[0]?.employeeId,
-    );
-
     onConfirm({
       clientName,
-      service: mainService?.name || "",
-      employeeId: mainEmployee?.id || memberId,
-      employeeName: mainEmployee?.name || "",
+      service:
+        DUMMY_SERVICES.find((s) => s.id === bookingOrder[0]?.serviceId)?.name ||
+        "",
+      employeeId: bookingOrder[0]?.employeeId || memberId,
+      employeeName:
+        teamMembers.find(
+          (m) => m.id === (bookingOrder[0]?.employeeId || memberId),
+        )?.name || "",
       status: selectedStatus,
       duration: formattedTotalDuration,
-      price: mainService?.price || "",
+      price:
+        DUMMY_SERVICES.find((s) => s.id === bookingOrder[0]?.serviceId)
+          ?.price || "",
     });
   };
 
@@ -163,48 +149,45 @@ export default function NewAppointmentModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-[12px] shadow-2xl w-full max-w-[620px] max-h-[92vh] overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200"
+        className="bg-white rounded-[12px] shadow-2xl w-full max-w-[620px] max-h-[94vh] overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Fixed Header */}
+        {/* Header */}
         <div className="flex-none px-8 py-6 flex items-start justify-between border-b border-slate-100 bg-white">
           <div>
-            <h2 className="text-2xl font-bold text-[#29343D]">
+            <h2 className="text-[20px] font-bold text-[#29343D]">
               New Appointment
             </h2>
-            <div className="flex items-center gap-2 mt-1 text-[14px] text-[#999]">
-              <Calendar size={14} />
-              <span>
-                {date.toLocaleDateString("en-US", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </span>
-            </div>
+            <p className="text-[14px] text-[#999] font-medium mt-0.5">
+              {date.toLocaleDateString("en-US", {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}
+            </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-slate-100 rounded-full cursor-pointer"
+            className="p-1 hover:bg-slate-100 rounded-full cursor-pointer text-[#29343D]"
           >
-            <X size={24} color="#29343D" />
+            <X size={24} />
           </button>
         </div>
 
         {/* Scrollable Body */}
         <div className="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar">
           {/* Client Selection */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <label className="text-[13px] font-semibold text-[#999]">
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <label className="text-[12px] font-bold text-[#999]">
                 Client Name *
               </label>
               <button
                 onClick={() => setIsAddingNewClient(!isAddingNewClient)}
-                className="text-[13px] font-bold text-[#635BFF]"
+                className="text-[12px] font-bold text-[#635BFF] hover:underline"
               >
-                {isAddingNewClient ? "Select existing" : "Add new client"}
+                {isAddingNewClient ? "Select existing" : "+ Add new client"}
               </button>
             </div>
 
@@ -220,7 +203,7 @@ export default function NewAppointmentModal({
                     setSelectedClientId(e.target.value);
                     setShowGiftDetails(false);
                   }}
-                  className="w-full pl-10 pr-10 py-3 bg-white border border-slate-200 rounded-[4px] text-[15px] text-[#29343D] focus:border-[#635BFF] focus:ring-1 focus:ring-[#635BFF] outline-none appearance-none cursor-pointer"
+                  className="w-full pl-10 pr-10 py-3 bg-white border border-slate-200 rounded-[4px] text-[15px] text-[#29343D] focus:border-[#635BFF] outline-none appearance-none cursor-pointer"
                 >
                   <option value="">Search or select client...</option>
                   {DUMMY_CLIENTS.map((c) => (
@@ -250,78 +233,158 @@ export default function NewAppointmentModal({
               </div>
             )}
 
-            {selectedClient && (
-              <div className="flex gap-3 mt-4">
-                <button
-                  onClick={() => {
-                    setShowNoteDetails(!showNoteDetails);
-                    setShowGiftDetails(false);
-                  }}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 border rounded-[4px] text-[13px] font-bold transition-all ${showNoteDetails ? "bg-[#635BFF]/5 border-[#635BFF] text-[#635BFF]" : "bg-white border-slate-200 text-[#29343D]"}`}
-                >
-                  <Notebook size={16} /> Client Notes
-                </button>
-                <button
-                  onClick={() => {
-                    setShowGiftDetails(!showGiftDetails);
-                    setShowNoteDetails(false);
-                  }}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 border rounded-[4px] text-[13px] font-bold transition-all ${showGiftDetails ? "bg-[#635BFF]/5 border-[#635BFF] text-[#635BFF]" : "bg-white border-slate-200 text-[#29343D]"}`}
-                >
-                  <Ticket size={16} /> Gift Card{" "}
-                  {selectedClient.giftCards > 0 &&
-                    `(${selectedClient.giftCards})`}
-                </button>
-              </div>
-            )}
+            {/* Conditional Client Details (Only show if notes or gift cards exist) */}
+            {selectedClient &&
+              (selectedClient.notes || selectedClient.giftCards > 0) && (
+                <div className="bg-[#F8FAFC] border border-slate-200 rounded-[8px] overflow-hidden">
+                  {/* Notes Section - Only if notes exist */}
+                  {selectedClient.notes && (
+                    <div
+                      className={`${selectedClient.giftCards > 0 ? "border-b border-slate-200" : ""}`}
+                    >
+                      <button
+                        onClick={() => setShowNoteDetails(!showNoteDetails)}
+                        className="w-full px-4 py-3 flex items-center justify-between text-[14px] font-bold text-[#29343D] hover:bg-slate-50"
+                      >
+                        <span>Client notes</span>
+                        {showNoteDetails ? (
+                          <ChevronUp size={16} />
+                        ) : (
+                          <ChevronDown size={16} />
+                        )}
+                      </button>
+                      {showNoteDetails && (
+                        <div className="px-4 pb-4 animate-in slide-in-from-top-1">
+                          <div className="bg-white border border-slate-200 p-3 rounded-[4px] text-[13px] text-[#29343D]">
+                            {selectedClient.notes}
+                          </div>
+                          <button className="text-[12px] font-bold text-[#635BFF] mt-2 flex items-center gap-1">
+                            Show all notes (3) <ChevronDown size={12} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
-            {/* Redesigned White Gift View */}
-            {showGiftDetails && selectedClient?.giftCardDetails && (
-              <div className="mt-4 bg-white rounded-[12px] border border-slate-200 overflow-hidden shadow-sm animate-in slide-in-from-top-2">
-                <div className="bg-slate-50 px-6 py-3 border-b border-slate-100 flex justify-between items-center">
-                  <span className="text-[13px] font-bold text-[#29343D]">
-                    Gift Card Details
-                  </span>
-                  <button
-                    onClick={() => setShowGiftDetails(false)}
-                    className="text-[#999] hover:text-[#29343D]"
-                  >
-                    <X size={16} />
-                  </button>
+                  {/* Gift Card Section - Only if cards > 0 */}
+                  {selectedClient.giftCards > 0 && (
+                    <div>
+                      <button
+                        onClick={() => setShowGiftDetails(!showGiftDetails)}
+                        className="w-full px-4 py-3 flex items-center justify-between text-[14px] font-bold text-[#29343D] hover:bg-slate-50"
+                      >
+                        <span>Active gift cards</span>
+                        {showGiftDetails ? (
+                          <ChevronUp size={16} />
+                        ) : (
+                          <ChevronDown size={16} />
+                        )}
+                      </button>
+                      {showGiftDetails && selectedClient.giftCardDetails && (
+                        <div className="px-4 pb-4 animate-in slide-in-from-top-1">
+                          <div className="bg-white border border-slate-200 p-4 rounded-[4px] shadow-sm cursor-default">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className="p-2 bg-slate-50 rounded-[4px] border border-slate-100">
+                                  <Ticket size={16} className="text-[#999]" />
+                                </div>
+                                <div>
+                                  <p className="text-[16px] font-bold text-[#29343D]">
+                                    {selectedClient.giftCardDetails.amount}
+                                  </p>
+                                  <p className="text-[12px] text-[#999]">
+                                    Expires{" "}
+                                    {
+                                      selectedClient.giftCardDetails
+                                        .dateOfExpiration
+                                    }
+                                  </p>
+                                </div>
+                              </div>
+                              <span className="text-[12px] text-[#999]">
+                                {selectedClient.giftCardDetails.eligibleServices.join(
+                                  " • ",
+                                )}
+                              </span>
+                            </div>
+
+                            <div className="mt-6 pt-6 border-t border-slate-100 grid grid-cols-2 gap-y-6">
+                              <div>
+                                <p className="text-[11px] text-[#999] font-bold uppercase mb-1">
+                                  Date of Issue
+                                </p>
+                                <p className="text-[14px] font-bold text-[#29343D]">
+                                  {selectedClient.giftCardDetails.dateOfIssue}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-[11px] text-[#999] font-bold uppercase mb-1">
+                                  Date of Expiration
+                                </p>
+                                <p className="text-[14px] font-bold text-[#29343D]">
+                                  {
+                                    selectedClient.giftCardDetails
+                                      .dateOfExpiration
+                                  }
+                                </p>
+                              </div>
+                              <div className="border-t border-slate-50 pt-4">
+                                <p className="text-[11px] text-[#999] font-bold uppercase mb-1">
+                                  Amount
+                                </p>
+                                <p className="text-[16px] font-bold text-[#29343D]">
+                                  {selectedClient.giftCardDetails.amount}
+                                </p>
+                              </div>
+                              <div className="border-t border-slate-50 pt-4">
+                                <p className="text-[11px] text-[#999] font-bold uppercase mb-1">
+                                  Usage Limit
+                                </p>
+                                <p className="text-[16px] font-bold text-[#29343D]">
+                                  {selectedClient.giftCardDetails.usageLimit}
+                                </p>
+                              </div>
+                              <div className="col-span-2">
+                                <p className="text-[11px] text-[#999] font-bold uppercase mb-2">
+                                  Eligible Services
+                                </p>
+                                <div className="flex gap-2">
+                                  {selectedClient.giftCardDetails.eligibleServices.map(
+                                    (s) => (
+                                      <span
+                                        key={s}
+                                        className="bg-[#635BFF]/10 text-[#635BFF] px-3 py-1 rounded-full text-[12px] font-bold"
+                                      >
+                                        {s}
+                                      </span>
+                                    ),
+                                  )}
+                                </div>
+                              </div>
+                              <div className="col-span-2 pt-4 border-t border-slate-50">
+                                <p className="text-[11px] text-[#999] font-bold uppercase mb-2">
+                                  Personal Message
+                                </p>
+                                <div className="bg-slate-50 p-3 rounded-[4px] italic text-[13px] text-[#29343D]">
+                                  {
+                                    selectedClient.giftCardDetails
+                                      .personalMessage
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-                <div className="p-6 grid grid-cols-2 gap-y-5">
-                  <div>
-                    <p className="text-[11px] text-[#999] font-medium mb-0.5">
-                      Balance
-                    </p>
-                    <p className="text-[20px] font-bold text-[#635BFF]">
-                      {selectedClient.giftCardDetails.amount}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[11px] text-[#999] font-medium mb-0.5">
-                      Expires
-                    </p>
-                    <p className="text-[14px] font-bold text-[#29343D]">
-                      {selectedClient.giftCardDetails.dateOfExpiration}
-                    </p>
-                  </div>
-                  <div className="col-span-2 border-t border-slate-50 pt-4">
-                    <p className="text-[11px] text-[#999] font-medium mb-2 italic">
-                      Personal Message
-                    </p>
-                    <p className="text-[13px] text-[#29343D] italic bg-slate-50 p-3 rounded-[4px]">
-                      {selectedClient.giftCardDetails.personalMessage}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+              )}
           </section>
 
-          {/* Services */}
-          <section>
-            <label className="text-[13px] font-semibold text-[#999] mb-3 block">
+          {/* Services Section */}
+          <section className="space-y-3">
+            <label className="text-[12px] font-bold text-[#999]">
               Services *
             </label>
             <div className="relative">
@@ -332,14 +395,14 @@ export default function NewAppointmentModal({
                 }}
                 className="w-full px-4 py-3 bg-white border border-slate-200 rounded-[4px] text-[15px] text-[#29343D] focus:border-[#635BFF] outline-none appearance-none cursor-pointer"
               >
-                <option value="">+ Add a service...</option>
+                <option value="">Search or select a service...</option>
                 {DUMMY_SERVICES.map((s) => (
                   <option
                     key={s.id}
                     value={s.id}
                     disabled={selectedServiceIds.includes(s.id)}
                   >
-                    {s.name} ({s.duration})
+                    {s.name} ({s.duration}) — {s.price}
                   </option>
                 ))}
               </select>
@@ -349,47 +412,46 @@ export default function NewAppointmentModal({
               />
             </div>
 
-            <div className="flex flex-wrap gap-2 mt-4">
-              {selectedServiceIds.map((id) => {
-                const srv = DUMMY_SERVICES.find((s) => s.id === id);
-                return (
-                  <div
-                    key={id}
-                    className="flex items-center gap-2 bg-[#635BFF]/10 text-[#635BFF] px-3 py-1.5 rounded-[4px] text-[13px] font-bold"
-                  >
-                    {srv?.name} {srv?.duration}
-                    <button
-                      onClick={() => handleServiceToggle(id)}
-                      className="cursor-pointer hover:text-[#29343D]"
+            {selectedServiceIds.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {selectedServiceIds.map((id) => {
+                  const srv = DUMMY_SERVICES.find((s) => s.id === id);
+                  return (
+                    <div
+                      key={id}
+                      className="flex items-center gap-2 bg-[#635BFF]/10 text-[#635BFF] px-3 py-1.5 rounded-[4px] text-[13px] font-bold border border-[#635BFF]/20"
                     >
-                      <X size={14} />
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+                      {srv?.name} {srv?.duration}
+                      <button
+                        onClick={() => handleServiceToggle(id)}
+                        className="hover:text-[#29343D] cursor-pointer"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            <p className="text-[13px] font-bold text-[#29343D] pt-2">
+              Total duration:{" "}
+              <span className="font-extrabold">{formattedTotalDuration}</span>
+            </p>
           </section>
 
-          {/* Booking Summary & Timeline */}
-          {selectedServiceIds.length > 0 && (
+          {/* Booking Order Timeline */}
+          {bookingOrder.length > 0 && (
             <section className="space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                <label className="text-[13px] font-semibold text-[#999]">
-                  Booking Order
-                </label>
-                <p className="text-[13px] font-bold text-[#29343D]">
-                  Total duration:{" "}
-                  <span className="text-[#635BFF]">
-                    {formattedTotalDuration}
-                  </span>
-                </p>
-              </div>
+              <label className="text-[12px] font-bold text-[#999]">
+                Booking Order
+              </label>
+              <div className="bg-[#F8FAFC] p-8 rounded-[12px] border border-slate-200 relative">
+                {/* Connecting Line - ONLY IF MORE THAN 1 ORDER */}
+                {bookingOrder.length > 1 && (
+                  <div className="absolute top-[48px] left-[15%] right-[15%] h-[2px] bg-slate-200 z-0" />
+                )}
 
-              <div className="bg-slate-50/50 p-6 rounded-[12px] border border-slate-100 relative">
-                <div className="flex items-start justify-between relative px-4">
-                  {bookingOrder.length > 1 && (
-                    <div className="absolute top-[18px] left-[60px] right-[60px] h-[2px] bg-slate-200 z-0" />
-                  )}
+                <div className="flex items-start justify-center gap-8 relative z-10">
                   {bookingOrder.map((item, index) => {
                     const srv = DUMMY_SERVICES.find(
                       (s) => s.id === item.serviceId,
@@ -397,14 +459,22 @@ export default function NewAppointmentModal({
                     return (
                       <div
                         key={item.serviceId}
-                        className="flex flex-col items-center text-center relative z-10 w-1/3"
+                        className="flex flex-col items-center text-center w-1/3 space-y-2"
                       >
-                        <div className="w-9 h-9 rounded-full bg-[#29343D] text-white flex items-center justify-center text-[14px] font-bold mb-3 border-4 border-white shadow-sm">
+                        <div className="w-9 h-9 rounded-full bg-[#29343D] text-white flex items-center justify-center text-[15px] font-bold shadow-sm">
                           {index + 1}
                         </div>
-                        <p className="text-[12px] font-bold text-[#29343D] leading-tight mb-2 truncate w-full px-1">
-                          {srv?.name}
-                        </p>
+                        <span className="bg-[#635BFF]/10 text-[#635BFF] text-[10px] font-extrabold px-2 py-0.5 rounded-[4px] uppercase tracking-wider">
+                          To Do
+                        </span>
+                        <div className="space-y-0.5">
+                          <p className="text-[11px] text-[#999] font-bold">
+                            23:17-23:47
+                          </p>
+                          <p className="text-[13px] font-bold text-[#29343D] leading-tight px-1">
+                            {srv?.name}
+                          </p>
+                        </div>
                         <select
                           value={item.employeeId}
                           onChange={(e) =>
@@ -413,7 +483,7 @@ export default function NewAppointmentModal({
                               e.target.value,
                             )
                           }
-                          className="text-[11px] font-bold text-[#999] bg-white border border-slate-200 rounded-[4px] px-2 py-1 outline-none cursor-pointer max-w-[100px]"
+                          className="mt-1 text-[12px] font-bold text-[#29343D] bg-white border border-slate-200 rounded-[12px] px-3 py-1 outline-none cursor-pointer hover:border-[#635BFF]"
                         >
                           {teamMembers.map((m) => (
                             <option key={m.id} value={m.id}>
@@ -429,11 +499,9 @@ export default function NewAppointmentModal({
             </section>
           )}
 
-          {/* Status Selection */}
-          <section className="pb-4">
-            <label className="text-[13px] font-semibold text-[#999] mb-3 block">
-              Status
-            </label>
+          {/* Status Section */}
+          <section className="space-y-4">
+            <label className="text-[12px] font-bold text-[#999]">Status</label>
             <div className="flex gap-4">
               {statusOptions.map((status) => {
                 const isSelected = selectedStatus === status;
@@ -442,7 +510,7 @@ export default function NewAppointmentModal({
                   <button
                     key={status}
                     onClick={() => setSelectedStatus(status)}
-                    className={`flex-1 flex items-center gap-3 p-3 rounded-[4px] border text-[14px] font-bold transition-all ${isSelected ? `border-[${color}] bg-slate-50` : "border-slate-200 text-[#999]"}`}
+                    className={`flex-1 flex items-center gap-3 p-4 rounded-[4px] border text-[14px] font-bold transition-all ${isSelected ? "bg-slate-50" : "bg-white border-slate-200 text-[#999]"}`}
                     style={{
                       borderColor: isSelected ? color : undefined,
                       color: isSelected ? "#29343D" : undefined,
@@ -460,18 +528,18 @@ export default function NewAppointmentModal({
           </section>
         </div>
 
-        {/* Fixed Footer */}
+        {/* Footer */}
         <div className="flex-none p-8 border-t border-slate-100 flex gap-4 bg-white">
           <button
             onClick={onClose}
-            className="flex-1 py-4 rounded-[12px] text-[15px] font-bold bg-[#F8FAFC] text-[#29343D] hover:bg-slate-100 cursor-pointer"
+            className="w-[30%] py-4 rounded-[12px] text-[15px] font-bold bg-[#F8FAFC] text-[#29343D] hover:bg-slate-100 cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={handleConfirm}
             disabled={!isValid}
-            className="flex-[2] py-4 rounded-[12px] bg-[#635BFF] text-white text-[15px] font-bold hover:opacity-90 disabled:opacity-40 transition-all shadow-lg shadow-[#635BFF]/20 cursor-pointer"
+            className="w-[70%] py-4 rounded-[12px] bg-[#635BFF] text-white text-[15px] font-bold hover:opacity-90 disabled:opacity-40 transition-all shadow-lg shadow-[#635BFF]/20 cursor-pointer"
           >
             Create Appointment
           </button>
