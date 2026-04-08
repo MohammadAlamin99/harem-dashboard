@@ -5,12 +5,10 @@ import {
 } from "@/@types/salon-owner/CalAppointment.type";
 import {
   X,
-  Notebook,
   Ticket,
   UserPlus,
   Search,
   ChevronDown,
-  Calendar,
   ChevronUp,
 } from "lucide-react";
 
@@ -52,8 +50,6 @@ const statusOptions: AppStatus[] = ["Booked", "Confirmed"];
 
 export default function NewAppointmentModal({
   memberId,
-  startTime,
-  endTime,
   date,
   teamMembers,
   onClose,

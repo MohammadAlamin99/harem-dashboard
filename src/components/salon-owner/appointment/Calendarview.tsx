@@ -212,36 +212,6 @@ export default function CalendarView() {
     else setCurrentDate(new Date(2025, 8, 2));
   };
 
-  // ================= DUMMY CLIENTS =================
-  const clients = [
-    {
-      id: "c1",
-      name: "Sofia Rossi",
-      notes: ["Prefers evening appointments", "VIP client"],
-      giftCards: [
-        {
-          id: "g1",
-          amount: 50,
-          expiry: "2026-06-20",
-          services: ["Haircut", "Blowdry"],
-        },
-      ],
-    },
-    {
-      id: "c2",
-      name: "John Smith",
-      notes: ["Allergic to some products"],
-    },
-  ];
-
-  // ================= DUMMY SERVICES =================
-  const servicesList = [
-    { id: "s1", name: "Haircut", duration: 30 },
-    { id: "s2", name: "Blowdry", duration: 20 },
-    { id: "s3", name: "Haircut & Blowdry", duration: 60 },
-    { id: "s4", name: "Shampoo", duration: 15 },
-  ];
-
   return (
     <div className="bg-white rounded-xl border border-[#EFF4FA] overflow-hidden font-manrope">
       {/* Toolbar */}
