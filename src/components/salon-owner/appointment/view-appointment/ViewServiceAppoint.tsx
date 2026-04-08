@@ -59,7 +59,7 @@ export default function ViewServiceAppoint({
                       alt="Maria Rodriguez"
                       width={48}
                       height={48}
-                      className="rounded-[8px] object-cover flex-shrink-0"
+                      className="rounded-[8px] object-cover"
                     />
                     <span className="flex items-center gap-6 text-sm font-semibold font-manrope text-[#29343D] whitespace-nowrap">
                       Maria Rodriguez

@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -165,7 +164,7 @@ export default function CalendarView() {
     teamMembers.map((m) => m.id),
   );
   const [appointments, setAppointments] = useState<CalAppointment[]>(
-    allAppointments.slice(0, 3)
+    allAppointments.slice(0, 3),
   );
 
   const isMonthOrWeek = period === "Month" || period === "Week";
@@ -175,9 +174,7 @@ export default function CalendarView() {
   };
 
   const handleAppointmentUpdate = (appt: CalAppointment) => {
-    setAppointments((prev) =>
-      prev.map((a) => (a.id === appt.id ? appt : a))
-    );
+    setAppointments((prev) => prev.map((a) => (a.id === appt.id ? appt : a)));
   };
 
   const navigate = (dir: -1 | 1) => {
@@ -214,6 +211,36 @@ export default function CalendarView() {
     else if (p === "Week") setCurrentDate(new Date(2025, 8, 1));
     else setCurrentDate(new Date(2025, 8, 2));
   };
+
+  // ================= DUMMY CLIENTS =================
+  const clients = [
+    {
+      id: "c1",
+      name: "Sofia Rossi",
+      notes: ["Prefers evening appointments", "VIP client"],
+      giftCards: [
+        {
+          id: "g1",
+          amount: 50,
+          expiry: "2026-06-20",
+          services: ["Haircut", "Blowdry"],
+        },
+      ],
+    },
+    {
+      id: "c2",
+      name: "John Smith",
+      notes: ["Allergic to some products"],
+    },
+  ];
+
+  // ================= DUMMY SERVICES =================
+  const servicesList = [
+    { id: "s1", name: "Haircut", duration: 30 },
+    { id: "s2", name: "Blowdry", duration: 20 },
+    { id: "s3", name: "Haircut & Blowdry", duration: 60 },
+    { id: "s4", name: "Shampoo", duration: 15 },
+  ];
 
   return (
     <div className="bg-white rounded-xl border border-[#EFF4FA] overflow-hidden font-manrope">
@@ -254,9 +281,10 @@ export default function CalendarView() {
                 key={p}
                 onClick={() => handlePeriodChange(p)}
                 className={`relative px-6 py-[10px] text-[16px] font-manrope font-medium transition-all cursor-pointer
-                  ${period === p
-                    ? "bg-[#DDDBFF] text-[#0A2540]"
-                    : "text-[#526B7A] bg-[white] hover:text-[#29343D]"
+                  ${
+                    period === p
+                      ? "bg-[#DDDBFF] text-[#0A2540]"
+                      : "text-[#526B7A] bg-[white] hover:text-[#29343D]"
                   }
                   ${i !== 2 ? "border-r border-[#E0E6EB]" : ""}
                   `}

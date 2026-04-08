@@ -1,4 +1,3 @@
-
 import {
   AppStatus,
   CalAppointment,
@@ -101,7 +100,7 @@ export default function DayView({
   const handleTimeSlotMouseDown = (
     e: React.MouseEvent,
     memberId: string,
-    baseMinutes: number
+    baseMinutes: number,
   ) => {
     if (e.button !== 0) return;
 
@@ -130,7 +129,7 @@ export default function DayView({
     e: React.MouseEvent,
     memberId: string,
     baseMinutes: number,
-    hourIndex: number
+    hourIndex: number,
   ) => {
     if (!isDraggingRef.current || !timeSelectionRef.current) return;
     console.log("mouseup", isDraggingRef.current, timeSelectionRef.current);
@@ -141,7 +140,7 @@ export default function DayView({
     const offsetY = e.clientY - rect.top;
     const currentMin = Math.max(
       baseMinutes,
-      baseMinutes + Math.floor((offsetY / HOUR_HEIGHT) * 60)
+      baseMinutes + Math.floor((offsetY / HOUR_HEIGHT) * 60),
     );
 
     if (currentMin > timeSelectionRef.current.startMin) {
@@ -183,12 +182,10 @@ export default function DayView({
     setDraggedAppt(null);
   };
 
-
-
   const handleTimeSlotDrop = (
     e: React.DragEvent,
     memberId: string,
-    baseMinutes: number
+    baseMinutes: number,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -198,7 +195,8 @@ export default function DayView({
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const offsetY = e.clientY - rect.top;
     const droppedMin = baseMinutes + Math.floor((offsetY / HOUR_HEIGHT) * 60);
-    const duration = timeToMinutes(draggedAppt.endTime) - timeToMinutes(draggedAppt.startTime);
+    const duration =
+      timeToMinutes(draggedAppt.endTime) - timeToMinutes(draggedAppt.startTime);
 
     const newStart = minutesToTime(droppedMin);
     const newEnd = minutesToTime(droppedMin + duration);
@@ -208,7 +206,9 @@ export default function DayView({
       startTime: newStart,
       endTime: newEnd,
       employeeId: memberId,
-      employeeName: teamMembers.find((m) => m.id === memberId)?.name || draggedAppt.employeeName,
+      employeeName:
+        teamMembers.find((m) => m.id === memberId)?.name ||
+        draggedAppt.employeeName,
     };
 
     onAppointmentUpdate?.(updatedAppt);
@@ -216,7 +216,7 @@ export default function DayView({
   };
 
   const handleCreateAppointment = (
-    data: Omit<CalAppointment, "id" | "date" | "startTime" | "endTime">
+    data: Omit<CalAppointment, "id" | "date" | "startTime" | "endTime">,
   ) => {
     if (!selectedSlot) return;
 
@@ -323,7 +323,12 @@ export default function DayView({
                           handleTimeSlotMouseDown(e, member.id, baseMinutes)
                         }
                         onMouseMove={(e) =>
-                          handleTimeSlotMouseMove(e, member.id, baseMinutes, hourIndex)
+                          handleTimeSlotMouseMove(
+                            e,
+                            member.id,
+                            baseMinutes,
+                            hourIndex,
+                          )
                         }
                         onDragOver={(e) => {
                           e.preventDefault();
@@ -338,8 +343,9 @@ export default function DayView({
                           {Array.from({ length: 4 }).map((_, i) => (
                             <div
                               key={i}
-                              className={`flex-1 ${i < 3 ? "border-b border-[#F0F0F0]" : ""
-                                }`}
+                              className={`flex-1 ${
+                                i < 3 ? "border-b border-[#F0F0F0]" : ""
+                              }`}
                             />
                           ))}
                         </div>
@@ -351,11 +357,14 @@ export default function DayView({
                               className="absolute left-0 right-0 bg-[#635BFF] opacity-15 border-2 border-[#635BFF]"
                               style={{
                                 top: `${(
-                                  ((selectionPreview.startMin - baseMinutes) / 60) *
+                                  ((selectionPreview.startMin - baseMinutes) /
+                                    60) *
                                   HOUR_HEIGHT
                                 ).toFixed(2)}px`,
                                 height: `${(
-                                  ((selectionPreview.endMin - selectionPreview.startMin) / 60) *
+                                  ((selectionPreview.endMin -
+                                    selectionPreview.startMin) /
+                                    60) *
                                   HOUR_HEIGHT
                                 ).toFixed(2)}px`,
                               }}
@@ -364,18 +373,21 @@ export default function DayView({
                               className="absolute left-0 right-0 flex items-center justify-center text-[11px] font-semibold font-manrope text-[#635BFF] bg-white bg-opacity-90 rounded px-1"
                               style={{
                                 top: `${(
-                                  ((selectionPreview.startMin - baseMinutes) / 60) *
-                                  HOUR_HEIGHT +
-                                  (((selectionPreview.endMin - selectionPreview.startMin) / 60) *
+                                  ((selectionPreview.startMin - baseMinutes) /
+                                    60) *
+                                    HOUR_HEIGHT +
+                                  (((selectionPreview.endMin -
+                                    selectionPreview.startMin) /
+                                    60) *
                                     HOUR_HEIGHT) /
-                                  2 -
+                                    2 -
                                   10
                                 ).toFixed(2)}px`,
                               }}
                             >
                               {formatDuration(
                                 selectionPreview.startMin,
-                                selectionPreview.endMin
+                                selectionPreview.endMin,
                               )}
                             </div>
                           </div>
@@ -396,7 +408,9 @@ export default function DayView({
                                 style={{ height }}
                                 className="p-2"
                                 draggable
-                                onDragStart={(e) => handlePillDragStart(appt, e)}
+                                onDragStart={(e) =>
+                                  handlePillDragStart(appt, e)
+                                }
                                 onDragEnd={handlePillDragEnd}
                               >
                                 <AppPill
@@ -446,4 +460,3 @@ export default function DayView({
     </div>
   );
 }
-

@@ -159,7 +159,9 @@ const statusFilters: (Status | "All")[] = [
 
 export default function AppoinmentTableviewContent() {
   const [activeStatus, setActiveStatus] = useState<Status | "All">("All");
-  const [activeView, setActiveView] = useState<"calendar" | "table">("table");
+  const [activeView, setActiveView] = useState<"calendar" | "table">(
+    "calendar",
+  );
   const [activePeriod, setActivePeriod] = useState<"Month" | "Week" | "Day">(
     "Day",
   );
@@ -324,7 +326,7 @@ export default function AppoinmentTableviewContent() {
                     setCurrentPage(1);
                     setExpandedRow(null);
                   }}
-                  className={`flex-shrink-0 px-3 py-1.5 text-sm font-manrope font-medium rounded-[6px] border transition-all cursor-pointer ${activeStatus === s ? "border-[#635BFF] text-[#635BFF] bg-white" : "border-[#E0E6EB] text-[#526B7A] hover:border-[#635BFF] hover:text-[#635BFF]"}`}
+                  className={`px-3 py-1.5 text-sm font-manrope font-medium rounded-[6px] border transition-all cursor-pointer ${activeStatus === s ? "border-[#635BFF] text-[#635BFF] bg-white" : "border-[#E0E6EB] text-[#526B7A] hover:border-[#635BFF] hover:text-[#635BFF]"}`}
                 >
                   {s}
                 </button>
@@ -417,7 +419,7 @@ export default function AppoinmentTableviewContent() {
                               alt={row.clientName}
                               width={36}
                               height={36}
-                              className="rounded-xl object-cover flex-shrink-0"
+                              className="rounded-xl object-cover"
                             />
                             <div>
                               <p className="text-sm font-semibold font-manrope text-[#29343D]">

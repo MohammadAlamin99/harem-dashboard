@@ -18,7 +18,6 @@ import PreferencesBehavior from "./Preferencesbehavior";
 import ClientHistoryOfEdit from "./ClientHistoryEdit";
 import ClientAppointmentTab from "./ClientAppointmentTab";
 import ClientFinacialTab from "./finalcial-tab/ClientFinacialTab";
-import Notes from "./notes/NotesTab";
 import NotesTab from "./notes/NotesTab";
 import MediaTab from "./notes/Mediatab";
 import CommunicationLog from "./commonication/Communicationlog";
