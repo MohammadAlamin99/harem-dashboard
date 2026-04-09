@@ -121,7 +121,7 @@ export default function ViewPaymentContent() {
                             {/* Timeline Graphic */}
                             <div className="flex flex-col items-center">
                                 <div className="w-3 h-3 rounded-full border-2 border-[#FF6692] bg-white z-10" />
-                                <div className="w-[1px] h-20 bg-[#E0E6EB] -my-1" />
+                                <div className="w-px h-20 bg-[#E0E6EB] -my-1" />
                             </div>
 
                             {/* Content */}

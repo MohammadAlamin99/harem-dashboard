@@ -9,7 +9,7 @@ export default function AppPill({
   appt,
   onClick,
   statusColor,
-  compact = false,
+  // compact = false,
 }: {
   appt: CalAppointment;
   onClick: (appt: CalAppointment, e: React.MouseEvent) => void;
@@ -27,7 +27,7 @@ export default function AppPill({
       onClick={(e) => onClick(appt, e)}
       className={`
         ${c.bg} ${c.text} ${c.border}
-        border-l-[4px] rounded-[0px_8px_8px_0px]
+        border-l-4 rounded-[0px_8px_8px_0px]
         w-full h-full
         flex items-center
         px-2.5 py-0.5

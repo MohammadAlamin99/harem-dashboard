@@ -34,6 +34,7 @@ const MOVEMENTS: StockMovement[] = [
 const DROPDOWN_HEIGHT = 3 * 44 + 16
 
 function RowDropdown({ id }: { id: number }) {
+    console.log(id)
     const [open, setOpen] = useState(false)
     const [pos, setPos] = useState({ top: 0, left: 0 })
     const btnRef = useRef<HTMLButtonElement>(null)
@@ -167,7 +168,7 @@ export default function InventoryStockTable() {
                                 <td className="px-4 py-5 border-b border-l border-[#E0E6EB] text-[14px] font-semibold text-[#29343D]">{row.sku}</td>
                                 <td className="px-4 py-5 border-b border-l border-[#E0E6EB]">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-9 h-9 rounded-full bg-[#F3F3FF] overflow-hidden flex-shrink-0">
+                                        <div className="w-9 h-9 rounded-full bg-[#F3F3FF] overflow-hidden">
                                             <Image
                                                 src={row.productImage}
                                                 alt={row.productName}
