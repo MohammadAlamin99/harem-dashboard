@@ -121,7 +121,7 @@ export default function AddPostModal({ isOpen, onClose }: AddPostModalProps) {
               </label>
               <div className="border border-[#E2E8F0] rounded-xl p-4 min-h-[180px] flex flex-col relative focus-within:border-[#6366F1] transition-colors">
                 <textarea
-                  className="w-full flex-grow text-[14px] outline-none resize-none placeholder:text-[#94A3B8]"
+                  className="w-full text-[14px] outline-none resize-none placeholder:text-[#94A3B8]"
                   placeholder="Write your description here..."
                 />
 
@@ -154,7 +154,6 @@ export default function AddPostModal({ isOpen, onClose }: AddPostModalProps) {
                 </div>
               </div>
             </div>
-
 
             {/* Hidden Native File Input */}
             <input

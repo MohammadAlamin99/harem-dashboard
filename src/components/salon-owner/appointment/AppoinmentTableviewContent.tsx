@@ -457,7 +457,7 @@ export default function AppoinmentTableviewContent() {
                             <RowActions />
                             <button
                               onClick={() => handleChevronClick(globalIndex)}
-                              className="p-1.5 hover:bg-[#F4F6FA] rounded-lg transition-colors cursor-pointer"
+                              className="p-1.5 hover:bg-[#F4F6FA] rounded-lg cursor-pointer"
                             >
                               {isExpanded ? (
                                 <ChevronUp
