@@ -3,12 +3,16 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+const ITEMS = 3;
+const DROPDOWN_HEIGHT = ITEMS * 44 + 12;
+
 export default function RowActions() {
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ top: 0, left: 0 });
   const btnRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Close on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (
@@ -24,12 +28,24 @@ export default function RowActions() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // Close on any scroll
+  useEffect(() => {
+    const handleScroll = () => setOpen(false);
+    window.addEventListener("scroll", handleScroll, true);
+    return () => window.removeEventListener("scroll", handleScroll, true);
+  }, []);
+
   const handleOpen = () => {
     if (btnRef.current) {
       const rect = btnRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+
       setPos({
-        top: rect.bottom + 6,
-        left: rect.right - 176, // 176 = w-44 (11rem)
+        top:
+          spaceBelow < DROPDOWN_HEIGHT
+            ? rect.top - DROPDOWN_HEIGHT - 6  // flip upward
+            : rect.bottom + 6,               // show below
+        left: rect.right - 176,
       });
     }
     setOpen((p) => !p);
@@ -39,7 +55,7 @@ export default function RowActions() {
     <div
       ref={dropdownRef}
       style={{ position: "fixed", top: pos.top, left: pos.left, zIndex: 9999 }}
-      className="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#F0F2F5] py-1.5 w-44"
+      className="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#F0F2F5] py-1.5 w-44 overflow-hidden"
     >
       <Link href={"/salon-owner/appointment/view-appointment"}>
         <button
