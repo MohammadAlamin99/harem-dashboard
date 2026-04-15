@@ -273,8 +273,8 @@ export default function DayView({
         {/* Time grid */}
         <div
           ref={scrollRef}
-          className="overflow-y-auto overflow-x-auto flex-1"
-          style={{ maxHeight: "calc(100vh - 280px)" }}
+          className="overflow-y-auto flex-1"
+        // style={{ maxHeight: "calc(100vh - 280px)" }}
         >
           <div className="flex min-w-[1000px]">
             {/* Time labels */}
@@ -338,18 +338,6 @@ export default function DayView({
                           handleTimeSlotDrop(e, member.id, baseMinutes)
                         }
                       >
-                        {/* Quarter lines */}
-                        <div className="absolute inset-0 flex flex-col pointer-events-none">
-                          {Array.from({ length: 4 }).map((_, i) => (
-                            <div
-                              key={i}
-                              className={`flex-1 ${
-                                i < 3 ? "border-b border-[#F0F0F0]" : ""
-                              }`}
-                            />
-                          ))}
-                        </div>
-
                         {/* Selection preview overlay */}
                         {isSelectingInThisSlot && selectionPreview && (
                           <div className="absolute inset-0 pointer-events-none">
@@ -375,12 +363,12 @@ export default function DayView({
                                 top: `${(
                                   ((selectionPreview.startMin - baseMinutes) /
                                     60) *
-                                    HOUR_HEIGHT +
+                                  HOUR_HEIGHT +
                                   (((selectionPreview.endMin -
                                     selectionPreview.startMin) /
                                     60) *
                                     HOUR_HEIGHT) /
-                                    2 -
+                                  2 -
                                   10
                                 ).toFixed(2)}px`,
                               }}

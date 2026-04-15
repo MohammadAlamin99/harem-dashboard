@@ -1,186 +1,3 @@
-// import {
-//   AppStatus,
-//   CalAppointment,
-// } from "@/@types/salon-owner/CalAppointment.type";
-// import { useRef, useState } from "react";
-// import AppPill from "./AppPill";
-// import PreviewCard from "./PreviewCard";
-
-// export default function WeekView({
-//   date,
-//   selectedMemberIds,
-//   teamMembers,
-//   allAppointments,
-//   isSameDay,
-//   HOURS,
-//   HOUR_HEIGHT,
-//   formatHour,
-//   timeToMinutes,
-//   WEEK_DAYS,
-//   getWeekStart,
-//   statusColor,
-//   statusBadgeColor,
-// }: {
-//   date: Date;
-//   selectedMemberIds: string[];
-//   teamMembers: { id: string; name: string; avatar: string }[];
-//   allAppointments: CalAppointment[];
-//   isSameDay: (a: Date, b: Date) => boolean;
-//   HOURS: number[];
-//   HOUR_HEIGHT: number;
-//   formatHour: (hour: number) => string;
-//   timeToMinutes: (time: string) => number;
-//   WEEK_DAYS: string[];
-//   statusColor: Record<AppStatus, { bg: string; text: string; border: string }>;
-//   statusBadgeColor: Record<AppStatus, string>;
-//   getWeekStart: (date: Date) => Date;
-// }) {
-//   const [preview, setPreview] = useState<{
-//     appt: CalAppointment;
-//     x: number;
-//     y: number;
-//   } | null>(null);
-//   const containerRef = useRef<HTMLDivElement>(null);
-
-//   const weekStart = getWeekStart(date);
-//   const days = Array.from({ length: 7 }, (_, i) => {
-//     const d = new Date(weekStart);
-//     d.setDate(d.getDate() + i);
-//     return d;
-//   });
-
-//   const memberAppts = allAppointments.filter((a) =>
-//     selectedMemberIds.includes(a.employeeId),
-//   );
-
-//   const handlePillClick = (appt: CalAppointment, e: React.MouseEvent) => {
-//     e.stopPropagation();
-//     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-//     const containerRect = containerRef.current?.getBoundingClientRect();
-//     if (!containerRect) return;
-//     setPreview({
-//       appt,
-//       x: rect.left - containerRect.left + rect.width + 8,
-//       y: rect.top - containerRect.top,
-//     });
-//   };
-
-//   return (
-//     <div className="overflow-x-auto">
-//       <div className="min-w-[1000px]">
-//         <div
-//           ref={containerRef}
-//           className="relative flex flex-col overflow-hidden md:m-[30px] m-[15px] border border-[#E0E6EB] rounded-xl"
-//           onClick={() => setPreview(null)}
-//         >
-//           {/* Day header */}
-//           <div className="flex border-b border-[#E0E6EB] bg-white sticky top-0 z-10">
-//             <div className="w-[72px] border-r border-[#E0E6EB]" />
-//             {days.map((d, i) => (
-//               <div
-//                 key={i}
-//                 className="flex-1 min-w-[80px] flex flex-col items-center py-3 border-r border-[#E0E6EB] last:border-r-0"
-//               >
-//                 <p className="text-xs font-manrope font-medium text-[#98A4AE]">
-//                   {String(d.getDate()).padStart(2, "0")} {WEEK_DAYS[d.getDay()]}
-//                 </p>
-//               </div>
-//             ))}
-//           </div>
-
-//           {/* Time grid */}
-//           <div
-//             className="overflow-y-auto overflow-x-auto flex-1"
-//             style={{ maxHeight: "calc(100vh - 280px)" }}
-//           >
-//             <div className="flex">
-//               {/* Time labels */}
-//               <div className="w-[72px] border-r border-[#E0E6EB]">
-//                 {HOURS.map((h) => (
-//                   <div
-//                     key={h}
-//                     className="relative border-b border-[#E0E6EB]"
-//                     style={{ height: HOUR_HEIGHT }}
-//                   >
-//                     <span className="absolute top-0 left-2 text-[10px] font-manrope text-[#98A4AE] whitespace-nowrap">
-//                       {formatHour(h)}
-//                     </span>
-//                   </div>
-//                 ))}
-//               </div>
-
-//               {/* Day columns */}
-//               {days.map((d, di) => {
-//                 const dayAppts = memberAppts.filter((a) =>
-//                   isSameDay(a.date, d),
-//                 );
-//                 return (
-//                   <div
-//                     key={di}
-//                     className="flex-1 min-w-[80px] relative border-r border-[#E0E6EB] last:border-r-0"
-//                   >
-//                     {/* Hour grid lines */}
-//                     {HOURS.map((h) => (
-//                       <div
-//                         key={h}
-//                         className="border-b border-[#E0E6EB]"
-//                         style={{ height: HOUR_HEIGHT }}
-//                       >
-//                         <div className="border-b border-dashed border-[#F0F0F0] h-1/2" />
-//                       </div>
-//                     ))}
-
-//                     {/* Appointments overlay */}
-//                     <div className="absolute inset-0 pointer-events-none">
-//                       {dayAppts.map((appt) => {
-//                         const startMin = timeToMinutes(appt.startTime);
-//                         const endMin = timeToMinutes(appt.endTime);
-//                         const top = (startMin / 60) * HOUR_HEIGHT;
-//                         const height = Math.max(
-//                           ((endMin - startMin) / 60) * HOUR_HEIGHT,
-//                           18,
-//                         );
-//                         return (
-//                           <div
-//                             key={appt.id}
-//                             className="absolute px-0.5 pointer-events-auto"
-//                             style={{ top, height, left: 0, right: 0 }}
-//                           >
-//                             <AppPill
-//                               appt={appt}
-//                               statusColor={statusColor}
-//                               onClick={handlePillClick}
-//                               compact
-//                             />
-//                           </div>
-//                         );
-//                       })}
-//                     </div>
-//                   </div>
-//                 );
-//               })}
-//             </div>
-//           </div>
-
-//           {preview && (
-//             <PreviewCard
-//               appt={preview.appt}
-//               onClose={() => setPreview(null)}
-//               statusBadgeColor={statusBadgeColor}
-//               style={{
-//                 top: Math.min(preview.y, 300),
-//                 left: Math.min(preview.x, 100),
-//               }}
-//             />
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
 import {
   AppStatus,
   CalAppointment,
@@ -260,7 +77,7 @@ export default function WeekView({
   });
 
   const memberAppts = allAppointments.filter((a) =>
-    selectedMemberIds.includes(a.employeeId),
+    selectedMemberIds.includes(a.employeeId)
   );
 
   const minutesToTime = (mins: number): string => {
@@ -389,7 +206,8 @@ export default function WeekView({
     const offsetY = e.clientY - rect.top;
     const droppedMin = baseMinutes + Math.floor((offsetY / HOUR_HEIGHT) * 60);
     const duration =
-      timeToMinutes(draggedAppt.endTime) - timeToMinutes(draggedAppt.startTime);
+      timeToMinutes(draggedAppt.endTime) -
+      timeToMinutes(draggedAppt.startTime);
 
     const updatedAppt: CalAppointment = {
       ...draggedAppt,
@@ -428,7 +246,6 @@ export default function WeekView({
           className="relative flex flex-col overflow-hidden md:m-[30px] m-[15px] border border-[#E0E6EB] rounded-xl"
           onClick={() => setPreview(null)}
           onMouseUp={() => {
-            // Fallback global mouseup in case cursor leaves a cell
             if (isDraggingRef.current && timeSelectionRef.current) {
               const { startMin, endMin, dayIndex } = timeSelectionRef.current;
               isDraggingRef.current = false;
@@ -460,8 +277,7 @@ export default function WeekView({
           {/* Time grid */}
           <div
             ref={scrollRef}
-            className="overflow-y-auto overflow-x-auto flex-1"
-            style={{ maxHeight: "calc(100vh - 280px)" }}
+            className="overflow-x-auto flex-1"
           >
             <div className="flex">
               {/* Time labels */}
@@ -472,7 +288,7 @@ export default function WeekView({
                     className="relative border-b border-[#E0E6EB]"
                     style={{ height: HOUR_HEIGHT }}
                   >
-                    <span className="absolute top-0 left-2 text-[10px] font-manrope text-[#98A4AE] whitespace-nowrap">
+                    <span className="absolute top-1 left-2 text-[10px] font-manrope text-[#98A4AE] whitespace-nowrap">
                       {formatHour(h)}
                     </span>
                   </div>
@@ -481,7 +297,9 @@ export default function WeekView({
 
               {/* Day columns */}
               {days.map((d, di) => {
-                const dayAppts = memberAppts.filter((a) => isSameDay(a.date, d));
+                const dayAppts = memberAppts.filter((a) =>
+                  isSameDay(a.date, d)
+                );
 
                 return (
                   <div
@@ -518,16 +336,6 @@ export default function WeekView({
                             handleTimeSlotDrop(e, di, baseMinutes)
                           }
                         >
-                          {/* Quarter lines */}
-                          <div className="absolute inset-0 flex flex-col pointer-events-none">
-                            {Array.from({ length: 4 }).map((_, i) => (
-                              <div
-                                key={i}
-                                className={`flex-1 ${i < 3 ? "border-b border-[#F0F0F0]" : ""}`}
-                              />
-                            ))}
-                          </div>
-
                           {/* Selection preview overlay */}
                           {isSelectingHere && selectionPreview && (
                             <div className="absolute inset-0 pointer-events-none">
@@ -535,11 +343,15 @@ export default function WeekView({
                                 className="absolute left-0 right-0 bg-[#635BFF] opacity-15 border-2 border-[#635BFF]"
                                 style={{
                                   top: `${(
-                                    ((selectionPreview.startMin - baseMinutes) / 60) *
+                                    ((selectionPreview.startMin -
+                                      baseMinutes) /
+                                      60) *
                                     HOUR_HEIGHT
                                   ).toFixed(2)}px`,
                                   height: `${(
-                                    ((selectionPreview.endMin - selectionPreview.startMin) / 60) *
+                                    ((selectionPreview.endMin -
+                                      selectionPreview.startMin) /
+                                      60) *
                                     HOUR_HEIGHT
                                   ).toFixed(2)}px`,
                                 }}
@@ -548,9 +360,13 @@ export default function WeekView({
                                 className="absolute left-0 right-0 flex items-center justify-center text-[11px] font-semibold font-manrope text-[#635BFF] bg-white bg-opacity-90 rounded px-1"
                                 style={{
                                   top: `${(
-                                    ((selectionPreview.startMin - baseMinutes) / 60) *
+                                    ((selectionPreview.startMin -
+                                      baseMinutes) /
+                                      60) *
                                     HOUR_HEIGHT +
-                                    (((selectionPreview.endMin - selectionPreview.startMin) / 60) *
+                                    (((selectionPreview.endMin -
+                                      selectionPreview.startMin) /
+                                      60) *
                                       HOUR_HEIGHT) /
                                     2 -
                                     10
@@ -580,7 +396,9 @@ export default function WeekView({
                                   style={{ height }}
                                   className="p-0.5"
                                   draggable
-                                  onDragStart={(e) => handlePillDragStart(appt, e)}
+                                  onDragStart={(e) =>
+                                    handlePillDragStart(appt, e)
+                                  }
                                   onDragEnd={handlePillDragEnd}
                                 >
                                   <AppPill

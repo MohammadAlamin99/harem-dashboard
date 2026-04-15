@@ -10,6 +10,7 @@ import MonthView from "./calander-view/MonthView";
 import DayView from "./calander-view/DayView";
 import WeekView from "./calander-view/WeekView";
 import TeamDropdown from "./calander-view/TeamDropdown";
+
 type Period = "Month" | "Week" | "Day";
 
 const statusColor: Record<
@@ -57,7 +58,7 @@ const statusBadgeColor: Record<AppStatus, string> = {
   Canceled: "bg-[#FFE5ED] text-[#FF6692]",
 };
 
-//  Static team members
+// Static team members
 const teamMembers = [
   { id: "1", name: "Maria Rodriguez", avatar: "/images/avator.png" },
   { id: "2", name: "Maria Rodriguez", avatar: "/images/avator.png" },
@@ -67,7 +68,7 @@ const teamMembers = [
   { id: "6", name: "Maria Rodriguez", avatar: "/images/avator.png" },
 ];
 
-//  Static appointments
+// Static appointments
 const makeDate = (y: number, m: number, d: number) => new Date(y, m - 1, d);
 
 const allAppointments: CalAppointment[] = [
@@ -85,36 +86,10 @@ const allAppointments: CalAppointment[] = [
       employeeName: member.name,
       employeeId: member.id,
     },
-    {
-      id: `d-${mi}-2`,
-      clientName: "Client Name",
-      service: "Haircut",
-      date: makeDate(2025, 9, 2),
-      startTime: "00:20",
-      endTime: "00:35",
-      price: "€ 170",
-      duration: "15 min",
-      status: "Completed" as AppStatus,
-      employeeName: member.name,
-      employeeId: member.id,
-    },
-    {
-      id: `d-${mi}-3`,
-      clientName: "Client Name",
-      service: "Haircut",
-      date: makeDate(2025, 9, 2),
-      startTime: "00:45",
-      endTime: "01:00",
-      price: "€ 170",
-      duration: "15 min",
-      status: "Booked" as AppStatus,
-      employeeName: member.name,
-      employeeId: member.id,
-    },
   ]),
 ];
 
-//  Helpers
+// Helpers
 const isSameDay = (a: Date, b: Date) =>
   a.getFullYear() === b.getFullYear() &&
   a.getMonth() === b.getMonth() &&
@@ -125,8 +100,26 @@ const timeToMinutes = (t: string) => {
   return h * 60 + m;
 };
 
-const HOUR_HEIGHT = 200;
+// ─── Dynamic HOUR_HEIGHT ───────────────────────────────────────────────────────
+const MIN_HOUR_HEIGHT = 48; 
+const PX_PER_MINUTE = 1;  
+
+function getHourHeight(appointments: CalAppointment[], date: Date): number {
+  const dayAppts = appointments.filter((a) => isSameDay(a.date, date));
+  if (dayAppts.length === 0) return MIN_HOUR_HEIGHT;
+
+  const maxDuration = Math.max(
+    ...dayAppts.map(
+      (a) => timeToMinutes(a.endTime) - timeToMinutes(a.startTime)
+    )
+  );
+
+  return Math.max(MIN_HOUR_HEIGHT, maxDuration * PX_PER_MINUTE);
+}
+// ──────────────────────────────────────────────────────────────────────────────
+
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
+
 function formatHour(h: number) {
   if (h === 0) return "12:00 AM";
   if (h < 12) return `${h}:00 AM`;
@@ -161,13 +154,16 @@ export default function CalendarView() {
   const [period, setPeriod] = useState<Period>("Day");
   const [currentDate, setCurrentDate] = useState(new Date(2025, 8, 2));
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>(
-    teamMembers.map((m) => m.id),
+    teamMembers.map((m) => m.id)
   );
   const [appointments, setAppointments] = useState<CalAppointment[]>(
-    allAppointments.slice(0, 3),
+    allAppointments.slice(0, 1)
   );
 
   const isMonthOrWeek = period === "Month" || period === "Week";
+
+  // Compute dynamic height based on current date's appointments
+  const dynamicHourHeight = getHourHeight(appointments, currentDate);
 
   const handleAppointmentCreate = (appt: CalAppointment) => {
     setAppointments((prev) => [...prev, appt]);
@@ -199,12 +195,17 @@ export default function CalendarView() {
       const ws = getWeekStart(currentDate);
       const we = new Date(ws);
       we.setDate(we.getDate() + 6);
-      return `${ws.toLocaleDateString("en-US", { month: "long", day: "2-digit" })} – ${we.toLocaleDateString("en-US", { month: "long", day: "2-digit" })}`;
+      return `${ws.toLocaleDateString("en-US", {
+        month: "long",
+        day: "2-digit",
+      })} – ${we.toLocaleDateString("en-US", {
+        month: "long",
+        day: "2-digit",
+      })}`;
     }
     return MONTH_NAMES[currentDate.getMonth()];
   };
 
-  // Switch date when changing period
   const handlePeriodChange = (p: Period) => {
     setPeriod(p);
     if (p === "Month") setCurrentDate(new Date(2025, 9, 1));
@@ -243,7 +244,7 @@ export default function CalendarView() {
           </button>
         </div>
 
-        {/* date grid */}
+        {/* Period switcher */}
         <div className="flex items-center flex-wrap gap-4">
           <div className="flex items-center border border-[#E0E6EB] rounded-[8px] overflow-hidden bg-[#F7F9FC]">
             {(["Month", "Week", "Day"] as const).map((p, i) => (
@@ -251,13 +252,12 @@ export default function CalendarView() {
                 key={p}
                 onClick={() => handlePeriodChange(p)}
                 className={`relative px-6 py-[10px] text-[16px] font-manrope font-medium transition-all cursor-pointer
-                  ${
-                    period === p
-                      ? "bg-[#DDDBFF] text-[#0A2540]"
-                      : "text-[#526B7A] bg-[white] hover:text-[#29343D]"
+                  ${period === p
+                    ? "bg-[#DDDBFF] text-[#0A2540]"
+                    : "text-[#526B7A] bg-[white] hover:text-[#29343D]"
                   }
                   ${i !== 2 ? "border-r border-[#E0E6EB]" : ""}
-                  `}
+                `}
               >
                 {p}
               </button>
@@ -279,7 +279,7 @@ export default function CalendarView() {
           allAppointments={appointments}
           isSameDay={isSameDay}
           HOURS={HOURS}
-          HOUR_HEIGHT={HOUR_HEIGHT}
+          HOUR_HEIGHT={dynamicHourHeight}
           formatHour={formatHour}
           timeToMinutes={timeToMinutes}
           statusColor={statusColor}
@@ -297,7 +297,7 @@ export default function CalendarView() {
           allAppointments={appointments}
           isSameDay={isSameDay}
           HOURS={HOURS}
-          HOUR_HEIGHT={HOUR_HEIGHT}
+          HOUR_HEIGHT={dynamicHourHeight}
           formatHour={formatHour}
           timeToMinutes={timeToMinutes}
           statusColor={statusColor}
@@ -308,6 +308,7 @@ export default function CalendarView() {
           onAppointmentUpdate={handleAppointmentUpdate}
         />
       )}
+
       {period === "Month" && (
         <MonthView
           date={currentDate}
