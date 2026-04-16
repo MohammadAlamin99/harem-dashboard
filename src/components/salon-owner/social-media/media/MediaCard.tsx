@@ -37,7 +37,7 @@ const Checkbox = ({ checked, onChange }: { checked: boolean; onChange: () => voi
         role="checkbox"
         aria-checked={checked}
         onClick={(e) => { e.stopPropagation(); onChange(); }}
-        className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] transition-all duration-150 cursor-pointer flex-shrink-0
+        className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] transition-all duration-150 cursor-pointer
             ${checked
                 ? "bg-[#635BFF] border-0"
                 : "bg-white border-[1.5px] border-gray-300"
