@@ -100,9 +100,9 @@ const timeToMinutes = (t: string) => {
   return h * 60 + m;
 };
 
-// ─── Dynamic HOUR_HEIGHT ───────────────────────────────────────────────────────
-const MIN_HOUR_HEIGHT = 48; 
-const PX_PER_MINUTE = 1;  
+//  Dynamic HOUR_HEIGHT 
+const MIN_HOUR_HEIGHT = 48;
+const PX_PER_MINUTE = 1;
 
 function getHourHeight(appointments: CalAppointment[], date: Date): number {
   const dayAppts = appointments.filter((a) => isSameDay(a.date, date));
@@ -116,7 +116,6 @@ function getHourHeight(appointments: CalAppointment[], date: Date): number {
 
   return Math.max(MIN_HOUR_HEIGHT, maxDuration * PX_PER_MINUTE);
 }
-// ──────────────────────────────────────────────────────────────────────────────
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
 
