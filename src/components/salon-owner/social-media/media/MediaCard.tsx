@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
+// ─── Types ────────────────────────────────────────────────────────────────────
 interface MediaItem {
     id: string;
     fileName: string;
@@ -30,10 +31,13 @@ interface MediaCardProps {
     onDelete: (id: string) => void;
 }
 
+// ─── Checkbox — uses <div> to avoid nested <button> hydration error ───────────
 const Checkbox = ({ checked, onChange }: { checked: boolean; onChange: () => void }) => (
-    <button
-        onClick={onChange}
-        className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] transition-all duration-150
+    <div
+        role="checkbox"
+        aria-checked={checked}
+        onClick={(e) => { e.stopPropagation(); onChange(); }}
+        className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] transition-all duration-150 cursor-pointer flex-shrink-0
             ${checked
                 ? "bg-[#635BFF] border-0"
                 : "bg-white border-[1.5px] border-gray-300"
@@ -50,9 +54,10 @@ const Checkbox = ({ checked, onChange }: { checked: boolean; onChange: () => voi
                 />
             </svg>
         )}
-    </button>
+    </div>
 );
 
+// ─── Dropdown ─────────────────────────────────────────────────────────────────
 interface DropdownProps {
     onClose: () => void;
     onDelete: () => void;
@@ -94,12 +99,13 @@ const Dropdown = ({ onClose, onDelete }: DropdownProps) => {
     );
 };
 
+// ─── MediaCard ────────────────────────────────────────────────────────────────
 export const MediaCard = ({ item, selected, onSelect, onDelete }: MediaCardProps) => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <div
-            className={`bg-white overflow-hidden transition-all duration-200 rounded-[14px] border border-[#E0E6EB] p-[15px] md:p-[30px]`}>
+        <div className="bg-white overflow-hidden transition-all duration-200 rounded-[14px] border border-[#E0E6EB] p-[15px] md:p-[30px]">
+
             {/* ── Header ── */}
             <div className="flex items-center justify-between pb-6">
                 <div className="flex items-center gap-[10px]">
@@ -138,7 +144,7 @@ export const MediaCard = ({ item, selected, onSelect, onDelete }: MediaCardProps
                 {item.type === "video" && (
                     <div className="absolute inset-0 flex flex-col justify-between">
                         {/* Center play button */}
-                        <div className="flex-1 flex items-center justify-center"></div>
+                        <div className="flex-1 flex items-center justify-center" />
 
                         {/* Controls bar */}
                         <div className="backdrop-blur-md px-3 pt-[7px] pb-[9px]">
@@ -163,12 +169,9 @@ export const MediaCard = ({ item, selected, onSelect, onDelete }: MediaCardProps
             {/* ── Footer ── */}
             <div className="flex items-center justify-between flex-wrap gap-y-1">
                 <div className="flex items-center gap-[6px]">
-                    {/* Uploader badge */}
                     <span className="font-manrope font-medium text-[11px] px-[9px] py-[3px] rounded-lg border border-[#635BFF]/30 text-[#635BFF] bg-[#635BFF]/5">
                         Uploaded by: {item.uploadedBy}
                     </span>
-
-                    {/* Status badge */}
                     {item.published ? (
                         <span className="font-manrope font-medium text-[11px] px-[9px] py-[3px] rounded-lg text-[#36C76C] bg-[#EBFAF0]">
                             Published
@@ -179,8 +182,6 @@ export const MediaCard = ({ item, selected, onSelect, onDelete }: MediaCardProps
                         </span>
                     )}
                 </div>
-
-                {/* Upload date */}
                 <span className="font-manrope text-[11px] text-gray-400 whitespace-nowrap">
                     Uploaded at {item.uploadedAt}
                 </span>
@@ -189,7 +190,7 @@ export const MediaCard = ({ item, selected, onSelect, onDelete }: MediaCardProps
     );
 };
 
-
+// ─── Demo Wrapper ─────────────────────────────────────────────────────────────
 const DEMO_ITEMS: MediaItem[] = [
     {
         id: "1",
@@ -236,14 +237,17 @@ export default function MediaCardDemo() {
 
                 {/* ── Top action bar ── */}
                 <div className="flex items-center justify-between mb-5">
-                    {/* Left: select / unselect all */}
-                    <button
+                    {/* Left: select / unselect all — <div> wrapper avoids nested <button> error */}
+                    <div
+                        role="button"
+                        tabIndex={0}
                         onClick={toggleAll}
-                        className="flex items-center gap-2 font-manrope font-semibold text-[13.5px] text-[#635BFF] hover:opacity-75 transition-opacity"
+                        onKeyDown={(e) => e.key === "Enter" && toggleAll()}
+                        className="flex items-center gap-2 font-manrope font-semibold text-[13.5px] text-[#635BFF] hover:opacity-75 transition-opacity cursor-pointer"
                     >
                         <Checkbox checked={allSelected} onChange={toggleAll} />
                         {allSelected ? "Unselect All Salons" : "Select All Salons"}
-                    </button>
+                    </div>
 
                     {/* Right: action buttons */}
                     {selected.length > 0 && (
