@@ -44,8 +44,8 @@ const Checkbox = ({
     checked: boolean;
     onChange: () => void;
 }) => (
-    <button
-        onClick={onChange}
+    <div
+        onClick={(e) => { e.stopPropagation(); onChange(); }}
         className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] transition-all duration-150
       ${checked
                 ? "bg-[#635BFF] border-0"
@@ -63,7 +63,7 @@ const Checkbox = ({
                 />
             </svg>
         )}
-    </button>
+    </div>
 );
 
 export default function MediaManager() {
@@ -181,9 +181,9 @@ export default function MediaManager() {
                     <div className="flex items-center justify-between mb-5">
 
                         {/* Left: select-all toggle */}
-                        <button
+                        <div
                             onClick={toggleSelectAll}
-                            className="flex items-center gap-2 font-manrope font-semibold text-[13.5px] text-[#635BFF] hover:opacity-75 transition-opacity"
+                            className="flex items-center gap-2 font-manrope font-semibold text-[13.5px] text-[#635BFF] hover:opacity-75 transition-opacity cursor-pointer"
                         >
                             <Checkbox checked={allSelected} onChange={toggleSelectAll} />
                             {allSelected ? "Unselect All Salons" : "Select All Salons"}
@@ -192,7 +192,7 @@ export default function MediaManager() {
                                     {selected.length} selected
                                 </span>
                             )}
-                        </button>
+                        </div>
 
                         {/* Right: action buttons — visible only when items are selected */}
                         {selected.length > 0 && (

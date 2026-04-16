@@ -10,7 +10,6 @@ import {
     Tooltip,
 } from "recharts";
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
 const DATA = [
     { day: "Sunday", active: 4 },
     { day: "Monday", active: 4 },
@@ -34,7 +33,7 @@ interface ChartBarProps {
     };
 }
 
-// ─── Custom Background Bar Shape ─────────────────────────────────────────────
+//  Custom Background Bar Shape 
 const BackgroundBar = (props: ChartBarProps) => {
     const { x, width, background } = props;
     if (!background) return null;
@@ -53,7 +52,7 @@ const BackgroundBar = (props: ChartBarProps) => {
     );
 };
 
-// ─── Custom Active Bar Shape ──────────────────────────────────────────────────
+// Custom Active Bar Shape 
 const ActiveBar = (props: ChartBarProps) => {
     const { x, y, width, height } = props;
     if (!height || height <= 0) return null;
@@ -71,7 +70,7 @@ const ActiveBar = (props: ChartBarProps) => {
     );
 };
 
-// ─── Custom Tooltip ───────────────────────────────────────────────────────────
+// Custom Tooltip 
 interface TooltipPayload {
     payload: {
         active: number;
@@ -100,7 +99,6 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
     );
 };
 
-// ─── Main Component ───────────────────────────────────────────────────────────
 export default function FollowersActiveChart() {
     return (
         <div className="bg-white rounded-xl mt-6 px-6 pt-6 pb-4 font-manrope">
