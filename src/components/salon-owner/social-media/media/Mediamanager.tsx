@@ -215,19 +215,6 @@ export default function MediaManager() {
                     {/* Empty state */}
                     {filtered.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-16 text-gray-400">
-                            <svg
-                                width="48"
-                                height="48"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                className="mb-3 opacity-40"
-                            >
-                                <rect x="3" y="3" width="18" height="18" rx="2" />
-                                <circle cx="8.5" cy="8.5" r="1.5" />
-                                <polyline points="21 15 16 10 5 21" />
-                            </svg>
                             <span className="text-sm font-manrope">No media found</span>
                         </div>
                     ) : (

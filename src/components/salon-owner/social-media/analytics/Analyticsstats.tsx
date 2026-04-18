@@ -100,7 +100,7 @@ const StatCardItem = ({ card }: { card: StatCard }) => (
 export default function AnalyticsStats() {
     return (
         <div className="bg-[#F4F6FA] font-manrope mt-6">
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {STATS.map((card, idx) => (
                     <StatCardItem key={idx} card={card} />
                 ))}

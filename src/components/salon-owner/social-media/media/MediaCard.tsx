@@ -12,8 +12,6 @@ import {
     MoreHorizontal,
 } from "lucide-react";
 import Image from "next/image";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
 interface MediaItem {
     id: string;
     fileName: string;
@@ -31,7 +29,7 @@ interface MediaCardProps {
     onDelete: (id: string) => void;
 }
 
-// ─── Checkbox — uses <div> to avoid nested <button> hydration error ───────────
+//  Checkbox 
 const Checkbox = ({ checked, onChange }: { checked: boolean; onChange: () => void }) => (
     <div
         role="checkbox"
@@ -57,7 +55,7 @@ const Checkbox = ({ checked, onChange }: { checked: boolean; onChange: () => voi
     </div>
 );
 
-// ─── Dropdown ─────────────────────────────────────────────────────────────────
+// ─── Dropdown 
 interface DropdownProps {
     onClose: () => void;
     onDelete: () => void;
@@ -99,7 +97,7 @@ const Dropdown = ({ onClose, onDelete }: DropdownProps) => {
     );
 };
 
-// ─── MediaCard ────────────────────────────────────────────────────────────────
+// ─── MediaCard 
 export const MediaCard = ({ item, selected, onSelect, onDelete }: MediaCardProps) => {
     const [menuOpen, setMenuOpen] = useState(false);
 

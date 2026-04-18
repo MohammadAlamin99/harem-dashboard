@@ -84,7 +84,7 @@ export default function PaginationClient<T>({
         </div>
 
         {/* Page info */}
-        <span className="text-sm text-[#526B7A] w-full md:w-auto text-center md:text-left order-3 md:order-none">
+        <span className="text-sm text-[#526B7A] w-full md:w-auto text-center md:text-left order-3 md:order-0">
           {start + 1}-{Math.min(start + itemsPerPage, filtered.length)} of{" "}
           {filtered.length}
         </span>
