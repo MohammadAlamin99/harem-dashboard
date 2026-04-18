@@ -11,7 +11,6 @@ import {
 } from "recharts";
 import { ChevronDown } from "lucide-react";
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
 const AGE_DATA = [
     { age: "18-24", Man: 68, Woman: 58, Unspecified: 42 },
     { age: "25-34", Man: 68, Woman: 58, Unspecified: 42 },
@@ -61,7 +60,7 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
     );
 };
 
-// ─── Legend 
+// Legend 
 const Legend = () => (
     <div className="flex items-center gap-5 mt-4 px-1">
         {Object.entries(COLORS).map(([label, color]) => (
@@ -78,7 +77,7 @@ const Legend = () => (
     </div>
 );
 
-// ─── City Progress Row 
+// City Progress Row 
 const CityRow = ({ city, pct }: { city: string; pct: number }) => (
     <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
@@ -94,7 +93,7 @@ const CityRow = ({ city, pct }: { city: string; pct: number }) => (
     </div>
 );
 
-// ─── Main Component 
+// Main Component 
 export default function AudienceAnalytics() {
     return (
         <div className="bg-[#F4F6FA] font-manrope mt-6">
@@ -143,7 +142,7 @@ export default function AudienceAnalytics() {
                     <Legend />
                 </div>
 
-                {/* ── Right: Audience by City ── */}
+                {/* Right: Audience by City */}
                 <div className="bg-white rounded-xl px-6 pt-5 pb-5">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-6">
