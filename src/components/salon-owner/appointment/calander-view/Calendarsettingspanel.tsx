@@ -22,29 +22,6 @@ function formatHour(h: number) {
     return `${h}:00`;
 }
 
-const valueBoxStyle: React.CSSProperties = {
-    flex: 1,
-    height: 36,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "1px solid #E0E6EB",
-    borderRadius: 8,
-    fontSize: 14,
-    fontWeight: 700,
-    color: "#29343D",
-    background: "white",
-};
-
-const sectionLabelStyle: React.CSSProperties = {
-    fontSize: 10,
-    fontWeight: 700,
-    color: "#98A4AE",
-    textTransform: "uppercase",
-    letterSpacing: "0.08em",
-    marginBottom: 8,
-};
-
 function StepButton({
     children,
     onClick,
@@ -58,29 +35,7 @@ function StepButton({
         <button
             onClick={onClick}
             disabled={disabled}
-            style={{
-                width: 36,
-                height: 36,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid #E0E6EB",
-                borderRadius: 8,
-                background: "white",
-                color: "#29343D",
-                fontSize: 18,
-                fontWeight: 700,
-                cursor: disabled ? "not-allowed" : "pointer",
-                opacity: disabled ? 0.4 : 1,
-                flexShrink: 0,
-            }}
-            onMouseEnter={(e) => {
-                if (!disabled)
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "#F4F6FA";
-            }}
-            onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.backgroundColor = "white";
-            }}
+            className="w-9 h-9 flex items-center justify-center border border-[#E0E6EB] rounded-[8px] bg-white text-[#29343D] text-lg font-bold shrink-0 hover:bg-[#F4F6FA] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
         >
             {children}
         </button>
@@ -100,30 +55,26 @@ export default function CalendarSettingsPanel({
     const [open, setOpen] = useState(false);
     const [timeRangeOpen, setTimeRangeOpen] = useState(false);
     const [slotOpen, setSlotOpen] = useState(false);
-    const [panelStyle, setPanelStyle] = useState<{ top: number; right: number }>({
-        top: 0,
-        right: 0,
-    });
+    const [panelPos, setPanelPos] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
 
-    // Recalculate panel position whenever it opens, page scrolls, or window resizes
+    // Recalculate position on open, scroll, resize
     useEffect(() => {
         if (!open || !buttonRef.current) return;
 
         const updatePosition = () => {
             if (!buttonRef.current) return;
             const rect = buttonRef.current.getBoundingClientRect();
-            setPanelStyle({
+            setPanelPos({
                 top: rect.bottom + 8,
                 right: window.innerWidth - rect.right,
             });
         };
 
-        updatePosition(); // set immediately on open
-
-        window.addEventListener("scroll", updatePosition, true); // true = capture all scroll events
+        updatePosition();
+        window.addEventListener("scroll", updatePosition, true);
         window.addEventListener("resize", updatePosition);
         return () => {
             window.removeEventListener("scroll", updatePosition, true);
@@ -150,7 +101,7 @@ export default function CalendarSettingsPanel({
 
     const visibleHours = endHour - startHour;
 
-    // Slider: value 1–10 maps to px 40–120
+    // Slider: 1–10 maps to px 40–120
     const sliderValue = Math.round(((slotHeight - 40) / 80) * 9) + 1;
     const handleSliderChange = (val: number) => {
         const px = Math.round(40 + ((val - 1) / 9) * 80);
@@ -158,157 +109,118 @@ export default function CalendarSettingsPanel({
     };
 
     const previewRowHeight = Math.max(24, (slotHeight / 60) * slotDuration);
+    const sliderPercent = ((sliderValue - 1) / 9) * 100;
 
     const panel = (
         <div
             ref={panelRef}
+            className="font-manrope fixed z-[9999] w-[340px] bg-white border border-[#E0E6EB] rounded-[12px] shadow-xl shadow-black/10 overflow-y-auto"
             style={{
-                position: "fixed",
-                top: panelStyle.top,
-                right: panelStyle.right,
-                zIndex: 9999,
-                width: 340,
-                backgroundColor: "white",
-                border: "1px solid #E0E6EB",
-                borderRadius: 12,
-                boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+                top: panelPos.top,
+                right: panelPos.right,
                 maxHeight: "calc(100vh - 80px)",
-                overflowY: "auto",
-                fontFamily: "var(--font-manrope, sans-serif)",
             }}
         >
             {/* Sticky header */}
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "16px 20px",
-                    borderBottom: "1px solid #E0E6EB",
-                    position: "sticky",
-                    top: 0,
-                    backgroundColor: "white",
-                    zIndex: 1,
-                }}
-            >
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: "#29343D", margin: 0 }}>
+            <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-4 border-b border-[#E0E6EB] bg-white">
+                <h3 className="text-[15px] font-bold text-[#29343D] m-0">
                     Calendar settings
                 </h3>
                 <button
                     onClick={() => setOpen(false)}
-                    style={{
-                        padding: 4,
-                        borderRadius: "50%",
-                        border: "none",
-                        background: "transparent",
-                        cursor: "pointer",
-                        color: "#98A4AE",
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                    onMouseEnter={(e) =>
-                        ((e.currentTarget as HTMLElement).style.backgroundColor = "#F4F6FA")
-                    }
-                    onMouseLeave={(e) =>
-                        ((e.currentTarget as HTMLElement).style.backgroundColor = "transparent")
-                    }
+                    className="p-1 rounded-full border-none bg-transparent cursor-pointer text-[#98A4AE] hover:bg-[#F4F6FA] transition-colors flex items-center"
                 >
                     <X size={16} />
                 </button>
             </div>
 
-            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+            <div className="p-5 flex flex-col gap-3">
 
-                {/* ── Section 1: Visible time range ─────────────────────────────── */}
-                <div style={{ border: "1px solid #E0E6EB", borderRadius: 10, overflow: "hidden" }}>
+                {/* ── Section 1: Visible time range ──────────────────────────── */}
+                <div className="border border-[#E0E6EB] rounded-[10px] overflow-hidden">
                     <button
                         onClick={() => setTimeRangeOpen((p) => !p)}
-                        style={{
-                            width: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "12px 16px",
-                            background: "#F8FAFC",
-                            border: "none",
-                            cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) =>
-                            ((e.currentTarget as HTMLElement).style.backgroundColor = "#F0F2F5")
-                        }
-                        onMouseLeave={(e) =>
-                            ((e.currentTarget as HTMLElement).style.backgroundColor = "#F8FAFC")
-                        }
+                        className="w-full flex items-center justify-between px-4 py-3 bg-[#F8FAFC] border-none cursor-pointer hover:bg-[#F0F2F5] transition-colors"
                     >
-                        <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 600, color: "#29343D" }}>
+                        <span className="flex items-center gap-2 text-[13px] font-semibold text-[#29343D]">
                             <Clock size={14} color="#635BFF" />
                             Visible time range
                         </span>
-                        <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#526B7A", background: "white", border: "1px solid #E0E6EB", padding: "2px 8px", borderRadius: 6 }}>
+                        <span className="flex items-center gap-2">
+                            <span className="text-[12px] font-bold text-[#526B7A] bg-white border border-[#E0E6EB] px-2 py-0.5 rounded-[6px]">
                                 {formatHour(startHour)} – {formatHour(endHour)}
                             </span>
-                            {timeRangeOpen ? <ChevronUp size={14} color="#98A4AE" /> : <ChevronDown size={14} color="#98A4AE" />}
+                            {timeRangeOpen
+                                ? <ChevronUp size={14} color="#98A4AE" />
+                                : <ChevronDown size={14} color="#98A4AE" />}
                         </span>
                     </button>
 
                     {timeRangeOpen && (
-                        <div style={{ padding: "12px 16px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+                        <div className="px-4 pb-4 pt-3 flex flex-col gap-4">
 
                             {/* Start time */}
                             <div>
-                                <p style={sectionLabelStyle}>Start time</p>
-                                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                <p className="text-[10px] font-bold text-[#98A4AE] uppercase tracking-wider mb-2">
+                                    Start time
+                                </p>
+                                <div className="flex items-center gap-2">
                                     <StepButton onClick={() => onStartHourChange(Math.max(0, startHour - 1))}>–</StepButton>
-                                    <div style={valueBoxStyle}>{formatHour(startHour)}</div>
+                                    <div className="flex-1 h-9 flex items-center justify-center border border-[#E0E6EB] rounded-[8px] text-[14px] font-bold text-[#29343D] bg-white">
+                                        {formatHour(startHour)}
+                                    </div>
                                     <StepButton onClick={() => onStartHourChange(Math.min(endHour - 1, startHour + 1))}>+</StepButton>
                                 </div>
                             </div>
 
                             {/* End time */}
                             <div>
-                                <p style={sectionLabelStyle}>End time</p>
-                                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                <p className="text-[10px] font-bold text-[#98A4AE] uppercase tracking-wider mb-2">
+                                    End time
+                                </p>
+                                <div className="flex items-center gap-2">
                                     <StepButton onClick={() => onEndHourChange(Math.max(startHour + 1, endHour - 1))}>–</StepButton>
-                                    <div style={valueBoxStyle}>{formatHour(endHour)}</div>
+                                    <div className="flex-1 h-9 flex items-center justify-center border border-[#E0E6EB] rounded-[8px] text-[14px] font-bold text-[#29343D] bg-white">
+                                        {formatHour(endHour)}
+                                    </div>
                                     <StepButton onClick={() => onEndHourChange(Math.min(24, endHour + 1))}>+</StepButton>
                                 </div>
                             </div>
 
                             {/* Summary */}
-                            <div style={{ display: "flex", alignItems: "center", gap: 8, background: "#F8FAFC", border: "1px solid #E0E6EB", borderRadius: 8, padding: "8px 12px" }}>
+                            <div className="flex items-center gap-2 bg-[#F8FAFC] border border-[#E0E6EB] rounded-[8px] px-3 py-2">
                                 <Clock size={13} color="#98A4AE" />
-                                <span style={{ fontSize: 12, color: "#526B7A", fontWeight: 600 }}>
+                                <span className="text-[12px] text-[#526B7A] font-semibold">
                                     {visibleHours}h visible · {formatHour(startHour)} to {formatHour(endHour)}
                                 </span>
                             </div>
 
                             {/* Mini preview */}
                             <div>
-                                <p style={sectionLabelStyle}>Preview</p>
-                                <div style={{ border: "1px solid #E0E6EB", borderRadius: 8, overflow: "hidden" }}>
-                                    <div style={{ background: "#F3F3FF", padding: "6px 12px", fontSize: 11, fontWeight: 700, color: "#29343D", borderBottom: "1px solid #E0E6EB" }}>
+                                <p className="text-[10px] font-bold text-[#98A4AE] uppercase tracking-wider mb-2">
+                                    Preview
+                                </p>
+                                <div className="border border-[#E0E6EB] rounded-[8px] overflow-hidden">
+                                    <div className="bg-[#F3F3FF] px-3 py-1.5 text-[11px] font-bold text-[#29343D] border-b border-[#E0E6EB]">
                                         Mon
                                     </div>
-                                    <div style={{ position: "relative", height: 80, background: "white" }}>
+                                    <div className="relative h-20 bg-white">
                                         {Array.from({ length: Math.min(visibleHours, 4) }).map((_, i) => (
                                             <div
                                                 key={i}
+                                                className="absolute left-0 right-0 flex"
                                                 style={{
-                                                    position: "absolute",
-                                                    left: 0, right: 0,
                                                     top: `${(i / Math.min(visibleHours, 4)) * 80}px`,
                                                     height: `${80 / Math.min(visibleHours, 4)}px`,
-                                                    display: "flex",
                                                 }}
                                             >
-                                                <div style={{ width: 40, fontSize: 9, color: "#98A4AE", fontWeight: 600, borderRight: "1px solid #E0E6EB", borderBottom: "1px solid #E0E6EB", paddingLeft: 4, paddingTop: 2, flexShrink: 0 }}>
+                                                <div className="w-10 text-[9px] text-[#98A4AE] font-semibold border-r border-b border-[#E0E6EB] pt-0.5 pl-1 shrink-0">
                                                     {formatHour(startHour + i)}
                                                 </div>
-                                                <div style={{ flex: 1, borderBottom: "1px solid #E0E6EB", position: "relative" }}>
+                                                <div className="flex-1 border-b border-[#E0E6EB] relative">
                                                     {i === 1 && (
-                                                        <div style={{ position: "absolute", inset: "2px 4px", background: "#EEF2FF", borderLeft: "2px solid #635BFF", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", paddingLeft: 6 }}>
-                                                            <span style={{ fontSize: 9, fontWeight: 700, color: "#635BFF", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                                        <div className="absolute inset-1 bg-[#EEF2FF] border-l-2 border-[#635BFF] rounded-r-[3px] flex items-center px-1.5">
+                                                            <span className="text-[9px] font-bold text-[#635BFF] truncate">
                                                                 Team meeting
                                                             </span>
                                                         </div>
@@ -324,46 +236,35 @@ export default function CalendarSettingsPanel({
                     )}
                 </div>
 
-                {/* ── Section 2: Slot duration & height ─────────────────────────── */}
-                <div style={{ border: "1px solid #E0E6EB", borderRadius: 10, overflow: "hidden" }}>
+                {/* ── Section 2: Slot duration & height ──────────────────────── */}
+                <div className="border border-[#E0E6EB] rounded-[10px] overflow-hidden">
                     <button
                         onClick={() => setSlotOpen((p) => !p)}
-                        style={{
-                            width: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "12px 16px",
-                            background: "#F8FAFC",
-                            border: "none",
-                            cursor: "pointer",
-                        }}
-                        onMouseEnter={(e) =>
-                            ((e.currentTarget as HTMLElement).style.backgroundColor = "#F0F2F5")
-                        }
-                        onMouseLeave={(e) =>
-                            ((e.currentTarget as HTMLElement).style.backgroundColor = "#F8FAFC")
-                        }
+                        className="w-full flex items-center justify-between px-4 py-3 bg-[#F8FAFC] border-none cursor-pointer hover:bg-[#F0F2F5] transition-colors"
                     >
-                        <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 600, color: "#29343D" }}>
+                        <span className="flex items-center gap-2 text-[13px] font-semibold text-[#29343D]">
                             <CalendarDays size={14} color="#635BFF" />
                             Slot duration & height
                         </span>
-                        <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#526B7A", background: "white", border: "1px solid #E0E6EB", padding: "2px 8px", borderRadius: 6 }}>
+                        <span className="flex items-center gap-2">
+                            <span className="text-[12px] font-bold text-[#526B7A] bg-white border border-[#E0E6EB] px-2 py-0.5 rounded-[6px]">
                                 {slotDuration} min
                             </span>
-                            {slotOpen ? <ChevronUp size={14} color="#98A4AE" /> : <ChevronDown size={14} color="#98A4AE" />}
+                            {slotOpen
+                                ? <ChevronUp size={14} color="#98A4AE" />
+                                : <ChevronDown size={14} color="#98A4AE" />}
                         </span>
                     </button>
 
                     {slotOpen && (
-                        <div style={{ padding: "12px 16px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+                        <div className="px-4 pb-4 pt-3 flex flex-col gap-4">
 
                             {/* Duration stepper */}
                             <div>
-                                <p style={sectionLabelStyle}>Slot duration</p>
-                                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                <p className="text-[10px] font-bold text-[#98A4AE] uppercase tracking-wider mb-2">
+                                    Slot duration
+                                </p>
+                                <div className="flex items-center gap-2">
                                     <StepButton
                                         onClick={() => {
                                             const idx = SLOT_DURATION_OPTIONS.indexOf(slotDuration);
@@ -371,7 +272,9 @@ export default function CalendarSettingsPanel({
                                         }}
                                         disabled={SLOT_DURATION_OPTIONS.indexOf(slotDuration) === 0}
                                     >–</StepButton>
-                                    <div style={valueBoxStyle}>{slotDuration} min</div>
+                                    <div className="flex-1 h-9 flex items-center justify-center border border-[#E0E6EB] rounded-[8px] text-[14px] font-bold text-[#29343D] bg-white">
+                                        {slotDuration} min
+                                    </div>
                                     <StepButton
                                         onClick={() => {
                                             const idx = SLOT_DURATION_OPTIONS.indexOf(slotDuration);
@@ -385,24 +288,24 @@ export default function CalendarSettingsPanel({
 
                             {/* Height slider */}
                             <div>
-                                <p style={sectionLabelStyle}>Slot height in calendar view</p>
-                                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                                <p className="text-[10px] font-bold text-[#98A4AE] uppercase tracking-wider mb-2">
+                                    Slot height in calendar view
+                                </p>
+                                <div className="flex items-center gap-3">
                                     <input
                                         type="range"
-                                        min={1} max={10} step={1}
+                                        min={1}
+                                        max={10}
+                                        step={1}
                                         value={sliderValue}
                                         onChange={(e) => handleSliderChange(Number(e.target.value))}
+                                        className="flex-1 h-1.5 rounded-full appearance-none cursor-pointer"
                                         style={{
-                                            flex: 1,
-                                            height: 6,
-                                            borderRadius: 999,
-                                            appearance: "none" as const,
-                                            cursor: "pointer",
                                             accentColor: "#635BFF",
-                                            background: `linear-gradient(to right, #635BFF 0%, #635BFF ${((sliderValue - 1) / 9) * 100}%, #E0E6EB ${((sliderValue - 1) / 9) * 100}%, #E0E6EB 100%)`,
+                                            background: `linear-gradient(to right, #635BFF 0%, #635BFF ${sliderPercent}%, #E0E6EB ${sliderPercent}%, #E0E6EB 100%)`,
                                         }}
                                     />
-                                    <span style={{ fontSize: 13, fontWeight: 700, color: "#29343D", minWidth: 16, textAlign: "right" }}>
+                                    <span className="text-[13px] font-bold text-[#29343D] min-w-[16px] text-right">
                                         {sliderValue}
                                     </span>
                                 </div>
@@ -410,8 +313,10 @@ export default function CalendarSettingsPanel({
 
                             {/* Preview */}
                             <div>
-                                <p style={sectionLabelStyle}>Preview</p>
-                                <div style={{ border: "1px solid #E0E6EB", borderRadius: 8, overflow: "hidden" }}>
+                                <p className="text-[10px] font-bold text-[#98A4AE] uppercase tracking-wider mb-2">
+                                    Preview
+                                </p>
+                                <div className="border border-[#E0E6EB] rounded-[8px] overflow-hidden">
                                     {[0, 1].map((rowIdx) => {
                                         const rowMinutes = rowIdx * slotDuration;
                                         const rowH = Math.floor(rowMinutes / 60);
@@ -420,19 +325,16 @@ export default function CalendarSettingsPanel({
                                         return (
                                             <div
                                                 key={rowIdx}
-                                                style={{
-                                                    display: "flex",
-                                                    height: previewRowHeight,
-                                                    borderBottom: rowIdx === 0 ? "1px solid #E0E6EB" : "none",
-                                                }}
+                                                className={`flex ${rowIdx === 0 ? "border-b border-[#E0E6EB]" : ""}`}
+                                                style={{ height: previewRowHeight }}
                                             >
-                                                <div style={{ width: 40, fontSize: 9, color: "#98A4AE", fontWeight: 600, borderRight: "1px solid #E0E6EB", display: "flex", alignItems: "flex-start", paddingTop: 2, paddingLeft: 4, flexShrink: 0 }}>
+                                                <div className="w-10 text-[9px] text-[#98A4AE] font-semibold border-r border-[#E0E6EB] flex items-start pt-0.5 pl-1 shrink-0">
                                                     {timeLabel}
                                                 </div>
-                                                <div style={{ flex: 1, position: "relative" }}>
+                                                <div className="flex-1 relative">
                                                     {rowIdx === 0 && (
-                                                        <div style={{ position: "absolute", top: 2, bottom: 2, left: 4, right: 4, background: "#EEF2FF", borderLeft: "2px solid #635BFF", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", paddingLeft: 6 }}>
-                                                            <span style={{ fontSize: 9, fontWeight: 700, color: "#635BFF", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                                        <div className="absolute top-0.5 bottom-0.5 left-1 right-1 bg-[#EEF2FF] border-l-2 border-[#635BFF] rounded-r-[3px] flex items-center px-1.5">
+                                                            <span className="text-[9px] font-bold text-[#635BFF] truncate">
                                                                 Team meeting
                                                             </span>
                                                         </div>
@@ -453,7 +355,6 @@ export default function CalendarSettingsPanel({
 
     return (
         <div className="font-manrope">
-            {/* Trigger button */}
             <button
                 ref={buttonRef}
                 onClick={() => setOpen((p) => !p)}
@@ -467,7 +368,6 @@ export default function CalendarSettingsPanel({
                 Calendar settings
             </button>
 
-            {/* Render via portal — directly into document.body so nothing clips it */}
             {open && typeof document !== "undefined"
                 ? createPortal(panel, document.body)
                 : null}
