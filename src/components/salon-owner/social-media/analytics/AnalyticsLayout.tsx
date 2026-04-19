@@ -21,7 +21,7 @@ export default function AnalyticsLayout() {
             <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
                 <Topbar onMenuClick={() => setSidebarOpen(true)} />
                 <main className="flex-1 overflow-y-auto bg-[#F4F7FB] p-4 md:p-6 lg:p-8">
-                    <div className="mx-auto">
+                    <div className="">
                         <AnalyticsContent />
                     </div>
                 </main>

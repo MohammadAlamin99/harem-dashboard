@@ -170,16 +170,23 @@ import { ChevronDown } from "lucide-react";
 import InstaIcon from "./InstaIcon";
 
 export type Tab = "Account" | "Posts" | "Reels" | "Story";
+export type AccountPlatform = "instagram" | "facebook" | "messenger";
 
-// অ্যাকাউন্ট টাইপ ডিফাইন করা
 export interface AccountItem {
     id: number;
     name: string;
-    platform: "instagram" | "facebook" | "messenger";
+    platform: AccountPlatform;
     icon: React.ReactNode;
 }
 
-// আপনার অরিজিনাল SVG গুলো
+type Props = {
+    activeTab: Tab;
+    setActiveTab: (tab: Tab) => void;
+    selectedAccount: AccountItem;
+    setSelectedAccount: (acc: AccountItem) => void;
+    tabs: Tab[];
+};
+
 const FacebookIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="11" height="20" viewBox="0 0 11 20" fill="none">
         <path d="M6.70831 11.1515H9.10419L10.0625 7.27269H6.70831V5.33334C6.70831 4.33455 6.70831 3.39393 8.625 3.39393H10.0625V0.135753C9.75006 0.0940582 8.57037 0 7.32456 0C4.72269 0 2.875 1.60679 2.875 4.55757V7.27269H0V11.1515H2.875V19.3939H6.70831V11.1515Z" fill="#635BFF" />
@@ -194,7 +201,6 @@ const MessengerIcon = () => (
     </svg>
 );
 
-// অ্যাকাউন্ট লিস্ট এক্সপোর্ট করা হলো যাতে প্যারেন্ট ব্যবহার করতে পারে
 export const ACCOUNTS: AccountItem[] = [
     { id: 1, name: "Maria Rodriguez", platform: "instagram", icon: <InstaIcon /> },
     { id: 2, name: "Maria Rodriguez", platform: "facebook", icon: <FacebookIcon /> },
@@ -208,18 +214,12 @@ export const ACCOUNTS: AccountItem[] = [
     },
 ];
 
-const DATE_OPTIONS = ["Last 7 days", "Last 28 days", "Last 90 days", "Custom Range"];
+const DATE_OPTIONS = [
+    "Last 7 days", "Last 28 days", "Last 90 days", "This Week",
+    "This Month", "This Year", "Last Week", "Last Month", "Custom Range"
+];
 
-type Props = {
-    activeTab: Tab;
-    setActiveTab: (tab: Tab) => void;
-    selectedAccount: AccountItem; // প্যারেন্ট থেকে আসবে
-    setSelectedAccount: (acc: AccountItem) => void; // প্যারেন্ট থেকে আসবে
-};
-
-export default function AnalyticsHeader({ activeTab, setActiveTab, selectedAccount, setSelectedAccount }: Props) {
-    const tabs: Tab[] = ["Account", "Posts", "Reels", "Story"];
-
+export default function AnalyticsHeader({ activeTab, setActiveTab, selectedAccount, setSelectedAccount, tabs }: Props) {
     const [isAccountOpen, setIsAccountOpen] = useState(false);
     const [isDateOpen, setIsDateOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState("Last 7 days");
@@ -238,19 +238,21 @@ export default function AnalyticsHeader({ activeTab, setActiveTab, selectedAccou
 
     return (
         <div className="bg-white rounded-xl font-manrope">
-            {/* Top Row */}
+            {/* ── Top Row ── */}
             <div className="flex items-center justify-between px-6 pt-5 pb-5 flex-wrap gap-3">
                 <h2 className="text-[15px] font-bold text-[#29343D]">Analytics</h2>
 
                 <div className="flex items-center gap-3">
-                    {/* Account Selector */}
+                    {/* 1. Account Selector Dropdown */}
                     <div className="relative" ref={accountRef}>
                         <button
                             onClick={() => { setIsAccountOpen(!isAccountOpen); setIsDateOpen(false); }}
                             className="flex items-center gap-2 px-3 py-[7px] rounded-lg border border-[#E0E6EB] hover:border-[#635BFF]/40 transition-colors cursor-pointer"
                         >
                             {selectedAccount.icon}
-                            <span className="text-[13px] font-medium text-[#29343D]">{selectedAccount.name}</span>
+                            <span className="text-[13px] font-medium text-[#29343D]">
+                                {selectedAccount.name}
+                            </span>
                             <ChevronDown size={14} className={`text-[#29343D] transition-transform ${isAccountOpen ? "rotate-180" : ""}`} />
                         </button>
 
@@ -260,7 +262,7 @@ export default function AnalyticsHeader({ activeTab, setActiveTab, selectedAccou
                                     <button
                                         key={acc.id}
                                         onClick={() => { setSelectedAccount(acc); setIsAccountOpen(false); }}
-                                        className={`w-full flex items-center gap-2 px-4 py-2.5 text-[13px] font-manrope transition-colors text-left ${selectedAccount.id === acc.id ? "bg-[#F3F3FF] text-[#635BFF] font-semibold" : "text-[#29343D] hover:bg-[#F4F6FA]"}`}
+                                        className={`w-full flex items-center gap-2 px-4 py-2.5 text-[13px] transition-colors text-left font-manrope ${selectedAccount.id === acc.id ? "bg-[#F3F3FF] text-[#635BFF] font-semibold" : "text-[#29343D] hover:bg-[#F4F6FA]"}`}
                                     >
                                         {acc.icon}
                                         {acc.name}
@@ -270,22 +272,25 @@ export default function AnalyticsHeader({ activeTab, setActiveTab, selectedAccou
                         )}
                     </div>
 
-                    {/* Date Selector */}
+                    {/* 2. Date Range Selector Dropdown */}
                     <div className="relative" ref={dateRef}>
                         <button
                             onClick={() => { setIsDateOpen(!isDateOpen); setIsAccountOpen(false); }}
                             className="flex items-center gap-2 px-3 py-[7px] rounded-lg border border-[#E0E6EB] hover:border-[#635BFF]/40 transition-colors cursor-pointer"
                         >
-                            <span className="text-[13px] font-medium text-[#29343D]">{selectedDate}</span>
+                            <span className="text-[13px] font-medium text-[#29343D]">
+                                {selectedDate}
+                            </span>
                             <ChevronDown size={14} className={`text-[#29343D] transition-transform ${isDateOpen ? "rotate-180" : ""}`} />
                         </button>
+
                         {isDateOpen && (
                             <div className="absolute right-0 mt-1 w-[160px] bg-white border border-[#E0E6EB] rounded-xl shadow-lg z-50 py-1 overflow-hidden">
                                 {DATE_OPTIONS.map((opt) => (
                                     <button
                                         key={opt}
                                         onClick={() => { setSelectedDate(opt); setIsDateOpen(false); }}
-                                        className={`w-full text-left px-4 py-2.5 text-[13px] font-manrope transition-colors ${selectedDate === opt ? "bg-[#F3F3FF] text-[#635BFF] font-semibold" : "text-[#526B7A] hover:bg-[#F8FAFC]"}`}
+                                        className={`w-full text-left px-4 py-2.5 text-[13px] transition-colors font-manrope ${selectedDate === opt ? "bg-[#F3F3FF] text-[#635BFF] font-semibold" : "text-[#526B7A] hover:bg-[#F8FAFC]"}`}
                                     >
                                         {opt}
                                     </button>
@@ -296,7 +301,7 @@ export default function AnalyticsHeader({ activeTab, setActiveTab, selectedAccou
                 </div>
             </div>
 
-            {/*  Tabs  */}
+            {/* ── Tabs (Now uses props.tabs) ── */}
             <div className="relative px-6 pb-4">
                 <div className="flex items-center border-b border-[#E0E6EB] w-fit">
                     {tabs.map((tab) => (
@@ -307,7 +312,9 @@ export default function AnalyticsHeader({ activeTab, setActiveTab, selectedAccou
                                 ${activeTab === tab ? "text-[#635BFF] font-semibold" : "text-[#29343D] font-medium hover:text-[#635BFF]/70"}`}
                         >
                             {tab}
-                            {activeTab === tab && <span className="absolute bottom-0 left-0 right-0 h-px bg-[#635BFF]" />}
+                            {activeTab === tab && (
+                                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#635BFF]" />
+                            )}
                         </button>
                     ))}
                 </div>
