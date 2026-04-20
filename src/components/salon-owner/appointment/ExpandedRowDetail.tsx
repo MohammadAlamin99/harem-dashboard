@@ -71,7 +71,7 @@ export default function ExpandedRowDetail({ row }: { row: Appointment }) {
             {steps.map((step, idx) => (
               <React.Fragment key={idx}>
                 {/* Circle */}
-                <div className="flex-shrink-0">
+                <div className="">
                   <StepIcon state={step.state} index={idx} />
                 </div>
                 {/* Full connector line between circles */}

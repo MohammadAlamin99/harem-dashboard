@@ -21,7 +21,7 @@ function ChannelIcon({ channel }: { channel: "Email" | "SMS" | "WhatsApp" }) {
     }
     if (channel === "Email") {
         return (
-            <div className="w-12 h-12 bg-[#635BFF] rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 bg-[#635BFF] rounded-full flex items-center justify-center">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                     <rect x="3" y="5" width="18" height="14" rx="2" stroke="white" strokeWidth="2" />
                     <path d="M3 7l9 6 9-6" stroke="white" strokeWidth="2" strokeLinecap="round" />
@@ -31,7 +31,7 @@ function ChannelIcon({ channel }: { channel: "Email" | "SMS" | "WhatsApp" }) {
     }
     // SMS
     return (
-        <div className="w-12 h-12 bg-[#FFD648] rounded-full flex items-center justify-center flex-shrink-0">
+        <div className="w-12 h-12 bg-[#FFD648] rounded-full flex items-center justify-center">
             <Image src="/images/messageicon.svg" alt="SMS" width={22} height={22} />
         </div>
     );

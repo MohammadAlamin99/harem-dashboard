@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
@@ -14,7 +15,7 @@ interface CalendarSettingsPanelProps {
     onSlotHeightChange: (px: number) => void;
 }
 
-const SLOT_DURATION_OPTIONS = [5, 10, 15, 30, 60];
+const SLOT_DURATION_OPTIONS = [5, 10, 15, 30, 60, 90];
 
 function formatHour(h: number) {
     if (h === 0) return "00:00";
@@ -56,11 +57,9 @@ export default function CalendarSettingsPanel({
     const [timeRangeOpen, setTimeRangeOpen] = useState(false);
     const [slotOpen, setSlotOpen] = useState(false);
     const [panelPos, setPanelPos] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
-
     const buttonRef = useRef<HTMLButtonElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
 
-    // Recalculate position on open, scroll, resize
     useEffect(() => {
         if (!open || !buttonRef.current) return;
 
@@ -82,7 +81,6 @@ export default function CalendarSettingsPanel({
         };
     }, [open]);
 
-    // Close on outside click
     useEffect(() => {
         if (!open) return;
         const handler = (e: MouseEvent) => {
@@ -101,7 +99,7 @@ export default function CalendarSettingsPanel({
 
     const visibleHours = endHour - startHour;
 
-    // Slider: 1–10 maps to px 40–120
+    // Slider
     const sliderValue = Math.round(((slotHeight - 40) / 80) * 9) + 1;
     const handleSliderChange = (val: number) => {
         const px = Math.round(40 + ((val - 1) / 9) * 80);
@@ -114,7 +112,7 @@ export default function CalendarSettingsPanel({
     const panel = (
         <div
             ref={panelRef}
-            className="font-manrope fixed z-[9999] w-[340px] bg-white border border-[#E0E6EB] rounded-[12px] shadow-xl shadow-black/10 overflow-y-auto"
+            className="font-manrope fixed z-50 w-[340px] bg-white border border-[#E0E6EB] rounded-[12px] shadow-xl shadow-black/10 overflow-y-auto"
             style={{
                 top: panelPos.top,
                 right: panelPos.right,
@@ -136,7 +134,7 @@ export default function CalendarSettingsPanel({
 
             <div className="p-5 flex flex-col gap-3">
 
-                {/* ── Section 1: Visible time range ──────────────────────────── */}
+                {/*Section 1*/}
                 <div className="border border-[#E0E6EB] rounded-[10px] overflow-hidden">
                     <button
                         onClick={() => setTimeRangeOpen((p) => !p)}
@@ -159,31 +157,51 @@ export default function CalendarSettingsPanel({
                     {timeRangeOpen && (
                         <div className="px-4 pb-4 pt-3 flex flex-col gap-4">
 
-                            {/* Start time */}
+                            {/* Start time Stepper */}
                             <div>
                                 <p className="text-[10px] font-bold text-[#98A4AE] uppercase tracking-wider mb-2">
                                     Start time
                                 </p>
                                 <div className="flex items-center gap-2">
-                                    <StepButton onClick={() => onStartHourChange(Math.max(0, startHour - 1))}>–</StepButton>
+                                    <StepButton
+                                        onClick={() => onStartHourChange(Math.max(0, startHour - 1))}
+                                        disabled={startHour <= 0}
+                                    >
+                                        –
+                                    </StepButton>
                                     <div className="flex-1 h-9 flex items-center justify-center border border-[#E0E6EB] rounded-[8px] text-[14px] font-bold text-[#29343D] bg-white">
                                         {formatHour(startHour)}
                                     </div>
-                                    <StepButton onClick={() => onStartHourChange(Math.min(endHour - 1, startHour + 1))}>+</StepButton>
+                                    <StepButton
+                                        onClick={() => onStartHourChange(Math.min(endHour - 1, startHour + 1))}
+                                        disabled={startHour >= endHour - 1}
+                                    >
+                                        +
+                                    </StepButton>
                                 </div>
                             </div>
 
-                            {/* End time */}
+                            {/* End time Stepper */}
                             <div>
                                 <p className="text-[10px] font-bold text-[#98A4AE] uppercase tracking-wider mb-2">
                                     End time
                                 </p>
                                 <div className="flex items-center gap-2">
-                                    <StepButton onClick={() => onEndHourChange(Math.max(startHour + 1, endHour - 1))}>–</StepButton>
+                                    <StepButton
+                                        onClick={() => onEndHourChange(Math.max(startHour + 1, endHour - 1))}
+                                        disabled={endHour <= startHour + 1}
+                                    >
+                                        –
+                                    </StepButton>
                                     <div className="flex-1 h-9 flex items-center justify-center border border-[#E0E6EB] rounded-[8px] text-[14px] font-bold text-[#29343D] bg-white">
                                         {formatHour(endHour)}
                                     </div>
-                                    <StepButton onClick={() => onEndHourChange(Math.min(24, endHour + 1))}>+</StepButton>
+                                    <StepButton
+                                        onClick={() => onEndHourChange(Math.min(24, endHour + 1))}
+                                        disabled={endHour >= 24}
+                                    >
+                                        +
+                                    </StepButton>
                                 </div>
                             </div>
 
@@ -231,12 +249,11 @@ export default function CalendarSettingsPanel({
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     )}
                 </div>
 
-                {/* ── Section 2: Slot duration & height ──────────────────────── */}
+                {/* Section 2 */}
                 <div className="border border-[#E0E6EB] rounded-[10px] overflow-hidden">
                     <button
                         onClick={() => setSlotOpen((p) => !p)}
@@ -345,7 +362,6 @@ export default function CalendarSettingsPanel({
                                     })}
                                 </div>
                             </div>
-
                         </div>
                     )}
                 </div>
@@ -358,7 +374,7 @@ export default function CalendarSettingsPanel({
             <button
                 ref={buttonRef}
                 onClick={() => setOpen((p) => !p)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-[8px] border text-[13px] font-semibold transition-colors cursor-pointer
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-[8px] border text-[14px] font-semibold transition-colors cursor-pointer
           ${open
                         ? "bg-[#DDDBFF] border-[#635BFF] text-[#635BFF]"
                         : "bg-white border-[#E0E6EB] text-[#526B7A] hover:border-[#635BFF] hover:text-[#635BFF]"

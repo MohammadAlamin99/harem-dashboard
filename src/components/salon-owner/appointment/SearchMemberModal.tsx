@@ -54,7 +54,7 @@ export default function SearchMemberModal({
         {/* Search input */}
         <div className="px-6 pb-4">
           <div className="flex items-center gap-2 border border-[#E0E6EB] rounded-[10px] px-3 py-2.5 focus-within:border-[#635BFF] transition-colors">
-            <Search size={16} className="text-[#98A4AE] flex-shrink-0" />
+            <Search size={16} className="text-[#98A4AE]" />
             <input
               ref={inputRef}
               value={query}
@@ -82,7 +82,7 @@ export default function SearchMemberModal({
                   alt={m.name}
                   width={38}
                   height={38}
-                  className="rounded-xl object-cover flex-shrink-0"
+                  className="rounded-xl object-cover"
                 />
                 <div>
                   <p className="text-sm font-semibold font-manrope text-[#29343D]">

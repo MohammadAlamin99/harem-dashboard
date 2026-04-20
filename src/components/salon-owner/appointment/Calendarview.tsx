@@ -79,10 +79,10 @@ const allAppointments: CalAppointment[] = [
       clientName: "Client Name",
       service: "Haircut",
       date: makeDate(2025, 9, 2),
-      startTime: "00:00",
-      endTime: "00:15",
+      startTime: "09:00",   // ✅ change করো
+      endTime: "10:30",     // ✅ 1.5 ঘণ্টা duration দাও
       price: "€ 170",
-      duration: "15 min",
+      duration: "90 min",
       status: "Canceled" as AppStatus,
       employeeName: member.name,
       employeeId: member.id,
@@ -124,11 +124,11 @@ export default function CalendarView() {
     allAppointments.slice(0, 1),
   );
 
-  // ── Calendar settings state ──────────────────────────────────────────────────
+  // Calendar settings state 
   const [visibleStartHour, setVisibleStartHour] = useState(0);
   const [visibleEndHour, setVisibleEndHour] = useState(24);
-  const [slotDuration, setSlotDuration] = useState(15); // minutes
-  const [slotHeight, setSlotHeight] = useState(48);     // px per hour (default compact)
+  const [slotDuration, setSlotDuration] = useState(60);
+  const [slotHeight, setSlotHeight] = useState(48);
 
   // Build HOURS array from visible range
   const HOURS = Array.from(
@@ -250,7 +250,7 @@ export default function CalendarView() {
             <IView />
           </div>
 
-          {/* ── Calendar Settings Panel ── */}
+          {/* Calendar Settings Panel */}
           <CalendarSettingsPanel
             startHour={visibleStartHour}
             endHour={visibleEndHour}
@@ -280,6 +280,7 @@ export default function CalendarView() {
           statusBadgeColor={statusBadgeColor}
           onAppointmentCreate={handleAppointmentCreate}
           onAppointmentUpdate={handleAppointmentUpdate}
+          slotDuration={slotDuration}
         />
       )}
 
@@ -300,6 +301,7 @@ export default function CalendarView() {
           getWeekStart={getWeekStart}
           onAppointmentCreate={handleAppointmentCreate}
           onAppointmentUpdate={handleAppointmentUpdate}
+          slotDuration={slotDuration}
         />
       )}
 

@@ -84,12 +84,12 @@ export default function AnalyticsContent() {
     const platformTabs: Record<string, Tab[]> = {
         instagram: ["Account", "Posts", "Reels", "Story"],
         facebook: ["Account", "Posts"],
-        messenger: ["Account"],
+        messenger: [],
     };
 
     const currentTabs = platformTabs[selectedAccount.platform] || ["Account"];
-    if (!currentTabs.includes(activeTab)) {
-        setActiveTab("Account");
+    if (currentTabs.length > 0 && !currentTabs.includes(activeTab)) {
+        setActiveTab(currentTabs[0]);
     }
 
     // Typed Render Function
@@ -176,6 +176,12 @@ export default function AnalyticsContent() {
                             <PostsTable<PostData> data={MOCK_POSTS} columns={POST_COLUMNS} />
                         )}
                     </div>
+                )}
+
+                {selectedAccount.platform === "messenger" && (
+                    <>
+                        <AnalyticsStats />
+                    </>
                 )}
             </div>
         </div>

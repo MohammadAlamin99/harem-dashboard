@@ -81,13 +81,13 @@ export default function TeamDropdown({
               className="flex items-center gap-3 px-3 py-2.5 hover:bg-[#F4F6FA] cursor-pointer transition-colors mx-1 rounded-[8px]"
             >
               <div
-                className={`w-[22px] h-[22px] rounded-[6px] flex items-center justify-center flex-shrink-0 ${allSelected ? "bg-[#635BFF]" : "border-2 border-[#E0E6EB] bg-white"}`}
+                className={`w-[22px] h-[22px] rounded-[6px] flex items-center justify-center ${allSelected ? "bg-[#635BFF]" : "border-2 border-[#E0E6EB] bg-white"}`}
               >
                 {allSelected && (
                   <Check size={13} color="white" strokeWidth={3} />
                 )}
               </div>
-              <div className="w-[42px] h-[42px] rounded-[10px] flex-shrink-0 bg-[#EEEEFF] flex items-center justify-center">
+              <div className="w-[42px] h-[42px] rounded-[10px] bg-[#EEEEFF] flex items-center justify-center">
                 <IAppoinUser />
               </div>
               <span className="text-sm font-manrope font-semibold text-[#29343D]">
@@ -105,7 +105,7 @@ export default function TeamDropdown({
               >
                 {!singleSelect && (
                   <div
-                    className={`w-[22px] h-[22px] rounded-[6px] flex items-center justify-center flex-shrink-0 ${checked ? "bg-[#635BFF]" : "border-2 border-[#E0E6EB] bg-white"}`}
+                    className={`w-[22px] h-[22px] rounded-[6px] flex items-center justify-center ${checked ? "bg-[#635BFF]" : "border-2 border-[#E0E6EB] bg-white"}`}
                   >
                     {checked && (
                       <Check size={13} color="white" strokeWidth={3} />
@@ -117,7 +117,7 @@ export default function TeamDropdown({
                   alt={member.name}
                   width={42}
                   height={42}
-                  className="rounded-[10px] object-cover flex-shrink-0"
+                  className="rounded-[10px] object-cover"
                 />
                 <span className="text-sm font-manrope font-semibold text-[#29343D] truncate">
                   {member.name}

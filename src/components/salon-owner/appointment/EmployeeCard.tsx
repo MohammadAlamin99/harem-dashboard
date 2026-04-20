@@ -16,7 +16,7 @@ export default function EmployeeCard({
     <div className="bg-[#F6F7F9] rounded-[12px] p-4 flex flex-col gap-4">
       {/* Avatar + Name */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-[10px] overflow-hidden bg-[#F4F6FA] flex-shrink-0">
+        <div className="w-10 h-10 rounded-[10px] overflow-hidden bg-[#F4F6FA]">
           <Image
             src={avatarUrl}
             alt={name}
@@ -38,11 +38,10 @@ export default function EmployeeCard({
           </span>
           <button
             onClick={() => setSyncCalendar((p) => !p)}
-            className={`text-xs font-manrope font-medium px-3 py-1 rounded-[6px] border transition-colors cursor-pointer ${
-              syncCalendar
+            className={`text-xs font-manrope font-medium px-3 py-1 rounded-[6px] border transition-colors cursor-pointer ${syncCalendar
                 ? "bg-[#635BFF] text-white border-[#635BFF]"
                 : "bg-[#EEEEFF] text-[#635BFF] border-[#EEEEFF]"
-            }`}
+              }`}
           >
             Sync
           </button>

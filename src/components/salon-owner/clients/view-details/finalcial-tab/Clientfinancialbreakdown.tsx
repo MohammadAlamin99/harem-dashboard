@@ -92,7 +92,7 @@ function ServiceRow({ service }: { service: ServiceType }) {
   return (
     <div className="flex items-center justify-between bg-[#F4F6FA] rounded-xl px-5 py-4">
       <div className="flex items-center gap-4">
-        <div className="w-8 h-8 rounded-xl bg-[#635BFF] flex items-center justify-center text-white text-sm font-semibold font-manrope flex-shrink-0">
+        <div className="w-8 h-8 rounded-xl bg-[#635BFF] flex items-center justify-center text-white text-sm font-semibold font-manrope">
           {service.id}
         </div>
         <span className="text-[#29343D] font-medium font-manrope text-sm">

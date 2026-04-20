@@ -84,7 +84,7 @@ export default function TeamFilterDropdown() {
               >
                 {/* Checkbox */}
                 <div
-                  className={`w-[22px] h-[22px] rounded-[6px] flex items-center justify-center flex-shrink-0 transition-colors ${
+                  className={`w-[22px] h-[22px] rounded-[6px] flex items-center justify-center transition-colors ${
                     isChecked
                       ? "bg-[#635BFF]"
                       : "border-2 border-[#E0E6EB] bg-white"
@@ -96,7 +96,7 @@ export default function TeamFilterDropdown() {
                 </div>
 
                 {/* Avatar */}
-                <div className="w-[42px] h-[42px] rounded-[10px] flex-shrink-0 overflow-hidden bg-[#EEEEFF] flex items-center justify-center">
+                <div className="w-[42px] h-[42px] rounded-[10px] overflow-hidden bg-[#EEEEFF] flex items-center justify-center">
                   {member.avatar ? (
                     <Image
                       src={member.avatar}

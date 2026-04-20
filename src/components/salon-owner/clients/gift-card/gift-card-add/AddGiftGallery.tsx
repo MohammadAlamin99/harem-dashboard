@@ -13,7 +13,7 @@ export default function AddGiftGallery() {
                 <div className="
                     relative 
                     w-full max-w-[548px] 
-                    aspect-[548/304] 
+                    aspect-548/304 
                     lg:w-[548px] lg:h-[304px]
                     rounded-2xl overflow-hidden
                 ">
@@ -43,7 +43,7 @@ export default function AddGiftGallery() {
                 <div className="
                     relative 
                     w-full max-w-[548px] 
-                    aspect-[548/304] 
+                    aspect-548/304 
                     lg:w-[548px] lg:h-[304px]
                     rounded-2xl overflow-hidden
                 ">

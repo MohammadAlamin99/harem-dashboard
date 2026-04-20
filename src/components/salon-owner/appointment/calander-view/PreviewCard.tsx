@@ -7,8 +7,6 @@ import {
 } from "@/@types/salon-owner/CalAppointment.type";
 import Image from "next/image";
 
-// ── Icons ─────────────────────────────────────────────────────────────────────
-
 function IconEye() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -48,7 +46,7 @@ function IconDots() {
   );
 }
 
-// ── Dropdown Menu ─────────────────────────────────────────────────────────────
+// Dropdown Menu 
 
 function DropdownMenu({
   onViewDetails,
@@ -104,11 +102,11 @@ function DropdownMenu({
   );
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
+// Component 
 
 export default function PreviewCard({
   appt,
-  onClose,
+  // onClose,
   onViewDetails,
   onEdit,
   onDelete,
@@ -118,7 +116,6 @@ export default function PreviewCard({
   appt: CalAppointment;
   onClose: () => void;
   onViewDetails?: () => void;
-  /** Opens the booking modal for editing */
   onEdit?: () => void;
   onDelete?: () => void;
   style?: React.CSSProperties;

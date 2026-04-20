@@ -302,23 +302,27 @@ export default function AnalyticsHeader({ activeTab, setActiveTab, selectedAccou
             </div>
 
             {/* ── Tabs (Now uses props.tabs) ── */}
-            <div className="relative px-6 pb-4">
-                <div className="flex items-center border-b border-[#E0E6EB] w-fit">
-                    {tabs.map((tab) => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={`relative px-4 py-3 text-[14px] font-manrope transition-colors whitespace-nowrap cursor-pointer w-[165px] text-center
+            {
+                tabs.length > 0 && (
+                    <div className="relative px-6 pb-4">
+                        <div className="flex items-center border-b border-[#E0E6EB] w-fit">
+                            {tabs.map((tab) => (
+                                <button
+                                    key={tab}
+                                    onClick={() => setActiveTab(tab)}
+                                    className={`relative px-4 py-3 text-[14px] font-manrope transition-colors whitespace-nowrap cursor-pointer w-[165px] text-center
                                 ${activeTab === tab ? "text-[#635BFF] font-semibold" : "text-[#29343D] font-medium hover:text-[#635BFF]/70"}`}
-                        >
-                            {tab}
-                            {activeTab === tab && (
-                                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#635BFF]" />
-                            )}
-                        </button>
-                    ))}
-                </div>
-            </div>
+                                >
+                                    {tab}
+                                    {activeTab === tab && (
+                                        <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#635BFF]" />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )
+            }
         </div>
     );
 }

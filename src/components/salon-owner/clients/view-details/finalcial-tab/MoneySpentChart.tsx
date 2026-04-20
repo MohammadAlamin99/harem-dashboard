@@ -17,7 +17,15 @@ interface chartDataProps {
   chartData: chartData[];
 }
 
-function CustomTooltip({ active, payload, label }: any) {
+interface CustomTooltipProps {
+  active?: boolean;
+  label?: string;
+  payload?: Array<{
+    payload?: chartData;
+  }>;
+}
+
+function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white border border-[#E0E6EB] rounded-xl shadow-lg px-4 py-3 font-manrope">

@@ -340,7 +340,7 @@ export default function ReceiptContent() {
                     setActiveMethod(m);
                     setCurrentPage(1);
                   }}
-                  className={`flex-shrink-0 px-3 py-1.5 text-sm font-manrope font-medium rounded-[6px] border transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 text-sm font-manrope font-medium rounded-[6px] border transition-all cursor-pointer ${
                     activeMethod === m
                       ? "border-[#635BFF] text-[#635BFF] bg-white"
                       : "border-[#E0E6EB] text-[#526B7A] hover:border-[#635BFF] hover:text-[#635BFF]"
@@ -353,7 +353,7 @@ export default function ReceiptContent() {
           </div>
 
           {/* Date Range */}
-          <div className="flex-shrink-0">
+          <div className="">
             <p className="text-xs font-manrope text-[#98A4AE] mb-2">
               Data Range
             </p>
@@ -372,7 +372,7 @@ export default function ReceiptContent() {
         {/* Search */}
         <div className="mb-4">
           <div className="flex items-center gap-2 border border-[#E0E6EB] rounded-xl px-4 py-2.5 w-full sm:w-72">
-            <Search size={15} className="text-[#98A4AE] flex-shrink-0" />
+            <Search size={15} className="text-[#98A4AE]" />
             <input
               type="text"
               placeholder="Search"

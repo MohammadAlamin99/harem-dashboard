@@ -23,6 +23,7 @@ export default function WeekView({
   statusBadgeColor,
   onAppointmentCreate,
   onAppointmentUpdate,
+  slotDuration,
 }: {
   date: Date;
   selectedMemberIds: string[];
@@ -39,21 +40,19 @@ export default function WeekView({
   getWeekStart: (date: Date) => Date;
   onAppointmentCreate?: (appt: CalAppointment) => void;
   onAppointmentUpdate?: (appt: CalAppointment) => void;
+  slotDuration: number;
 }) {
   const [preview, setPreview] = useState<{
     appt: CalAppointment;
     x: number;
     y: number;
   } | null>(null);
-
   const [selectedSlot, setSelectedSlot] = useState<{
     startTime: string;
     endTime: string;
     date: Date;
   } | null>(null);
-
   const [draggedAppt, setDraggedAppt] = useState<CalAppointment | null>(null);
-
   const [selectionPreview, setSelectionPreview] = useState<{
     startMin: number;
     endMin: number;
@@ -69,6 +68,10 @@ export default function WeekView({
   } | null>(null);
   const isDraggingRef = useRef(false);
 
+  // ✅ slot snapping এর জন্য
+  const slotsPerHour = 60 / slotDuration;
+  const slotPxHeight = HOUR_HEIGHT / slotsPerHour;
+
   const weekStart = getWeekStart(date);
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(weekStart);
@@ -77,7 +80,7 @@ export default function WeekView({
   });
 
   const memberAppts = allAppointments.filter((a) =>
-    selectedMemberIds.includes(a.employeeId)
+    selectedMemberIds.includes(a.employeeId),
   );
 
   const minutesToTime = (mins: number): string => {
@@ -96,7 +99,6 @@ export default function WeekView({
     return `${hours}h ${mins}m`;
   };
 
-  // ── Preview card on pill click ──────────────────────────────
   const handlePillClick = (appt: CalAppointment, e: React.MouseEvent) => {
     e.stopPropagation();
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -109,15 +111,13 @@ export default function WeekView({
     });
   };
 
-  // ── Time slot drag-to-select ────────────────────────────────
   const handleTimeSlotMouseDown = (
     e: React.MouseEvent,
     dayIndex: number,
-    baseMinutes: number
+    baseMinutes: number,
   ) => {
     if (e.button !== 0) return;
     if ((e.target as HTMLElement).closest('[draggable="true"]')) return;
-
     e.preventDefault();
     e.stopPropagation();
     isDraggingRef.current = true;
@@ -125,11 +125,13 @@ export default function WeekView({
 
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const offsetY = e.clientY - rect.top;
-    const selectedMin = baseMinutes + Math.floor((offsetY / HOUR_HEIGHT) * 60);
+    // ✅ slotDuration দিয়ে snap
+    const selectedMin =
+      baseMinutes + Math.floor(offsetY / slotPxHeight) * slotDuration;
 
     timeSelectionRef.current = {
       startMin: selectedMin,
-      endMin: selectedMin + 15,
+      endMin: selectedMin + slotDuration,
       dayIndex,
     };
   };
@@ -137,21 +139,19 @@ export default function WeekView({
   const handleTimeSlotMouseMove = (
     e: React.MouseEvent,
     dayIndex: number,
-    baseMinutes: number
+    baseMinutes: number,
   ) => {
     if (!isDraggingRef.current || !timeSelectionRef.current) return;
     if (timeSelectionRef.current.dayIndex !== dayIndex) return;
-
     e.stopPropagation();
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const offsetY = e.clientY - rect.top;
-    const currentMin = Math.max(
-      baseMinutes,
-      baseMinutes + Math.floor((offsetY / HOUR_HEIGHT) * 60)
-    );
+    // ✅ slotDuration দিয়ে snap
+    const currentMin =
+      baseMinutes + Math.floor(offsetY / slotPxHeight) * slotDuration;
 
-    if (currentMin > timeSelectionRef.current.startMin) {
-      timeSelectionRef.current.endMin = currentMin + 15;
+    if (currentMin >= timeSelectionRef.current.startMin) {
+      timeSelectionRef.current.endMin = currentMin + slotDuration;
       setSelectionPreview({
         startMin: timeSelectionRef.current.startMin,
         endMin: timeSelectionRef.current.endMin,
@@ -168,21 +168,17 @@ export default function WeekView({
       setSelectionPreview(null);
       return;
     }
-
     isDraggingRef.current = false;
     const { startMin, endMin } = timeSelectionRef.current;
-
     setSelectedSlot({
       startTime: minutesToTime(startMin),
       endTime: minutesToTime(endMin),
       date: days[dayIndex],
     });
-
     setSelectionPreview(null);
     timeSelectionRef.current = null;
   };
 
-  // ── Appointment drag & drop ─────────────────────────────────
   const handlePillDragStart = (appt: CalAppointment, e: React.DragEvent) => {
     e.stopPropagation();
     setDraggedAppt(appt);
@@ -196,7 +192,7 @@ export default function WeekView({
   const handleTimeSlotDrop = (
     e: React.DragEvent,
     dayIndex: number,
-    baseMinutes: number
+    baseMinutes: number,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -204,7 +200,9 @@ export default function WeekView({
 
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const offsetY = e.clientY - rect.top;
-    const droppedMin = baseMinutes + Math.floor((offsetY / HOUR_HEIGHT) * 60);
+    // ✅ slotDuration দিয়ে snap
+    const droppedMin =
+      baseMinutes + Math.floor(offsetY / slotPxHeight) * slotDuration;
     const duration =
       timeToMinutes(draggedAppt.endTime) -
       timeToMinutes(draggedAppt.startTime);
@@ -220,12 +218,10 @@ export default function WeekView({
     setDraggedAppt(null);
   };
 
-  // ── Create appointment ──────────────────────────────────────
   const handleCreateAppointment = (
-    data: Omit<CalAppointment, "id" | "date" | "startTime" | "endTime">
+    data: Omit<CalAppointment, "id" | "date" | "startTime" | "endTime">,
   ) => {
     if (!selectedSlot) return;
-
     const newAppt: CalAppointment = {
       id: `appt-${Date.now()}`,
       ...data,
@@ -233,7 +229,6 @@ export default function WeekView({
       startTime: selectedSlot.startTime,
       endTime: selectedSlot.endTime,
     };
-
     onAppointmentCreate?.(newAppt);
     setSelectedSlot(null);
   };
@@ -275,10 +270,7 @@ export default function WeekView({
           </div>
 
           {/* Time grid */}
-          <div
-            ref={scrollRef}
-            className="overflow-x-auto flex-1"
-          >
+          <div ref={scrollRef} className="overflow-x-auto flex-1">
             <div className="flex">
               {/* Time labels */}
               <div className="w-[72px] shrink-0 border-r border-[#E0E6EB]">
@@ -298,7 +290,7 @@ export default function WeekView({
               {/* Day columns */}
               {days.map((d, di) => {
                 const dayAppts = memberAppts.filter((a) =>
-                  isSameDay(a.date, d)
+                  isSameDay(a.date, d),
                 );
 
                 return (
@@ -308,9 +300,14 @@ export default function WeekView({
                   >
                     {HOURS.map((h) => {
                       const baseMinutes = h * 60;
-                      const hourAppts = dayAppts.filter(
-                        (a) => parseInt(a.startTime.split(":")[0]) === h
-                      );
+
+                      const hourAppts = dayAppts.filter((a) => {
+                        const startMin = timeToMinutes(a.startTime);
+                        return (
+                          startMin >= baseMinutes && startMin < baseMinutes + 60
+                        );
+                      });
+
                       const isSelectingHere =
                         selectionPreview?.dayIndex === di &&
                         selectionPreview.startMin >= baseMinutes &&
@@ -336,9 +333,21 @@ export default function WeekView({
                             handleTimeSlotDrop(e, di, baseMinutes)
                           }
                         >
+                          {/* ✅ Dynamic grid lines — slotDuration অনুযায়ী */}
+                          <div className="absolute inset-0 flex flex-col pointer-events-none">
+                            {Array.from({ length: slotsPerHour }).map(
+                              (_, i) => (
+                                <div
+                                  key={i}
+                                  className="flex-1 border-b border-[#E0E6EB]/60 last:border-b-0"
+                                />
+                              ),
+                            )}
+                          </div>
+
                           {/* Selection preview overlay */}
                           {isSelectingHere && selectionPreview && (
-                            <div className="absolute inset-0 pointer-events-none">
+                            <div className="absolute inset-0 pointer-events-none z-10">
                               <div
                                 className="absolute left-0 right-0 bg-[#635BFF] opacity-15 border-2 border-[#635BFF]"
                                 style={{
@@ -375,26 +384,34 @@ export default function WeekView({
                               >
                                 {formatDuration(
                                   selectionPreview.startMin,
-                                  selectionPreview.endMin
+                                  selectionPreview.endMin,
                                 )}
                               </div>
                             </div>
                           )}
 
-                          {/* Appointments in this hour */}
-                          <div className="relative z-10">
+                          {/* Appointments — absolute positioned */}
+                          <div className="absolute inset-0 z-10 pointer-events-none">
                             {hourAppts.map((appt) => {
                               const startMin = timeToMinutes(appt.startTime);
                               const endMin = timeToMinutes(appt.endTime);
+                              const topOffset =
+                                ((startMin - baseMinutes) / 60) * HOUR_HEIGHT;
                               const height = Math.max(
                                 ((endMin - startMin) / 60) * HOUR_HEIGHT,
-                                20
+                                20,
                               );
                               return (
                                 <div
                                   key={appt.id}
-                                  style={{ height }}
-                                  className="p-0.5"
+                                  style={{
+                                    position: "absolute",
+                                    top: topOffset,
+                                    left: 1,
+                                    right: 1,
+                                    height,
+                                    pointerEvents: "all",
+                                  }}
                                   draggable
                                   onDragStart={(e) =>
                                     handlePillDragStart(appt, e)

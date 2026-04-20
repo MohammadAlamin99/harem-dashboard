@@ -2,6 +2,7 @@ import { Plus } from "lucide-react";
 import PageHeaderWithButton from "../../common-component/PageHeaderWithButton";
 import { useState } from "react";
 import AddPostModal from "./AddPostModal";
+import SocialMediaCalendar from "./SocialMediaCalendar";
 
 export default function CalenderContent() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,7 @@ export default function CalenderContent() {
       />
       {/* add post modal */}
       {isOpen && <AddPostModal isOpen={isOpen} onClose={onClose} />}
+      <SocialMediaCalendar />
     </div>
   );
 }

@@ -26,7 +26,7 @@ function ChannelIcon({ channel }: { channel: "Email" | "SMS" | "WhatsApp" }) {
     );
 }
 
-/* ── status badge styles (exported so modal can reuse) ── */
+/* status badge styles */
 export const statusStyles: Record<LogStatus, string> = {
     Delivered: "bg-[#DDDBFF] text-[#635BFF]",
     Sent: "bg-[#ECFDFD] text-[#16CDC7]",

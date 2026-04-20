@@ -32,7 +32,7 @@ const DUMMY_CLIENTS = [
   {
     id: "2",
     name: "Michael Chen",
-    notes: "", // Empty notes test
+    notes: "", 
     giftCards: 0,
     giftCardDetails: null,
   },
@@ -229,7 +229,6 @@ export default function NewAppointmentModal({
               </div>
             )}
 
-            {/* Conditional Client Details (Only show if notes or gift cards exist) */}
             {selectedClient &&
               (selectedClient.notes || selectedClient.giftCards > 0) && (
                 <div className="bg-[#F8FAFC] border border-slate-200 rounded-[8px] overflow-hidden">

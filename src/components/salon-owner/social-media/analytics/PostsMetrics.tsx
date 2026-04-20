@@ -8,8 +8,12 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import LikeIcon from './LikeIcon';
+import LoveReactIcon from './LoveReactIcon';
+import WowIcon from './WowIcon';
+import HahaIcon from './HahaIcon';
+import SadIcon from './SadIcon';
+import AngeryIcon from './AngeryIcon';
 
-// --- Types ---
 interface ReactionData {
     name: string;
     value: number;
@@ -17,14 +21,13 @@ interface ReactionData {
     emoji: React.ReactNode;
 }
 
-// --- Mock Data ---
 const reactionData: ReactionData[] = [
     { name: 'Like', value: 250, label: 'Like', emoji: <LikeIcon /> },
-    { name: 'Love', value: 250, label: 'Love', emoji: '❤️' },
-    { name: 'Wow', value: 250, label: 'Wow', emoji: '😮' },
-    { name: 'Haha', value: 250, label: 'Haha', emoji: '😂' },
-    { name: 'Sad', value: 250, label: 'Sad/Sorry', emoji: '😢' },
-    { name: 'Angry', value: 250, label: 'Angry', emoji: '😡' },
+    { name: 'Love', value: 250, label: 'Love', emoji: <LoveReactIcon /> },
+    { name: 'Wow', value: 250, label: 'Wow', emoji: <WowIcon /> },
+    { name: 'Haha', value: 250, label: 'Haha', emoji: <HahaIcon /> },
+    { name: 'Sad', value: 250, label: 'Sad', emoji: <SadIcon /> },
+    { name: 'Angry', value: 250, label: 'Angry', emoji: <AngeryIcon /> },
 ];
 
 export default function PostsMetrics() {
