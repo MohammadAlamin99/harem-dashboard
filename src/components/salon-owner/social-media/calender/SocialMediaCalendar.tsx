@@ -3,6 +3,8 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import SocialDayview from "./SocialDayview";
 import TeamDropdown from "../../appointment/calander-view/TeamDropdown";
+import SocialWeekView from "./SocialWeekView";
+import SocialMonthView from "./SocialMonthView";
 
 type Period = "Month" | "Week" | "Day";
 
@@ -138,11 +140,15 @@ export default function SocialMediaCalendar() {
             )}
 
             {period === "Week" && (
-                <></>
+                <>
+                    <SocialWeekView currentDate={currentDate} />
+                </>
             )}
 
             {period === "Month" && (
-                <></>
+                <>
+                    <SocialMonthView currentDate={currentDate} />
+                </>
             )}
         </div>
     );

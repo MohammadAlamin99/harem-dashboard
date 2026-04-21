@@ -79,8 +79,8 @@ const allAppointments: CalAppointment[] = [
       clientName: "Client Name",
       service: "Haircut",
       date: makeDate(2025, 9, 2),
-      startTime: "09:00",   // ✅ change করো
-      endTime: "10:30",     // ✅ 1.5 ঘণ্টা duration দাও
+      startTime: "09:00",
+      endTime: "10:30",
       price: "€ 170",
       duration: "90 min",
       status: "Canceled" as AppStatus,
