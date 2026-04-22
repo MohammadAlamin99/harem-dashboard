@@ -11,7 +11,7 @@ import BundlesIcon from "@/app/account-protal/svg/BundlesIcon";
 import InventoryIcon from "@/app/account-protal/svg/InventoryIcon";
 import ProductIcon from "@/app/account-protal/svg/ProductIcon";
 import StockIcon from "@/app/account-protal/svg/StockIcon";
-import { BookOpen, CalendarDays, ChartSpline, Globe } from "lucide-react";
+import { Activity, BarChart3, BookOpen, CalendarDays, ChartSpline, Globe, UserCheck, Users } from "lucide-react";
 import IDollar from "@/components/salon-owner/appointment/add-appointment/IDollar";;
 import FinancialIcon from "@/app/account-protal/svg/FinancialIcon";
 import IReceipts from "@/app/account-protal/svg/IReceipts";
@@ -174,5 +174,26 @@ export const salonOwnerNavigation: NavItem[] = [
         icon: ChartSpline,
       },
     ],
+  },
+  {
+    label: "Statistics",
+    icon: BarChart3,
+    children: [
+      {
+        label: "Performance Dashboard",
+        href: "/salon-owner/statistics/performance-dashboard",
+        icon: Activity,
+      },
+      {
+        label: "Employee Status",
+        href: "/salon-owner/statistics/employee-performance",
+        icon: UserCheck,
+      },
+      {
+        label: "Client Status",
+        href: "/salon-owner/statistics/client-status",
+        icon: Users,
+      }
+    ]
   },
 ];

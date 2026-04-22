@@ -58,8 +58,8 @@ const salonData = [
   {
     id: 1,
     name: "Glamour Beauty",
-    iconColor: "#FF6692", // icon color
-    bgColor: "#FFE5ED", // background behind icon
+    iconColor: "#FF6692", 
+    bgColor: "#FFE5ED",
     pendingSalaries: 5,
     pendingTaxes: 2,
     status: "On Track",
@@ -68,8 +68,8 @@ const salonData = [
   {
     id: 2,
     name: "Style Studio",
-    iconColor: "#36C76C", // icon color
-    bgColor: "#EBFAF0", // background behind icon
+    iconColor: "#36C76C",
+    bgColor: "#EBFAF0", 
     pendingSalaries: 5,
     pendingTaxes: 2,
     status: "On Track",
@@ -78,8 +78,8 @@ const salonData = [
   {
     id: 3,
     name: "Chic Hair & Beauty",
-    iconColor: "#36C76C", // icon color
-    bgColor: "#EBFAF0", // background behind icon
+    iconColor: "#36C76C", 
+    bgColor: "#EBFAF0", 
     pendingSalaries: 5,
     pendingTaxes: 2,
     status: "On Track",
@@ -88,8 +88,8 @@ const salonData = [
   {
     id: 4,
     name: "Style Studio",
-    iconColor: "#FF6692", // icon color
-    bgColor: "#FFE5ED", // background behind icon
+    iconColor: "#FF6692", 
+    bgColor: "#FFE5ED", 
     pendingSalaries: 5,
     pendingTaxes: 2,
     status: "On Track",

@@ -18,7 +18,7 @@ export default function Card({
 }) {
     return (
         <div
-            className="w-full p-6 rounded-lg font-manrope"
+            className="w-full p-6 rounded-2xl font-manrope"
             style={{
                 background: `linear-gradient(to top, ${gradientFrom}, ${gradientTo})`,
             }}
