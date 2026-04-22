@@ -3,8 +3,7 @@ import { useState } from "react";
 import { salonOwnerNavigation } from "@/config/navigation/salon-owner";
 import Sidebar from "@/components/accountProtal/Sidebar";
 import Topbar from "@/components/accountProtal/Topbar";
-import StatPerformanceDashboardContent from "./StatPerformanceDashboardContent";
-
+import WaiversContent from "./WaiversContent";
 
 export const MediaLayout = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -21,7 +20,7 @@ export const MediaLayout = () => {
                 <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
                 <main className="flex-1 overflow-y-auto p-6 bg-[#F4F7FB] rounded-[20px]">
-                    <StatPerformanceDashboardContent />
+                    <WaiversContent />
                 </main>
             </div>
         </div>

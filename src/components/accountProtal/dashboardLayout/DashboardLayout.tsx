@@ -18,7 +18,7 @@ export const DashboardLayout = ({ children }: { children?: React.ReactNode }) =>
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="flex-1 overflow-y-auto p-6 bg-[#F4F7FB] mr-4 rounded-[20px]">
+        <main className="flex-1 p-6 bg-[#F4F7FB] mr-4 rounded-[20px]">
           {children}
         </main>
       </div>

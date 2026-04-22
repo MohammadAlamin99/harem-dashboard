@@ -8,9 +8,7 @@ import ProductCategoryContent from "./ProductCategoryContent";
 export const ProductCategoryLayout = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     return (
-        <div className="flex h-screen rounded-3xl">
-            {/* <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
-       */}
+        <div className="flex h-screen rounded-3xl overflow-hidden">
             <Sidebar
                 isOpen={isSidebarOpen}
                 onClose={() => setSidebarOpen(false)}
