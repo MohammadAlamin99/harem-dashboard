@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import AppPill from "./AppPill";
 import NewAppointmentModal from "./NewAppointmentModal";
 import PreviewCard from "./PreviewCard";
@@ -70,10 +69,10 @@ export default function MonthView({
   const [dragOverDay, setDragOverDay] = useState<Date | null>(null);
 
   const didClickPillRef = useRef(false);
-
   const containerRef = useRef<HTMLDivElement>(null);
 
   const grid = getMonthGrid(date.getFullYear(), date.getMonth());
+  const today = new Date();
 
   const memberAppts = (allAppointments ?? []).filter((a) =>
     selectedMemberIds.includes(a.employeeId)
@@ -89,7 +88,6 @@ export default function MonthView({
     setSelectedDay(day);
   };
 
-  //  Click on AppPill → show PreviewCard 
   const handlePillClick = (appt: CalAppointment, e: React.MouseEvent) => {
     e.stopPropagation();
     didClickPillRef.current = true;
@@ -106,170 +104,150 @@ export default function MonthView({
     setSelectedDay(null);
   };
 
-  // Drag & Drop: AppPill drag 
   const handlePillDragStart = (appt: CalAppointment, e: React.DragEvent) => {
     e.stopPropagation();
     setDraggedAppt(appt);
     e.dataTransfer.effectAllowed = "move";
   };
 
-  const handlePillDragEnd = () => {
-    setDraggedAppt(null);
-    setDragOverDay(null);
-  };
-
-  // Drag & Drop: Day cell drop 
   const handleDayCellDragOver = (e: React.DragEvent, day: Date) => {
     e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
     setDragOverDay(day);
   };
 
   const handleDayCellDrop = (e: React.DragEvent, day: Date) => {
     e.preventDefault();
     e.stopPropagation();
-
     if (!draggedAppt) return;
 
-    const updatedAppt: CalAppointment = {
+    onAppointmentUpdate?.({
       ...draggedAppt,
       date: day,
-    };
-
-    onAppointmentUpdate?.(updatedAppt);
+    });
     setDraggedAppt(null);
     setDragOverDay(null);
   };
 
-  const handleDayCellDragLeave = () => {
-    setDragOverDay(null);
-  };
-
-  // Create appointment from modal 
   const handleConfirm = (
     data: Omit<CalAppointment, "id" | "date" | "startTime" | "endTime">
   ) => {
     if (!selectedDay) return;
-
-    const newAppt: CalAppointment = {
+    onAppointmentCreate?.({
       id: `appt-${Date.now()}`,
       ...data,
       date: selectedDay,
-      startTime: "00:00",
-      endTime: "23:59",
-    };
-
-    onAppointmentCreate?.(newAppt);
+      startTime: "09:00",
+      endTime: "10:00",
+    });
     setSelectedDay(null);
   };
-
-  //  Close preview when clicking outside 
-  useEffect(() => {
-    const handler = () => setPreview(null);
-    window.addEventListener("click", handler);
-    return () => window.removeEventListener("click", handler);
-  }, []);
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-x-auto"
+      className="relative w-full h-full font-manrope bg-white"
       onClick={() => setPreview(null)}
     >
-      <div className="min-w-[1000px]">
-        <div className="mx-[15px] md:mx-[30px] border border-[#E0E6EB] rounded-xl">
+      <div className="min-w-[1000px] h-full flex flex-col">
+        <div className="mx-[15px] md:mx-[30px] border border-[#E0E6EB] rounded-xl flex flex-col overflow-hidden shadow-sm">
 
-          {/* Header */}
-          <div className="grid grid-cols-7 border-b border-[#E0E6EB] bg-[#E0E6EB] rounded-[12px_12px_0px_0px]">
+          {/* Header Row - GlamPro Style */}
+          <div className="grid grid-cols-7 border-b border-[#E0E6EB] bg-[#F3F3FF]">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
               <div
                 key={d}
-                className="py-5 text-center text-sm font-semibold text-[#526B7A]"
+                className="py-4 text-center text-[11px] font-semibold text-[#98A4AE] uppercase tracking-wider"
               >
                 {d}
               </div>
             ))}
           </div>
 
-          {/* Grid */}
-          {grid.map((week, wi) => (
-            <div key={wi} className="grid grid-cols-7 border-b border-[#E0E6EB]">
-              {week.map((day, di) => {
-                const dayAppts = day
-                  ? memberAppts.filter((a) => isSameDay(a.date, day))
-                  : [];
+          {/* Month Grid */}
+          <div className="flex-1 flex flex-col">
+            {grid.map((week, wi) => (
+              <div key={wi} className="grid grid-cols-7 border-b border-[#E0E6EB] last:border-b-0">
+                {week.map((day, di) => {
+                  const dayAppts = day
+                    ? memberAppts.filter((a) => isSameDay(a.date, day))
+                    : [];
 
-                const isDragOver =
-                  dragOverDay && day && isSameDay(dragOverDay, day);
+                  const isToday = day && isSameDay(today, day);
+                  const isDragOver = dragOverDay && day && isSameDay(dragOverDay, day);
 
-                return (
-                  <div
-                    key={di}
-                    className={`
-                      border-r border-[#E0E6EB] last:border-r-0
-                      min-h-[120px] p-2 relative
-                      transition-colors duration-100
-                      ${!day ? "bg-[#FAFBFF]" : "bg-white hover:bg-[#FAFBFF] cursor-pointer"}
-                      ${isDragOver ? "bg-[#F0EFFF] ring-2 ring-inset ring-[#635BFF]" : ""}
-                    `}
-                    onClick={(e) => day && handleDayCellClick(day, e)}
-                    onDragOver={(e) => day && handleDayCellDragOver(e, day)}
-                    onDrop={(e) => day && handleDayCellDrop(e, day)}
-                    onDragLeave={handleDayCellDragLeave}
-                  >
-                    {day && (
-                      <>
-                        <p className="text-[11px] text-right text-[#98A4AE] mb-1.5 select-none">
-                          {day.getDate()}
-                        </p>
-
-                        <div className="flex flex-col gap-[3px]">
-                          {dayAppts.slice(0, 3).map((appt) => (
-                            <div
-                              key={appt.id}
-                              draggable
-                              onDragStart={(e) => handlePillDragStart(appt, e)}
-                              onDragEnd={handlePillDragEnd}
-                            >
-                              <AppPill
-                                appt={appt}
-                                onClick={handlePillClick}
-                                statusColor={statusColor}
-                                compact
-                              />
-                            </div>
-                          ))}
-
-                          {dayAppts.length > 3 && (
-                            <p className="text-[11px] text-[#98A4AE] pl-1">
-                              +{dayAppts.length - 3} more
-                            </p>
-                          )}
-                        </div>
-                        {!draggedAppt && (
-                          <div className="absolute bottom-1.5 right-1.5 opacity-0 group-hover:opacity-100 pointer-events-none">
-                            <span className="text-[10px] text-[#635BFF] font-semibold">+</span>
+                  return (
+                    <div
+                      key={di}
+                      className={`
+                        border-r border-[#E0E6EB] last:border-r-0
+                        min-h-[140px] p-2 relative group
+                        transition-all duration-200
+                        ${!day ? "bg-[#FAFBFF]" : "bg-white hover:bg-[#F3F3FF]/30 cursor-cell"}
+                        ${isDragOver ? "bg-[#F0EFFF] !ring-2 !ring-inset !ring-[#635BFF] z-10" : ""}
+                      `}
+                      onClick={(e) => day && handleDayCellClick(day, e)}
+                      onDragOver={(e) => day && handleDayCellDragOver(e, day)}
+                      onDrop={(e) => day && handleDayCellDrop(e, day)}
+                      onDragLeave={() => setDragOverDay(null)}
+                    >
+                      {day && (
+                        <>
+                          <div className="flex justify-between items-start mb-2">
+                            <span className={`
+                               text-[13px] font-bold w-7 h-7 flex items-center justify-center rounded-full
+                               ${isToday ? "bg-[#635BFF] text-white" : "text-[#29343D]"}
+                             `}>
+                              {day.getDate()}
+                            </span>
+                            {/* Hover Add Indicator */}
+                            <span className="opacity-0 group-hover:opacity-100 text-[#635BFF] text-lg font-bold leading-none">+</span>
                           </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ))}
+
+                          <div className="flex flex-col gap-1.5 overflow-hidden">
+                            {dayAppts.slice(0, 3).map((appt) => (
+                              <div
+                                key={appt.id}
+                                draggable
+                                onDragStart={(e) => handlePillDragStart(appt, e)}
+                                onDragEnd={() => { setDraggedAppt(null); setDragOverDay(null); }}
+                              >
+                                <AppPill
+                                  appt={appt}
+                                  onClick={handlePillClick}
+                                  statusColor={statusColor}
+                                  compact
+                                />
+                              </div>
+                            ))}
+
+                            {dayAppts.length > 3 && (
+                              <div className="px-2 py-0.5">
+                                <p className="text-[11px] font-bold text-[#635BFF] bg-[#635BFF]/5 w-fit px-1.5 rounded">
+                                  + {dayAppts.length - 3} more
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Preview card */}
+      {/* Preview card - Centering logic improved */}
       {preview && (
         <PreviewCard
           appt={preview.appt}
           onClose={() => setPreview(null)}
           statusBadgeColor={statusBadgeColor}
           style={{
-            top: Math.min(preview.y, 400),
-            left: Math.min(preview.x, 500),
+            top: Math.min(preview.y, 500),
+            left: Math.min(preview.x, 800),
           }}
         />
       )}

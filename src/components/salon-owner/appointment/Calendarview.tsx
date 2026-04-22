@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react"; // Added useRef
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import IView from "./reschedule/IView";
 import {
@@ -18,36 +18,12 @@ const statusColor: Record<
   AppStatus,
   { bg: string; text: string; border: string }
 > = {
-  Booked: {
-    bg: "bg-[#F3F0FF]",
-    text: "text-[#635BFF]",
-    border: "border-l-[#635BFF]",
-  },
-  Confirmed: {
-    bg: "bg-[#E6FFFE]",
-    text: "text-[#16CDC7]",
-    border: "border-l-[#16CDC7]",
-  },
-  Arrived: {
-    bg: "bg-[#FFFBEA]",
-    text: "text-[#E6B800]",
-    border: "border-l-[#FFD648]",
-  },
-  Started: {
-    bg: "bg-[#FFF0F3]",
-    text: "text-[#FF6692]",
-    border: "border-l-[#FF6692]",
-  },
-  Completed: {
-    bg: "bg-[#EDFBF3]",
-    text: "text-[#36C76C]",
-    border: "border-l-[#36C76C]",
-  },
-  Canceled: {
-    bg: "bg-[#FFF0F3]",
-    text: "text-[#FF6692]",
-    border: "border-l-[#FF6692]",
-  },
+  Booked: { bg: "bg-[#F3F0FF]", text: "text-[#635BFF]", border: "border-l-[#635BFF]" },
+  Confirmed: { bg: "bg-[#E6FFFE]", text: "text-[#16CDC7]", border: "border-l-[#16CDC7]" },
+  Arrived: { bg: "bg-[#FFFBEA]", text: "text-[#E6B800]", border: "border-l-[#FFD648]" },
+  Started: { bg: "bg-[#FFF0F3]", text: "text-[#FF6692]", border: "border-l-[#FF6692]" },
+  Completed: { bg: "bg-[#EDFBF3]", text: "text-[#36C76C]", border: "border-l-[#36C76C]" },
+  Canceled: { bg: "bg-[#FFF0F3]", text: "text-[#FF6692]", border: "border-l-[#FF6692]" },
 };
 
 const statusBadgeColor: Record<AppStatus, string> = {
@@ -59,7 +35,6 @@ const statusBadgeColor: Record<AppStatus, string> = {
   Canceled: "bg-[#FFE5ED] text-[#FF6692]",
 };
 
-// Static team members
 const teamMembers = [
   { id: "1", name: "Maria Rodriguez", avatar: "/images/avator.png" },
   { id: "2", name: "Maria Rodriguez", avatar: "/images/avator.png" },
@@ -69,7 +44,6 @@ const teamMembers = [
   { id: "6", name: "Maria Rodriguez", avatar: "/images/avator.png" },
 ];
 
-// Static appointments
 const makeDate = (y: number, m: number, d: number) => new Date(y, m - 1, d);
 
 const allAppointments: CalAppointment[] = [
@@ -90,7 +64,6 @@ const allAppointments: CalAppointment[] = [
   ]),
 ];
 
-// Helpers
 const isSameDay = (a: Date, b: Date) =>
   a.getFullYear() === b.getFullYear() &&
   a.getMonth() === b.getMonth() &&
@@ -115,6 +88,7 @@ const MONTH_NAMES = [
 ];
 
 export default function CalendarView() {
+  const calendarRef = useRef<HTMLDivElement>(null); // NEW: Ref for full screen
   const [period, setPeriod] = useState<Period>("Day");
   const [currentDate, setCurrentDate] = useState(new Date(2025, 8, 2));
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>(
@@ -124,19 +98,28 @@ export default function CalendarView() {
     allAppointments.slice(0, 1),
   );
 
-  // Calendar settings state 
   const [visibleStartHour, setVisibleStartHour] = useState(0);
   const [visibleEndHour, setVisibleEndHour] = useState(24);
   const [slotDuration, setSlotDuration] = useState(60);
   const [slotHeight, setSlotHeight] = useState(48);
 
-  // Build HOURS array from visible range
   const HOURS = Array.from(
     { length: visibleEndHour - visibleStartHour },
     (_, i) => visibleStartHour + i,
   );
 
   const HOUR_HEIGHT = slotHeight;
+
+  // NEW: Fullscreen toggle function
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      calendarRef.current?.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
 
   function formatHour(h: number) {
     if (h === 0) return "12:00 AM";
@@ -166,24 +149,14 @@ export default function CalendarView() {
   const dateLabel = () => {
     if (period === "Day") {
       return currentDate
-        .toLocaleDateString("en-US", {
-          weekday: "long",
-          month: "short",
-          day: "2-digit",
-        })
+        .toLocaleDateString("en-US", { weekday: "long", month: "short", day: "2-digit" })
         .replace(",", "");
     }
     if (period === "Week") {
       const ws = getWeekStart(currentDate);
       const we = new Date(ws);
       we.setDate(we.getDate() + 6);
-      return `${ws.toLocaleDateString("en-US", {
-        month: "long",
-        day: "2-digit",
-      })} – ${we.toLocaleDateString("en-US", {
-        month: "long",
-        day: "2-digit",
-      })}`;
+      return `${ws.toLocaleDateString("en-US", { month: "long", day: "2-digit" })} – ${we.toLocaleDateString("en-US", { month: "long", day: "2-digit" })}`;
     }
     return MONTH_NAMES[currentDate.getMonth()];
   };
@@ -196,9 +169,12 @@ export default function CalendarView() {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-[#EFF4FA] overflow-hidden font-manrope">
+    <div
+      ref={calendarRef}
+      className="bg-white rounded-xl border border-[#EFF4FA] overflow-y-auto font-manrope h-full"
+    >
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-4 sm:p-[30px]">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-4 sm:p-[30px] bg-white sticky top-0 z-50">
         {/* Left: team filter */}
         <TeamDropdown
           selectedIds={selectedMemberIds}
@@ -246,77 +222,85 @@ export default function CalendarView() {
             ))}
           </div>
 
-          <div className="bg-[#EFF4FA] rounded-[8px] px-4 py-2.5">
+          {/* IView Wrapper for Fullscreen Click */}
+          <div
+            className="bg-[#EFF4FA] rounded-[8px] px-4 py-2.5 cursor-pointer hover:bg-[#e0e7f0] transition-colors"
+            onClick={toggleFullscreen}
+          >
             <IView />
           </div>
 
           {/* Calendar Settings Panel */}
-          <CalendarSettingsPanel
-            startHour={visibleStartHour}
-            endHour={visibleEndHour}
-            slotDuration={slotDuration}
-            slotHeight={slotHeight}
-            onStartHourChange={setVisibleStartHour}
-            onEndHourChange={setVisibleEndHour}
-            onSlotDurationChange={setSlotDuration}
-            onSlotHeightChange={setSlotHeight}
-          />
+          {(period === "Day" || period === "Week") && (
+            <CalendarSettingsPanel
+              startHour={visibleStartHour}
+              endHour={visibleEndHour}
+              slotDuration={slotDuration}
+              slotHeight={slotHeight}
+              onStartHourChange={setVisibleStartHour}
+              onEndHourChange={setVisibleEndHour}
+              onSlotDurationChange={setSlotDuration}
+              onSlotHeightChange={setSlotHeight}
+            />
+          )}
         </div>
       </div>
 
       {/* Calendar grid */}
-      {period === "Day" && (
-        <DayView
-          date={currentDate}
-          selectedMemberIds={selectedMemberIds}
-          teamMembers={teamMembers}
-          allAppointments={appointments}
-          isSameDay={isSameDay}
-          HOURS={HOURS}
-          HOUR_HEIGHT={HOUR_HEIGHT}
-          formatHour={formatHour}
-          timeToMinutes={timeToMinutes}
-          statusColor={statusColor}
-          statusBadgeColor={statusBadgeColor}
-          onAppointmentCreate={handleAppointmentCreate}
-          onAppointmentUpdate={handleAppointmentUpdate}
-          slotDuration={slotDuration}
-        />
-      )}
+      <div className="bg-white">
+        {period === "Day" && (
+          <DayView
+            date={currentDate}
+            selectedMemberIds={selectedMemberIds}
+            teamMembers={teamMembers}
+            allAppointments={appointments}
+            isSameDay={isSameDay}
+            HOURS={HOURS}
+            HOUR_HEIGHT={HOUR_HEIGHT}
+            formatHour={formatHour}
+            timeToMinutes={timeToMinutes}
+            statusColor={statusColor}
+            statusBadgeColor={statusBadgeColor}
+            onAppointmentCreate={handleAppointmentCreate}
+            onAppointmentUpdate={handleAppointmentUpdate}
+            slotDuration={slotDuration}
+          />
+        )}
 
-      {period === "Week" && (
-        <WeekView
-          date={currentDate}
-          selectedMemberIds={selectedMemberIds}
-          teamMembers={teamMembers}
-          allAppointments={appointments}
-          isSameDay={isSameDay}
-          HOURS={HOURS}
-          HOUR_HEIGHT={HOUR_HEIGHT}
-          formatHour={formatHour}
-          timeToMinutes={timeToMinutes}
-          statusColor={statusColor}
-          statusBadgeColor={statusBadgeColor}
-          WEEK_DAYS={WEEK_DAYS}
-          getWeekStart={getWeekStart}
-          onAppointmentCreate={handleAppointmentCreate}
-          onAppointmentUpdate={handleAppointmentUpdate}
-          slotDuration={slotDuration}
-        />
-      )}
+        {period === "Week" && (
+          <WeekView
+            date={currentDate}
+            selectedMemberIds={selectedMemberIds}
+            teamMembers={teamMembers}
+            allAppointments={appointments}
+            isSameDay={isSameDay}
+            HOURS={HOURS}
+            HOUR_HEIGHT={HOUR_HEIGHT}
+            formatHour={formatHour}
+            timeToMinutes={timeToMinutes}
+            statusColor={statusColor}
+            statusBadgeColor={statusBadgeColor}
+            WEEK_DAYS={WEEK_DAYS}
+            getWeekStart={getWeekStart}
+            onAppointmentCreate={handleAppointmentCreate}
+            onAppointmentUpdate={handleAppointmentUpdate}
+            slotDuration={slotDuration}
+          />
+        )}
 
-      {period === "Month" && (
-        <MonthView
-          date={currentDate}
-          selectedMemberIds={selectedMemberIds}
-          teamMembers={teamMembers}
-          allAppointments={appointments}
-          statusColor={statusColor}
-          statusBadgeColor={statusBadgeColor}
-          onAppointmentCreate={handleAppointmentCreate}
-          onAppointmentUpdate={handleAppointmentUpdate}
-        />
-      )}
+        {period === "Month" && (
+          <MonthView
+            date={currentDate}
+            selectedMemberIds={selectedMemberIds}
+            teamMembers={teamMembers}
+            allAppointments={appointments}
+            statusColor={statusColor}
+            statusBadgeColor={statusBadgeColor}
+            onAppointmentCreate={handleAppointmentCreate}
+            onAppointmentUpdate={handleAppointmentUpdate}
+          />
+        )}
+      </div>
     </div>
   );
 }
