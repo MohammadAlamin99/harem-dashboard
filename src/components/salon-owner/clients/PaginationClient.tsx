@@ -39,7 +39,7 @@ export default function PaginationClient<T>({
   return (
     <div>
       <div
-        className={`${margin ? "mx-4 md:mx-[30px]" : ""} mb-[30px] py-4 flex flex-wrap md:flex-nowrap items-center
+        className={`${margin ? "mx-4 md:mx-[30px]" : ""} mb-[30px] py-4 flex flex-wrap md:flex-nowrap items-center font-manrope
        md:justify-end justify-between gap-8 ${border ? "border-t-0 border-b border-l border-r rounded-[0_0_8px_8px] border-[#E0E6EB]" : ""} px-[15px] md:px-[30px]`}
       >
         {/* Items per page */}
