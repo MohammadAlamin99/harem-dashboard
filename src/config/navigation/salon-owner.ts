@@ -99,7 +99,7 @@ export const salonOwnerNavigation: NavSection[] = [
   {
     title: "Others",
     items: [
-      { label: "Waivers", href: "/salon-owner/waivers", icon: IFile },
+      { label: "Waivers", href: "/salon-owner/waivers", matchUrls: ["/salon-owner/waivers/add-waivers", "/salon-owner/waivers/view-waivers/"], icon: IFile },
       { label: "Files", href: "/salon-owner/files", icon: Folder },
       { label: "Roles", href: "/salon-owner/roles", icon: ShieldCheck },
       { label: "Support", href: "/salon-owner/support", icon: LifeBuoy },
