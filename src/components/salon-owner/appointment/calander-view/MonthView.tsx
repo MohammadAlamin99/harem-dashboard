@@ -183,7 +183,7 @@ export default function MonthView({
                         min-h-[140px] p-2 relative group
                         transition-all duration-200
                         ${!day ? "bg-[#FAFBFF]" : "bg-white hover:bg-[#F3F3FF]/30 cursor-cell"}
-                        ${isDragOver ? "bg-[#F0EFFF] !ring-2 !ring-inset !ring-[#635BFF] z-10" : ""}
+                        ${isDragOver ? "bg-[#F0EFFF] ring-2! ring-inset! ring-[#635BFF]! z-10" : ""}
                       `}
                       onClick={(e) => day && handleDayCellClick(day, e)}
                       onDragOver={(e) => day && handleDayCellDragOver(e, day)}

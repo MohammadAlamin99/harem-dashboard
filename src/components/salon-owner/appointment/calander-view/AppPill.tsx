@@ -1,4 +1,3 @@
-
 "use client";
 import {
   AppStatus,
@@ -12,8 +11,6 @@ export default function AppPill({
   statusColor,
   onResizeEnd,
   slotDuration = 15,
-  slotPxHeight = 12,
-  // baseMinutes = 0,
   HOUR_HEIGHT = 48,
 }: {
   appt: CalAppointment;
@@ -27,11 +24,15 @@ export default function AppPill({
   HOUR_HEIGHT?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number>(999);
+  const [height, setHeight] = useState<number>(0);
+  const [liveEndTime, setLiveEndTime] = useState<string>(appt.endTime);
+  const [isResizing, setIsResizing] = useState(false);
+
   const isResizingRef = useRef(false);
   const lastResizeEndTimeRef = useRef(0);
   const resizeStartYRef = useRef(0);
   const resizeStartEndMinRef = useRef(0);
+  const wrapperRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -43,6 +44,7 @@ export default function AppPill({
     observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
+
 
   const c = statusColor?.[appt.status] ?? {
     bg: "bg-gray-100",
@@ -69,37 +71,47 @@ export default function AppPill({
     e.preventDefault();
     e.stopPropagation();
 
+    wrapperRef.current = ref.current?.parentElement ?? null;
     isResizingRef.current = true;
+    setIsResizing(true);
     resizeStartYRef.current = e.clientY;
     resizeStartEndMinRef.current = timeToMinutes(appt.endTime);
 
     const onMouseMove = (ev: MouseEvent) => {
       if (!isResizingRef.current) return;
       const deltaY = ev.clientY - resizeStartYRef.current;
-      const deltaMin = Math.round(deltaY / slotPxHeight) * slotDuration;
-
+      const pxPerSlot = HOUR_HEIGHT / (60 / slotDuration);
+      const deltaMin = Math.round(deltaY / pxPerSlot) * slotDuration;
       const startMin = timeToMinutes(appt.startTime);
-      const newEndMin = resizeStartEndMinRef.current + deltaMin;
-      const clampedEnd = Math.max(startMin + slotDuration, newEndMin);
+      const clampedEnd = Math.max(
+        startMin + slotDuration,
+        resizeStartEndMinRef.current + deltaMin
+      );
 
-      if (ref.current?.parentElement) {
+      // Live height update
+      if (wrapperRef.current) {
         const newHeight = ((clampedEnd - startMin) / 60) * HOUR_HEIGHT;
-        ref.current.parentElement.style.height = `${newHeight}px`;
+        wrapperRef.current.style.height = `${Math.max(28, newHeight)}px`;
       }
+      // Live time text update
+      setLiveEndTime(minutesToTime(clampedEnd));
     };
 
     const onMouseUp = (ev: MouseEvent) => {
       if (isResizingRef.current) {
         const deltaY = ev.clientY - resizeStartYRef.current;
-        const deltaMin = Math.round(deltaY / slotPxHeight) * slotDuration;
+        const pxPerSlot = HOUR_HEIGHT / (60 / slotDuration);
+        const deltaMin = Math.round(deltaY / pxPerSlot) * slotDuration;
         const startMin = timeToMinutes(appt.startTime);
-        const clampedEnd = Math.max(startMin + slotDuration, resizeStartEndMinRef.current + deltaMin);
-
+        const clampedEnd = Math.max(
+          startMin + slotDuration,
+          resizeStartEndMinRef.current + deltaMin
+        );
         onResizeEnd?.(appt, minutesToTime(clampedEnd));
         lastResizeEndTimeRef.current = Date.now();
         isResizingRef.current = false;
+        setIsResizing(false);
       }
-
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", onMouseUp);
     };
@@ -109,12 +121,11 @@ export default function AppPill({
   };
 
   const handleMainClick = (e: React.MouseEvent) => {
-    const now = Date.now();
-    if (now - lastResizeEndTimeRef.current < 200) {
-      return;
-    }
+    if (Date.now() - lastResizeEndTimeRef.current < 200) return;
     onClick(appt, e);
   };
+
+  const displayEndTime = isResizing ? liveEndTime : appt.endTime;
 
   return (
     <div
@@ -126,21 +137,21 @@ export default function AppPill({
         w-full h-full
         flex flex-col justify-center
         px-2.5
-        cursor-grab active:cursor-grabbing hover:opacity-90
-        transition-opacity overflow-hidden touch-none
+        cursor-grab active:cursor-grabbing
+        overflow-hidden touch-none
         relative group/pill
+        ${isResizing ? "ring-2 ring-blue-400 z-50" : ""}
       `}
       style={{
         minHeight: 28,
         paddingTop: isCompact ? 2 : 4,
         paddingBottom: isCompact ? 2 : 4,
       }}
-      draggable="true"
+      draggable={false}
     >
-      {/* Service Info */}
       {isCompact && (
         <p className="font-manrope font-semibold truncate leading-none text-[11px]">
-          <span className="font-semibold">{appt.service}</span>&nbsp;
+          <span>{appt.service}</span>&nbsp;
           <span className="font-normal opacity-75">({appt.clientName})</span>
         </p>
       )}
@@ -153,6 +164,11 @@ export default function AppPill({
           <p className="font-manrope font-normal opacity-75 truncate leading-tight text-[11px]">
             {appt.clientName}
           </p>
+          {isResizing && (
+            <p className="font-manrope font-bold text-[10px] mt-0.5">
+              {appt.startTime} – {displayEndTime}
+            </p>
+          )}
         </>
       )}
 
@@ -165,28 +181,30 @@ export default function AppPill({
             {appt.clientName}
           </p>
           <p className="font-manrope font-normal opacity-55 truncate leading-tight text-[10px] mt-0.5">
-            {appt.startTime} – {appt.endTime}
+            {appt.startTime} –{" "}
+            <span className={isResizing ? "font-bold text-blue-600" : ""}>
+              {displayEndTime}
+            </span>
           </p>
         </>
       )}
 
-      {/* ── Resize handle ── */}
       {onResizeEnd && (
         <div
           onMouseDown={handleResizeMouseDown}
           onClick={(e) => e.stopPropagation()}
           className="
-            absolute bottom-0 left-0 right-0 h-[10px]
+            absolute bottom-0 left-0 right-0 h-[12px]
             flex items-center justify-center
             cursor-ns-resize
             opacity-0 group-hover/pill:opacity-100
             transition-opacity z-20
           "
         >
-          <div className="flex gap-[3px] mb-[2px] pointer-events-none">
-            <span className="w-[3px] h-[3px] rounded-full bg-current opacity-40" />
-            <span className="w-[3px] h-[3px] rounded-full bg-current opacity-40" />
-            <span className="w-[3px] h-[3px] rounded-full bg-current opacity-40" />
+          <div className="flex gap-[3px] mb-[2px] pointer-events-none bg-black/10 px-2 py-0.5 rounded-full">
+            <span className="w-[3px] h-[3px] rounded-full bg-current opacity-60" />
+            <span className="w-[3px] h-[3px] rounded-full bg-current opacity-60" />
+            <span className="w-[3px] h-[3px] rounded-full bg-current opacity-60" />
           </div>
         </div>
       )}

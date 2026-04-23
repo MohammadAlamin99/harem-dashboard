@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react"; // Added useRef
+import { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import IView from "./reschedule/IView";
 import {
@@ -88,7 +88,7 @@ const MONTH_NAMES = [
 ];
 
 export default function CalendarView() {
-  const calendarRef = useRef<HTMLDivElement>(null); // NEW: Ref for full screen
+  const calendarRef = useRef<HTMLDivElement>(null);
   const [period, setPeriod] = useState<Period>("Day");
   const [currentDate, setCurrentDate] = useState(new Date(2025, 8, 2));
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>(
@@ -107,14 +107,12 @@ export default function CalendarView() {
     { length: visibleEndHour - visibleStartHour },
     (_, i) => visibleStartHour + i,
   );
-
   const HOUR_HEIGHT = slotHeight;
 
-  // NEW: Fullscreen toggle function
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       calendarRef.current?.requestFullscreen().catch((err) => {
-        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+        console.error(`Fullscreen error: ${err.message}`);
       });
     } else {
       document.exitFullscreen();
@@ -130,13 +128,11 @@ export default function CalendarView() {
 
   const isMonthOrWeek = period === "Month" || period === "Week";
 
-  const handleAppointmentCreate = (appt: CalAppointment) => {
+  const handleAppointmentCreate = (appt: CalAppointment) =>
     setAppointments((prev) => [...prev, appt]);
-  };
 
-  const handleAppointmentUpdate = (appt: CalAppointment) => {
+  const handleAppointmentUpdate = (appt: CalAppointment) =>
     setAppointments((prev) => prev.map((a) => (a.id === appt.id ? appt : a)));
-  };
 
   const navigate = (dir: -1 | 1) => {
     const d = new Date(currentDate);
@@ -171,10 +167,10 @@ export default function CalendarView() {
   return (
     <div
       ref={calendarRef}
-      className="bg-white rounded-xl border border-[#EFF4FA] overflow-y-auto font-manrope h-full"
+      className="bg-white rounded-xl border border-[#EFF4FA] font-manrope h-full flex flex-col"
     >
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-4 sm:p-[30px] bg-white sticky top-0 z-50">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-4 sm:p-[30px] bg-white z-50">
         {/* Left: team filter */}
         <TeamDropdown
           selectedIds={selectedMemberIds}
@@ -212,7 +208,7 @@ export default function CalendarView() {
                 className={`relative px-6 py-[10px] text-[16px] font-manrope font-medium transition-all cursor-pointer
                   ${period === p
                     ? "bg-[#DDDBFF] text-[#0A2540]"
-                    : "text-[#526B7A] bg-[white] hover:text-[#29343D]"
+                    : "text-[#526B7A] bg-white hover:text-[#29343D]"
                   }
                   ${i !== 2 ? "border-r border-[#E0E6EB]" : ""}
                 `}
@@ -222,7 +218,6 @@ export default function CalendarView() {
             ))}
           </div>
 
-          {/* IView Wrapper for Fullscreen Click */}
           <div
             className="bg-[#EFF4FA] rounded-[8px] px-4 py-2.5 cursor-pointer hover:bg-[#e0e7f0] transition-colors"
             onClick={toggleFullscreen}
@@ -230,7 +225,6 @@ export default function CalendarView() {
             <IView />
           </div>
 
-          {/* Calendar Settings Panel */}
           {(period === "Day" || period === "Week") && (
             <CalendarSettingsPanel
               startHour={visibleStartHour}
@@ -246,8 +240,8 @@ export default function CalendarView() {
         </div>
       </div>
 
-      {/* Calendar grid */}
-      <div className="bg-white">
+      {/* Calendar grid area */}
+      <div className="flex-1 overflow-hidden bg-white min-h-0">
         {period === "Day" && (
           <DayView
             date={currentDate}
