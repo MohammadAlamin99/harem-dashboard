@@ -23,96 +23,16 @@ import TeamFilterDropdown from "./Teamfilterdropdown ";
 import Link from "next/link";
 
 const allAppointments: Appointment[] = [
-  {
-    id: "001",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Booked",
-  },
-  {
-    id: "002",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Started",
-  },
-  {
-    id: "003",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Canceled",
-  },
-  {
-    id: "004",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Confirmed",
-  },
-  {
-    id: "005",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Arrived",
-  },
-  {
-    id: "006",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Completed",
-  },
-  {
-    id: "007",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Arrived",
-  },
-  {
-    id: "008",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Arrived",
-  },
-  {
-    id: "009",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Canceled",
-  },
-  {
-    id: "010",
-    clientName: "Maria Rodriguez",
-    clientPhone: "+39 345 678 9123",
-    service: "Haircut",
-    scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)",
-    price: "€ 170",
-    status: "Booked",
-  },
+  { id: "001", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Booked" },
+  { id: "002", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Started" },
+  { id: "003", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Canceled" },
+  { id: "004", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Confirmed" },
+  { id: "005", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Arrived" },
+  { id: "006", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Completed" },
+  { id: "007", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Arrived" },
+  { id: "008", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Arrived" },
+  { id: "009", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Canceled" },
+  { id: "010", clientName: "Maria Rodriguez", clientPhone: "+39 345 678 9123", service: "Haircut", scheduledDate: "5 Aug 2025 (12:00 AM - 12:15 AM)", price: "€ 170", status: "Booked" },
 ];
 
 const statusStyles: Record<Status, string> = {
@@ -125,63 +45,68 @@ const statusStyles: Record<Status, string> = {
 };
 
 const recentMembers = [
-  {
-    name: "Maria Rodriguez",
-    phone: "+39 345 678 9123",
-    avatar: "/images/avator.png",
-  },
-  {
-    name: "Maria Rodriguez",
-    phone: "+39 345 678 9123",
-    avatar: "/images/avator.png",
-  },
-  {
-    name: "Maria Rodriguez",
-    phone: "+39 345 678 9123",
-    avatar: "/images/avator.png",
-  },
-  {
-    name: "Maria Rodriguez",
-    phone: "+39 345 678 9123",
-    avatar: "/images/avator.png",
-  },
+  { name: "Maria Rodriguez", phone: "+39 345 678 9123", avatar: "/images/avator.png" },
+  { name: "Maria Rodriguez", phone: "+39 345 678 9123", avatar: "/images/avator.png" },
+  { name: "Maria Rodriguez", phone: "+39 345 678 9123", avatar: "/images/avator.png" },
+  { name: "Maria Rodriguez", phone: "+39 345 678 9123", avatar: "/images/avator.png" },
 ];
 
 const statusFilters: (Status | "All")[] = [
-  "All",
-  "Booked",
-  "Confirmed",
-  "Arrived",
-  "Started",
-  "Completed",
-  "Canceled",
+  "All", "Booked", "Confirmed", "Arrived", "Started", "Completed", "Canceled",
 ];
 
 export default function AppoinmentTableviewContent() {
   const [activeStatus, setActiveStatus] = useState<Status | "All">("All");
-  const [activeView, setActiveView] = useState<"calendar" | "table">(
-    "calendar",
-  );
-  const [activePeriod, setActivePeriod] = useState<"Month" | "Week" | "Day">(
-    "Day",
-  );
+  const [activeView, setActiveView] = useState<"calendar" | "table">("calendar");
+  const [activePeriod, setActivePeriod] = useState<"Month" | "Week" | "Day">("Day");
   const [itemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsHovered, setSettingsHovered] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
 
+  // ── Fixed-position dropdown: track button position 
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownPos, setDropdownPos] = useState<{ top: number; right: number } | null>(null);
+
+  // Recalculate position whenever menu opens
+  useEffect(() => {
+    if (menuOpen && menuButtonRef.current) {
+      const rect = menuButtonRef.current.getBoundingClientRect();
+      setDropdownPos({
+        top: rect.bottom + 6,
+        right: window.innerWidth - rect.right,
+      });
+    }
+  }, [menuOpen]);
+
+  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMenuOpen(false);
-        setSettingsHovered(false);
-      }
+      const target = e.target as Node;
+      if (
+        menuButtonRef.current?.contains(target) ||
+        dropdownRef.current?.contains(target)
+      ) return;
+      setMenuOpen(false);
+      setSettingsHovered(false);
     };
     if (menuOpen) document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
+  // Close on scroll/resize so it doesn't drift
+  useEffect(() => {
+    if (!menuOpen) return;
+    const close = () => { setMenuOpen(false); setSettingsHovered(false); };
+    window.addEventListener("scroll", close, true);
+    window.addEventListener("resize", close);
+    return () => {
+      window.removeEventListener("scroll", close, true);
+      window.removeEventListener("resize", close);
+    };
   }, [menuOpen]);
 
   const filtered = allAppointments.filter(
@@ -229,78 +154,80 @@ export default function AppoinmentTableviewContent() {
               </button>
             </div>
 
-            {/* EllipsisVertical with Dropdown */}
-
-            <div className="relative" ref={menuRef}>
-              <button
-                onClick={() => {
-                  setMenuOpen((prev) => !prev);
-                  setSettingsHovered(false);
+            {/* ── 3-dot menu button ── */}
+            <button
+              ref={menuButtonRef}
+              onClick={() => {
+                setMenuOpen((prev) => !prev);
+                setSettingsHovered(false);
+              }}
+              className="w-[44px] h-[44px] flex items-center justify-center border border-[#E0E6EB] rounded-[8px] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
+            >
+              <EllipsisVertical size={20} color="#0A2540" />
+            </button>
+            {menuOpen && dropdownPos && (
+              <div
+                ref={dropdownRef}
+                style={{
+                  position: "fixed",
+                  top: dropdownPos.top,
+                  right: dropdownPos.right,
+                  zIndex: 99999,
                 }}
-                className="w-[44px] h-[44px] flex items-center justify-center border border-[#E0E6EB] rounded-[8px] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
               >
-                <EllipsisVertical size={20} color="#0A2540" />
-              </button>
+                <div className="bg-white rounded-[10px] shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-[#EFF4FA] py-1.5 min-w-[190px]">
+                  {/* Settings with sub-menu */}
+                  <div
+                    className="relative flex items-center justify-between px-4 py-2.5 hover:bg-[#F4F6FA] cursor-pointer"
+                    onMouseEnter={() => setSettingsHovered(true)}
+                    onMouseLeave={() => setSettingsHovered(false)}
+                  >
+                    <span className="text-sm font-manrope font-medium text-[#29343D]">
+                      Settings
+                    </span>
+                    <ChevronRight size={15} className="text-[#98A4AE]" />
 
-              {menuOpen && (
-                <div className="absolute right-0 top-[calc(100%+6px)] z-50">
-                  <div className="bg-white rounded-[10px] shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-[#EFF4FA] py-1.5 min-w-[190px]">
-                    <div
-                      className="relative flex items-center justify-between px-4 py-2.5 hover:bg-[#F4F6FA] cursor-pointer"
-                      onMouseEnter={() => setSettingsHovered(true)}
-                      onMouseLeave={() => setSettingsHovered(false)}
-                    >
-                      <span className="text-sm font-manrope font-medium text-[#29343D]">
-                        Settings
-                      </span>
-                      <ChevronRight size={15} className="text-[#98A4AE]" />
-                      {settingsHovered && (
-                        <div
-                          className="absolute left-full top-0 ml-1 bg-white rounded-[10px] shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-[#EFF4FA] py-1.5 min-w-[220px]"
-                          onMouseEnter={() => setSettingsHovered(true)}
-                          onMouseLeave={() => setSettingsHovered(false)}
-                        >
-                          <Link href="/salon-owner/appointment/settings">
-                            <button
-                              className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
-                              onClick={() => {
-                                setMenuOpen(false);
-                                setSettingsHovered(false);
-                              }}
-                            >
-                              General settings
-                            </button>
-                          </Link>
+                    {settingsHovered && (
+                      <div
+                        className="absolute left-full top-0 ml-1 bg-white rounded-[10px] shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-[#EFF4FA] py-1.5 min-w-[220px]"
+                        onMouseEnter={() => setSettingsHovered(true)}
+                        onMouseLeave={() => setSettingsHovered(false)}
+                      >
+                        <Link href="/salon-owner/appointment/settings">
                           <button
                             className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
-                            onClick={() => {
-                              setMenuOpen(false);
-                              setSettingsHovered(false);
-                            }}
+                            onClick={() => { setMenuOpen(false); setSettingsHovered(false); }}
                           >
-                            Notifications &amp; Communication
+                            General settings
                           </button>
-                        </div>
-                      )}
-                    </div>
-                    <Link href="/salon-owner/appointment/import-appointments">
-                      <button
-                        className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Import Appointments
-                      </button>
-                    </Link>
+                        </Link>
+                        <button
+                          className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
+                          onClick={() => { setMenuOpen(false); setSettingsHovered(false); }}
+                        >
+                          Notifications &amp; Communication
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  <Link href="/salon-owner/appointment/import-appointments">
                     <button
                       className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
                       onClick={() => setMenuOpen(false)}
                     >
-                      Export Data
+                      Import Appointments
                     </button>
-                  </div>
+                  </Link>
+                  <button
+                    className="w-full text-left px-4 py-2.5 text-sm font-manrope font-medium text-[#29343D] hover:bg-[#F4F6FA] transition-colors cursor-pointer"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Export Data
+                  </button>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
             <Link href={"/salon-owner/appointment/add"}>
               <button className="flex items-center gap-1.5 px-4 py-2.5 bg-[#635BFF] hover:bg-[#4f49e0] transition-colors text-white text-sm font-semibold font-manrope rounded-[8px] cursor-pointer">
@@ -321,11 +248,7 @@ export default function AppoinmentTableviewContent() {
               {statusFilters.map((s) => (
                 <button
                   key={s}
-                  onClick={() => {
-                    setActiveStatus(s);
-                    setCurrentPage(1);
-                    setExpandedRow(null);
-                  }}
+                  onClick={() => { setActiveStatus(s); setCurrentPage(1); setExpandedRow(null); }}
                   className={`px-3 py-1.5 text-sm font-manrope font-medium rounded-[6px] border transition-all cursor-pointer ${activeStatus === s ? "border-[#635BFF] text-[#635BFF] bg-white" : "border-[#E0E6EB] text-[#526B7A] hover:border-[#635BFF] hover:text-[#635BFF]"}`}
                 >
                   {s}
@@ -380,19 +303,8 @@ export default function AppoinmentTableviewContent() {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-[#F3F3FF] border-b border-[#E0E6EB]">
-                  {[
-                    "ID",
-                    "Client",
-                    "Service",
-                    "Scheduled Date",
-                    "Price",
-                    "Status",
-                    "",
-                  ].map((h, i) => (
-                    <th
-                      key={i}
-                      className="px-4 py-5 border-r border-[#E0E6EB] last:border-r-0 text-sm font-semibold font-manrope text-[#29343D] text-left whitespace-nowrap"
-                    >
+                  {["ID", "Client", "Service", "Scheduled Date", "Price", "Status", ""].map((h, i) => (
+                    <th key={i} className="px-4 py-5 border-r border-[#E0E6EB] last:border-r-0 text-sm font-semibold font-manrope text-[#29343D] text-left whitespace-nowrap">
                       {h}
                     </th>
                   ))}
@@ -404,53 +316,30 @@ export default function AppoinmentTableviewContent() {
                   const isExpanded = expandedRow === globalIndex;
                   return (
                     <React.Fragment key={globalIndex}>
-                      <tr
-                        className={`border-b border-[#E0E6EB] transition-colors ${isExpanded ? "bg-[#F7F7FF]" : "hover:bg-[#FAFBFF]"} ${isExpanded ? "" : "last:border-b-0"}`}
-                      >
+                      <tr className={`border-b border-[#E0E6EB] transition-colors ${isExpanded ? "bg-[#F7F7FF]" : "hover:bg-[#FAFBFF]"} ${isExpanded ? "" : "last:border-b-0"}`}>
                         <td className="px-4 py-4 border-r border-[#E0E6EB]">
-                          <span className="text-sm font-semibold font-manrope text-[#635BFF]">
-                            {row.id}
-                          </span>
+                          <span className="text-sm font-semibold font-manrope text-[#635BFF]">{row.id}</span>
                         </td>
                         <td className="px-4 py-4 border-r border-[#E0E6EB]">
                           <div className="flex items-center gap-3">
-                            <Image
-                              src="/images/avator.png"
-                              alt={row.clientName}
-                              width={36}
-                              height={36}
-                              className="rounded-xl object-cover"
-                            />
+                            <Image src="/images/avator.png" alt={row.clientName} width={36} height={36} className="rounded-xl object-cover" />
                             <div>
-                              <p className="text-sm font-semibold font-manrope text-[#29343D]">
-                                {row.clientName}
-                              </p>
-                              <p className="text-xs font-manrope text-[#98A4AE]">
-                                {row.clientPhone}
-                              </p>
+                              <p className="text-sm font-semibold font-manrope text-[#29343D]">{row.clientName}</p>
+                              <p className="text-xs font-manrope text-[#98A4AE]">{row.clientPhone}</p>
                             </div>
                           </div>
                         </td>
                         <td className="px-4 py-4 border-r border-[#E0E6EB]">
-                          <span className="text-sm font-manrope text-[#29343D]">
-                            {row.service}
-                          </span>
+                          <span className="text-sm font-manrope text-[#29343D]">{row.service}</span>
                         </td>
                         <td className="px-4 py-4 border-r border-[#E0E6EB]">
-                          <span className="text-sm font-manrope text-[#526B7A] whitespace-nowrap">
-                            {row.scheduledDate}
-                          </span>
+                          <span className="text-sm font-manrope text-[#526B7A] whitespace-nowrap">{row.scheduledDate}</span>
                         </td>
                         <td className="px-4 py-4 border-r border-[#E0E6EB]">
-                          <span className="text-sm font-manrope text-[#29343D]">
-                            {row.price}
-                          </span>
+                          <span className="text-sm font-manrope text-[#29343D]">{row.price}</span>
                         </td>
                         <td className="px-4 py-4 border-r border-[#E0E6EB]">
-                          <StatusBadge
-                            status={row.status}
-                            statusStyles={statusStyles}
-                          />
+                          <StatusBadge status={row.status} statusStyles={statusStyles} />
                         </td>
                         <td className="px-4 py-4">
                           <div className="flex items-center gap-1 justify-center">
@@ -460,15 +349,9 @@ export default function AppoinmentTableviewContent() {
                               className="p-1.5 hover:bg-[#F4F6FA] rounded-lg cursor-pointer"
                             >
                               {isExpanded ? (
-                                <ChevronUp
-                                  size={16}
-                                  className="text-[#635BFF]"
-                                />
+                                <ChevronUp size={16} className="text-[#635BFF]" />
                               ) : (
-                                <ChevronDown
-                                  size={16}
-                                  className="text-[#635BFF]"
-                                />
+                                <ChevronDown size={16} className="text-[#635BFF]" />
                               )}
                             </button>
                           </div>
@@ -491,39 +374,19 @@ export default function AppoinmentTableviewContent() {
               </div>
             </div>
             <span className="text-sm font-manrope text-[#526B7A]">
-              {(currentPage - 1) * itemsPerPage + 1}–
-              {Math.min(currentPage * itemsPerPage, filtered.length)} of{" "}
-              {filtered.length}
+              {(currentPage - 1) * itemsPerPage + 1}–{Math.min(currentPage * itemsPerPage, filtered.length)} of {filtered.length}
             </span>
             <div className="flex items-center gap-1">
-              <button
-                onClick={() => setCurrentPage(1)}
-                disabled={currentPage === 1}
-                className="rounded-[6px] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors cursor-pointer"
-              >
+              <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1} className="rounded-[6px] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors cursor-pointer">
                 <ChevronFirst size={22} className="text-[#526B7A]" />
               </button>
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="rounded-[6px] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors cursor-pointer"
-              >
+              <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1} className="rounded-[6px] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors cursor-pointer">
                 <ChevronLeft size={22} className="text-[#526B7A]" />
               </button>
-              <button
-                onClick={() =>
-                  setCurrentPage((p) => Math.min(totalPages, p + 1))
-                }
-                disabled={currentPage === totalPages}
-                className="rounded-[6px] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors cursor-pointer"
-              >
+              <button onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} className="rounded-[6px] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors cursor-pointer">
                 <ChevronRight size={22} className="text-[#526B7A]" />
               </button>
-              <button
-                onClick={() => setCurrentPage(totalPages)}
-                disabled={currentPage === totalPages}
-                className="rounded-[6px] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors cursor-pointer"
-              >
+              <button onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} className="rounded-[6px] hover:bg-[#F4F6FA] disabled:opacity-30 transition-colors cursor-pointer">
                 <ChevronLast size={22} className="text-[#526B7A]" />
               </button>
             </div>

@@ -434,12 +434,6 @@ export default function WeekView({
               setSelectedSlot(null);
             }}
           >
-            {/*
-              STICKY FIX: day header + grid are both inside ONE scroll
-              container with a viewport-based height. The header uses
-              `sticky top-0` so it pins while the grid scrolls beneath it.
-              Adjust `offsetTop` prop (default 160px) to match your layout.
-            */}
             <div
               className="overflow-y-auto overflow-x-auto"
               style={{ height: `calc(100svh - ${offsetTop}px)` }}
