@@ -5,14 +5,14 @@ import { Pencil, Plus, Trash2, X } from "lucide-react";
 import FBIcon from "./FBIcon";
 import InstagramIcon from "./InstagramIcon";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Types 
 
 export type Platform = "instagram" | "facebook";
 export type PostStatus = "scheduled" | "draft" | "published";
 
 export interface Post {
     id: string;
-    date: string; // YYYY-MM-DD
+    date: string;
     hour: number;
     title: string;
     platforms: Platform[];
@@ -29,7 +29,7 @@ interface SocialDayviewProps {
     onDelete: (id: string) => void;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers 
 
 function formatHour(hour: number): string {
     if (hour === 0) return "12:00 AM";
@@ -48,7 +48,7 @@ const STATUS_OPTS: { value: PostStatus; label: string; color: string; bg: string
     { value: "published", label: "Published", color: "#0BA360", bg: "#E6F7EE" },
 ];
 
-// ─── Shared Components (Modal, Labels, etc) ───────────────────────────────────
+// Shared Components 
 
 function ModalShell({ children, onClose }: { children: React.ReactNode; onClose: () => void }) {
     return (
@@ -80,7 +80,7 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
     return <label className="text-[12px] font-bold text-[#8898A8] block mb-1.5 font-manrope">{children}</label>;
 }
 
-// ─── Modals ───────────────────────────────────────────────────────────────────
+// Modals 
 
 function AddPostModal({ hour, date, hours, onClose, onAdd }: { hour: number; date: string; hours: number[]; onClose: () => void; onAdd: (post: Post) => void }) {
     const [draft, setDraft] = useState<Omit<Post, "id">>({
@@ -187,7 +187,7 @@ function DeletePostModal({ post, onClose, onConfirm }: { post: Post; onClose: ()
     );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+// Main Component 
 
 export default function SocialDayview({ currentDate, posts, onAdd, onUpdate, onDelete }: SocialDayviewProps) {
     const hours = Array.from({ length: 24 }, (_, i) => i);
