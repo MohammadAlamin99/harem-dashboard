@@ -154,7 +154,7 @@ export default function AppoinmentTableviewContent() {
               </button>
             </div>
 
-            {/* ── 3-dot menu button ── */}
+            {/* 3-dot menu button */}
             <button
               ref={menuButtonRef}
               onClick={() => {
