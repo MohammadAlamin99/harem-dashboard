@@ -268,8 +268,8 @@ const Checkbox = ({ checked, onChange }: { checked: boolean; onChange: () => voi
 
 // ── Main Component ────────────────────────────────────────────────────
 export default function MediaManager() {
-    const [mediaType, setMediaType] = useState<string>("All Type");
-    const [usageFilter, setUsageFilter] = useState<UsageFilter>("All Media");
+    const [mediaType] = useState<string>("All Type");
+    const [usageFilter] = useState<UsageFilter>("All Media");
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState<string[]>([]);
     const [media, setMedia] = useState<MediaItem[]>(MOCK_MEDIA);
