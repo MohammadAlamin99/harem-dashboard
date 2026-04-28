@@ -25,5 +25,5 @@ export const DashboardSalonOwner = () => {
     </div>
   );
 };
-
+// dashboard salon 
 export default DashboardSalonOwner;
